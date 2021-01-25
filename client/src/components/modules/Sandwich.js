@@ -19,4 +19,12 @@ Sandwich.propTypes = {
     data: PropTypes.object.isRequired,
 }
 
+Sandwich.defaultProps = {
+    data: {
+        "uid": -1,
+        "title": "N/A",
+        "tags": []
+    }
+}
+
 export default Sandwich;
