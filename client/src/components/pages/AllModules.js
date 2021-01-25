@@ -1,6 +1,8 @@
 import React, { Component } from "react";
 import Sandwich from '../modules/Sandwich';
 
+import data from "../../data/all_modules";
+
 class AllModules extends React.Component {
     render() {
         return (
@@ -8,12 +10,16 @@ class AllModules extends React.Component {
                 <h1>All Modules page</h1>
                 <div>
                     TODO: modules list goes here.
+                    All Modules:
+                    {data.all_modules.map((module) => 
+                        <Sandwich
+                        key={module.uid}
+                        data={module}
+                    />
+                    )}
+                </div>
+                <div>
 
-                    <Sandwich 
-                        uid="1"
-                        title="City of the Future"
-                        tags="[ai, Scratch, TODO]"
-                        /> 
 
                 </div>
             </>

@@ -3,6 +3,7 @@ import Sandwich from './modules/Sandwich';
 import Navbar from './modules/Navbar';
 import Home from './pages/Home';
 import AllModules from './pages/AllModules';
+import BuildYourOwn from "./pages/BuildYourOwn";
 
 import {
   Route,
@@ -21,8 +22,13 @@ function App() {
           <Home />
         </Route> 
 
+
+        <Route path="/builder">
+          <BuildYourOwn/>
+        </Route>
+
         <Route path="/all">
-          <AllModules path="/all"/>
+          <AllModules/>
         </Route>
 
         <Route path="/">
