@@ -1,8 +1,17 @@
 import React, { Component } from "react";
 import './NutritionFacts.js'
+import PropTypes from 'prop-types';
 
 class NutritionFacts extends React.Component {
-    render(props) {
+    render() {
+        let numSandwiches = 0;
+
+        this.props.sandwichData.forEach((wich) => {
+            if (wich.uid !== -1) {
+                numSandwiches++;
+            }
+        });
+
         return (<div class="container border border-primary">
             <div class="row">
                 <div class="col-sm">
@@ -19,10 +28,10 @@ class NutritionFacts extends React.Component {
             </div>
             <div class="row border">
                 <div class="col-sm">
-                    Computational Thinking:
+                    # of modules:
                 </div>
                 <div class="col-sm">
-                    0
+                    {numSandwiches}
                 </div>
             </div>
             <div class="row border">
@@ -36,6 +45,10 @@ class NutritionFacts extends React.Component {
             
         </div>)
     }
+}
+
+NutritionFacts.propTypes = {
+    sandwichData: PropTypes.object.isRequired,
 }
 
 export default NutritionFacts;

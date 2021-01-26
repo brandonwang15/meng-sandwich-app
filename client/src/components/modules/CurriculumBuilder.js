@@ -3,18 +3,20 @@ import SandwichHolder from "../modules/SandwichHolder";
 import NutritionFacts from "../modules/NutritionFacts";
 import PropTypes from 'prop-types';
 
+const emptySandwich = {
+    "uid": -1,
+    "title": "N/A",
+    "tags": []
+};
+
 class CurriculumBuilder extends React.Component {
     constructor(props) {
         super(props);
 
         // bind class methods
         this.handleSandwichHolderUpdate = this.handleSandwichHolderUpdate.bind(this);
+        this.clearSandwichHolder = this.clearSandwichHolder.bind(this);
 
-        const emptySandwich = {
-            "uid": -1,
-            "title": "N/A",
-            "tags": []
-        };
 
         this.state = {
             sandwichData: [],
@@ -25,9 +27,14 @@ class CurriculumBuilder extends React.Component {
         }
     }
 
+    clearSandwichHolder(indexToClear) {
+        console.log("CALLED CLEAR");
+        this.handleSandwichHolderUpdate(indexToClear, emptySandwich);
+    }
+
     handleSandwichHolderUpdate(indexToUpdate, newData) {
         const updatedSandwichData = this.state.sandwichData.map((data, j) => {
-            if (j == indexToUpdate) {
+            if (j === indexToUpdate) {
                 return newData;
             } else {
                 return data;
@@ -42,7 +49,7 @@ class CurriculumBuilder extends React.Component {
         for (let i = 0; i < this.props.numSlots; i++) {
             holderList.push(
                 <div class="col-sm">
-                    <SandwichHolder key={i} index={i} onSandwichUpdate={this.handleSandwichHolderUpdate} sandwichData={this.state.sandwichData[i]}/>
+                    <SandwichHolder key={i} index={i} onSandwichUpdate={this.handleSandwichHolderUpdate} sandwichData={this.state.sandwichData[i]} clearSandwich={this.clearSandwichHolder}/>
                 </div>)
             }
 
@@ -51,7 +58,7 @@ class CurriculumBuilder extends React.Component {
                 <div class="row">
                     <div class="col-sm">
                         Your curriculum:
-                                <NutritionFacts />
+                                <NutritionFacts sandwichData={this.state.sandwichData}/>
                     </div>
                 </div>
                 <br />

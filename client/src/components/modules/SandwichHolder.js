@@ -46,6 +46,7 @@ function SandwichHolder(props) {
             <h3>Title: {props.sandwichData.title}</h3>
             <p>UID: {props.sandwichData.uid}</p>
             <p>Tags: {props.sandwichData.tags.toString()}</p>
+            <input type="button" value="Remove" onClick={() => props.clearSandwich(props.index)}/>
         </div>
     )
 }
@@ -54,6 +55,7 @@ SandwichHolder.propTypes = {
     index: PropTypes.number.isRequired,
     sandwichData: PropTypes.object.isRequired,
     onSandwichUpdate: PropTypes.func.isRequired,
+    clearSandwich: PropTypes.func.isRequired,
 }
 
 export default SandwichHolder;
