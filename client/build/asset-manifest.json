@@ -1,0 +1,22 @@
+{
+  "files": {
+    "main.css": "/sandwich-app/static/css/main.fbe32133.chunk.css",
+    "main.js": "/sandwich-app/static/js/main.083d6439.chunk.js",
+    "main.js.map": "/sandwich-app/static/js/main.083d6439.chunk.js.map",
+    "runtime-main.js": "/sandwich-app/static/js/runtime-main.30a45736.js",
+    "runtime-main.js.map": "/sandwich-app/static/js/runtime-main.30a45736.js.map",
+    "static/js/2.c41f2bd4.chunk.js": "/sandwich-app/static/js/2.c41f2bd4.chunk.js",
+    "static/js/2.c41f2bd4.chunk.js.map": "/sandwich-app/static/js/2.c41f2bd4.chunk.js.map",
+    "static/js/3.62c6af23.chunk.js": "/sandwich-app/static/js/3.62c6af23.chunk.js",
+    "static/js/3.62c6af23.chunk.js.map": "/sandwich-app/static/js/3.62c6af23.chunk.js.map",
+    "index.html": "/sandwich-app/index.html",
+    "static/css/main.fbe32133.chunk.css.map": "/sandwich-app/static/css/main.fbe32133.chunk.css.map",
+    "static/js/2.c41f2bd4.chunk.js.LICENSE.txt": "/sandwich-app/static/js/2.c41f2bd4.chunk.js.LICENSE.txt"
+  },
+  "entrypoints": [
+    "static/js/runtime-main.30a45736.js",
+    "static/js/2.c41f2bd4.chunk.js",
+    "static/css/main.fbe32133.chunk.css",
+    "static/js/main.083d6439.chunk.js"
+  ]
+}
