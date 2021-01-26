@@ -3,6 +3,18 @@ import './NutritionFacts.js'
 import PropTypes from 'prop-types';
 
 class NutritionFacts extends React.Component {
+    
+    // returns set of tags as a list
+    getCoveredTags(sandwiches) {
+        let allTags = new Set();
+
+        sandwiches.forEach(sw => {
+            sw.tags.forEach(tag => allTags.add(tag));
+        });
+
+        return Array.from(allTags);
+    }
+
     render() {
         let numSandwiches = 0;
 
@@ -11,6 +23,7 @@ class NutritionFacts extends React.Component {
                 numSandwiches++;
             }
         });
+
 
         return (<div class="container border border-primary">
             <div class="row">
@@ -36,10 +49,10 @@ class NutritionFacts extends React.Component {
             </div>
             <div class="row border">
                 <div class="col-sm">
-                    Design Thinking
+                    Tags covered
                 </div>
                 <div class="col-sm">
-                    0
+                    {this.getCoveredTags(this.props.sandwichData).join(', ')}
                 </div>
             </div>
             
