@@ -1,11 +1,11 @@
 import React, { Component } from "react";
 
 import DraggableSandwich from "../modules/DraggableSandwich";
-import SandwichHolder from "../modules/SandwichHolder";
 
 import { DndProvider } from 'react-dnd'
 import { HTML5Backend } from 'react-dnd-html5-backend'
 
+import CurriculumBuilder from "../modules/CurriculumBuilder";
 
 import data from "../../data/all_modules"
 
@@ -14,22 +14,14 @@ class BuildYourOwn extends React.Component {
         return (
             <DndProvider backend={HTML5Backend}>
                 <>
-                    <h1>Build Your Own Module</h1>
-                    <hr />
-                Your curriculum:
                     <div class="container">
                         <div class="row">
                             <div class="col-sm">
-                                <SandwichHolder />
+                                <h1>Build Your Own Module</h1>
+                                <hr />
                             </div>
-                            <div class="col-sm">
-                                <SandwichHolder />
-                            </div>
-                            <div class="col-sm">
-                                <SandwichHolder />
-                            </div>
-
                         </div>
+                        <CurriculumBuilder numSlots="3"/>
                     </div>
                     <hr />
                     <div class="container">
