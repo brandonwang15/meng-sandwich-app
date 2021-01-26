@@ -7,6 +7,10 @@ import ItemTypes from "../../constants";
 
 import { useDrag } from 'react-dnd';
 
+import {
+    NavLink
+} from "react-router-dom";
+
 function DraggableSandwich(props) {
     const [{isDragging}, drag] = useDrag({
         item: { type: ItemTypes.SANDWICH },
@@ -32,6 +36,7 @@ function DraggableSandwich(props) {
             <h3>Title: {props.data.title}</h3>
             <p>UID: {props.data.uid}</p>
             <p>Tags: {props.data.tags.toString()}</p>
+            <NavLink to={"/sandwich/"+props.data.uid}>See More</NavLink>
         </div>
     )
 }

@@ -8,6 +8,10 @@ import ItemTypes from "../../constants";
 import { useDrop } from 'react-dnd';
 import Sandwich from './Sandwich';
 
+import {
+    NavLink
+} from "react-router-dom";
+
 function SandwichHolder(props) {
 
     // The sandwich data is stored as component state now, since
@@ -21,7 +25,7 @@ function SandwichHolder(props) {
     // const [data, setData] = useState(defaultData);
 
     // Configure the drag-and-drop handling
-    const [{isDragging}, drag] = useDrop({
+    const [{ isDragging }, drag] = useDrop({
         accept: ItemTypes.SANDWICH,
         // collect: monitor => ({
         //     isDragging: !!monitor.isDragging(),
@@ -32,7 +36,7 @@ function SandwichHolder(props) {
             console.log("Data: %o", data);
             props.onSandwichUpdate(props.index, data);
         },
-        });
+    });
 
     return (
         <div className="Sandwich-holder"
@@ -46,7 +50,8 @@ function SandwichHolder(props) {
             <h3>Title: {props.sandwichData.title}</h3>
             <p>UID: {props.sandwichData.uid}</p>
             <p>Tags: {props.sandwichData.tags.toString()}</p>
-            <input type="button" value="Remove" onClick={() => props.clearSandwich(props.index)}/>
+            {(props.sandwichData.uid !== -1) && <NavLink to={"/sandwich/" + props.sandwichData.uid}>See More</NavLink>}<br/>
+            <input type="button" value="Remove" onClick={() => props.clearSandwich(props.index)} />
         </div>
     )
 }

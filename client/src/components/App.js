@@ -1,9 +1,14 @@
 import './App.css';
 import Sandwich from './modules/Sandwich';
 import Navbar from './modules/Navbar';
+import SandwichPage from './pages/SandwichPage';
+
 import Home from './pages/Home';
 import AllModules from './pages/AllModules';
 import BuildYourOwn from "./pages/BuildYourOwn";
+
+import data from "../data/all_modules";
+
 
 import {
   Route,
@@ -30,10 +35,20 @@ function App() {
         <Route path="/all">
           <AllModules/>
         </Route>
+        
+        {
+          // TODO: generate Routes for each module page
+          data.all_modules.map(module => {
+            return <Route path={"/sandwich/"+module.uid}>
+              <SandwichPage sandwich={module}/>
+            </Route>
+          })
+        }
 
         <Route path="/">
           <h1>404</h1>
         </Route>
+
       </Switch>
     </div>
   );
