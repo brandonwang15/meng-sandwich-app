@@ -13,6 +13,12 @@ function DraggableSandwich(props) {
         collect: monitor => ({
             isDragging: !!monitor.isDragging(),
         }),
+        begin: () => {
+            return props.data;
+        },
+        end: (item, monitor) => {
+            console.log("DraggableSandwich: END DRAG. didDrop=%s; dropResult=%s.", monitor.didDrop(), monitor.getDropResult());
+        },
         });
 
     return (
