@@ -17,16 +17,34 @@ class BuildYourOwn extends React.Component {
                     <h1>Build Your Own Module</h1>
                     <hr />
                 Your curriculum:
-                TODO: modules go under here
-                Slot 1: <SandwichHolder />
+                    <div class="container">
+                        <div class="row">
+                            <div class="col-sm">
+                                <SandwichHolder />
+                            </div>
+                            <div class="col-sm">
+                                <SandwichHolder />
+                            </div>
+                            <div class="col-sm">
+                                <SandwichHolder />
+                            </div>
+
+                        </div>
+                    </div>
                     <hr />
-                    <div>
-                        {data.all_modules.map((module) =>
-                            <DraggableSandwich
-                                key={module.uid}
-                                data={module}
-                            />
-                        )}
+                    <div class="container">
+                        <div class="row">
+                            {data.all_modules.map((module, index) => {
+                                let sandwichDiv = <div class="col-sm">
+                                    <DraggableSandwich
+                                        key={module.uid}
+                                        data={module}
+                                    />
+                                </div>;
+                                return sandwichDiv;
+                            }
+                            )}
+                        </div>
                     </div>
                 </>
             </DndProvider>

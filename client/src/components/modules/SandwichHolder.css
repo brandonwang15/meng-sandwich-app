@@ -1,0 +1,8 @@
+.Sandwich-holder {
+    border-radius: 15px;
+    border:5px solid black;
+    margin-left: 10%;
+    margin-right: 10%;
+    padding: 5px;
+    height: 100%
+}

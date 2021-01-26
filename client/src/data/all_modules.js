@@ -26,6 +26,42 @@ var data = {
                 "Scratch",
                 "human skills"
             ]
+        },
+        {
+            "uid": 4,
+            "title": "Debugging Detective",
+            "tags": [
+                "debugging",
+                "Scratch",
+                "human skills"
+            ]
+        },
+        {
+            "uid": 5,
+            "title": "Debugging Detective",
+            "tags": [
+                "debugging",
+                "Scratch",
+                "human skills"
+            ]
+        },
+        {
+            "uid": 6,
+            "title": "Debugging Detective",
+            "tags": [
+                "debugging",
+                "Scratch",
+                "human skills"
+            ]
+        },
+        {
+            "uid": 7,
+            "title": "Debugging Detective",
+            "tags": [
+                "debugging",
+                "Scratch",
+                "human skills"
+            ]
         }
     ]
 };

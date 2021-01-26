@@ -1,5 +1,5 @@
 import React, { Component, useState } from 'react';
-import './Sandwich.css';
+import './SandwichHolder.css';
 
 import PropTypes from 'prop-types';
 
@@ -35,14 +35,13 @@ function SandwichHolder(props) {
         });
 
     return (
-        <div className="Sandwich-container"
+        <div className="Sandwich-holder"
             ref={drag}
             style={{
                 opacity: isDragging ? 0.5 : 1,
                 cursor: 'move',
             }}
         >
-            <h2>HOLDER:</h2>
             <h3>Title: {data.title}</h3>
             <p>UID: {data.uid}</p>
             <p>Tags: {data.tags.toString()}</p>
