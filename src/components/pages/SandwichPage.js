@@ -16,10 +16,26 @@ class SandwichPage extends React.Component {
                     Tags: {this.props.sandwich.tags.join(", ")}
                 </div>
                 <div class="row">
-                    TODO: PUT MORE MODULE INFO HERE.
+                    Blurb: {this.props.sandwich.short_description}
                 </div>
                 <div class="row">
-                    ex) links, resources, etc
+                    Grade versions:
+                </div>
+                <div class="row">
+                    Resources:
+                    {this.props.sandwich.resources.map((resource) => <div class="container">
+                        <a href={process.env.PUBLIC_URL+resource.url}>{resource.text}</a>
+                    </div>)}
+                    <div class="container">
+                            <a href={process.env.PUBLIC_URL+"/sandwich/"+this.props.sandwich.uid+"/sandwich-"+this.props.sandwich.uid+".zip"} class="btn btn-info" role="button">.ZIP File</a>
+                    </div>
+                </div>
+                <div class="row">
+                    Nutrition Facts:
+                </div>
+
+                <div class="row">
+                    Related Modules:
                 </div>
             </div>
         )

@@ -3,10 +3,21 @@ var data = {
         {
             "uid": 1,
             "title": "Cities of the Future",
+            "short_description": "Students envision what their communities will look like in the future, and create demonstrations that incorporate automation.",
             "tags": [
                 "algorithms",
                 "Scratch",
                 "plugged"
+            ],
+            "resources": [
+                {
+                    "url": "/sandwich/1/image.png",
+                    "text": "Sandwich picture.",
+                },
+                {
+                    "url": "/sandwich/1/test.pdf",
+                    "text": "Here's a PDF!",
+                }
             ]
         },
         {
@@ -16,7 +27,8 @@ var data = {
                 "algorithms",
                 "Scratch",
                 "Teachable Machines"
-            ]
+            ],
+            "resources": [],
         },
         {
             "uid": 3,
@@ -25,21 +37,24 @@ var data = {
                 "debugging",
                 "Scratch",
                 "human skills"
-            ]
+            ],
+            "resources": [],
         },
         {
             "uid": 4,
             "title": "DAILY AI",
             "tags": [
                 "AI"
-            ]
+            ],
+            "resources": [],
         },
         {
             "uid": 5,
             "title": "Design Thinking Bootcamp",
             "tags": [
                 "human skills"
-            ]
+            ],
+            "resources": [],
         },
         {
             "uid": 6,
@@ -48,7 +63,8 @@ var data = {
                 "debugging",
                 "Scratch",
                 "human skills"
-            ]
+            ],
+            "resources": [],
         },
         {
             "uid": 7,
@@ -57,7 +73,8 @@ var data = {
                 "debugging",
                 "Scratch",
                 "human skills"
-            ]
+            ],
+            "resources": [],
         }
     ]
 };
