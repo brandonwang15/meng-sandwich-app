@@ -1,7 +1,11 @@
 import React, { Component } from "react";
 import SandwichHolder from "../modules/SandwichHolder";
 import NutritionFacts from "../modules/NutritionFacts";
+
 import PropTypes from 'prop-types';
+
+import data from "../../data/all_modules"
+import DraggableSandwich from "../modules/DraggableSandwich";
 
 const emptySandwich = {
     "uid": -1,
@@ -17,6 +21,7 @@ class CurriculumBuilder extends React.Component {
         this.handleSandwichHolderUpdate = this.handleSandwichHolderUpdate.bind(this);
         this.clearSandwichHolder = this.clearSandwichHolder.bind(this);
         this.clearAll = this.clearAll.bind(this);
+        this.isSandwichSelected = this.isSandwichSelected.bind(this);
 
         this.state = {
             sandwichData: [],
@@ -32,6 +37,16 @@ class CurriculumBuilder extends React.Component {
         for(let i = 0; i < this.props.numSlots; i++) {
             this.clearSandwichHolder(i);
         }
+    }
+
+    isSandwichSelected(uid) {
+        for (let i = 0; i < this.props.numSlots; i++) {
+            if (this.state.sandwichData[i].uid === uid) {
+                return true;
+            }
+        }
+
+        return false;
     }
 
     clearSandwichHolder(indexToClear) {
@@ -74,6 +89,22 @@ class CurriculumBuilder extends React.Component {
                 <div class="row">
                     {holderList}
                 </div>
+                <hr />
+                    <div class="container">
+                        <div class="row">
+                            {data.all_modules.map((module, index) => {
+                                let sandwichDiv = <div class="col-sm">
+                                    <DraggableSandwich
+                                        key={module.uid}
+                                        data={module}
+                                        canDrag={!this.isSandwichSelected(module.uid)}
+                                    />
+                                </div>;
+                                return sandwichDiv;
+                            }
+                            )}
+                        </div>
+                    </div>
             </>
         )
     }

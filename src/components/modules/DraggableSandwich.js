@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import './Sandwich.css';
+import './DraggableSandwich.css';
 
 import PropTypes from 'prop-types';
 
@@ -17,6 +17,7 @@ function DraggableSandwich(props) {
         collect: monitor => ({
             isDragging: !!monitor.isDragging(),
         }),
+        canDrag: () => props.canDrag,
         begin: () => {
             return props.data;
         },
@@ -26,7 +27,7 @@ function DraggableSandwich(props) {
         });
 
     return (
-        <div className="Sandwich-container"
+        <div className={"Draggable-sandwich-container " + (props.canDrag ? "enabled" : "disabled")}
             ref={drag}
             style={{
                 opacity: isDragging ? 0.5 : 1,
@@ -43,6 +44,7 @@ function DraggableSandwich(props) {
 
 DraggableSandwich.propTypes = {
     data: PropTypes.object.isRequired,
+    canDrag: PropTypes.bool.isRequired,
 }
 
 DraggableSandwich.defaultProps = {
