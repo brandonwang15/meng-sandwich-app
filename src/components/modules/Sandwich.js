@@ -12,10 +12,11 @@ class Sandwich extends React.Component {
     render() {
         return (
             <div className="Sandwich-container" >
-                <h3>Title: {this.props.data.title}</h3>
-                <p>UID: {this.props.data.uid}</p>
+                <h3>{this.props.data.title}</h3>
+                <p><em>{this.props.data.short_description}</em></p>
                 <p>Tags: {this.props.data.tags.toString()}</p>
                 <NavLink to={"/sandwich/"+this.props.data.uid}>See More</NavLink>
+                <p>UID: {this.props.data.uid}</p>
             </div>
         )
     }

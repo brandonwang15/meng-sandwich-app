@@ -1,8 +1,11 @@
 import React, { Component } from "react";
 import Sandwich from '../modules/Sandwich';
+import FilterableSandwichContainer from "../modules/FilterableSandwichContainer";
 
 import { DndProvider } from 'react-dnd'
 import { HTML5Backend } from 'react-dnd-html5-backend'
+
+import "./../../styles.css"
 
 import data from "../../data/all_modules";
 
@@ -11,20 +14,11 @@ class AllModules extends React.Component {
         return (
             <DndProvider backend={HTML5Backend}>
                 <>
-                    <h1>All Modules page</h1>
-                    <div>
-                        TODO: modules list goes here.
-                        All Modules:
-                    {data.all_modules.map((module) =>
-                        <Sandwich
-                            key={module.uid}
-                            data={module}
-                        />
-                    )}
+                    <div class="Page-title">
+                        <h1>Browse All Sandwiches</h1>
                     </div>
                     <div>
-
-
+                        <FilterableSandwichContainer sandwichData={data}/>
                     </div>
                 </>
             </DndProvider>

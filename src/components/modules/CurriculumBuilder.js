@@ -6,6 +6,7 @@ import PropTypes from 'prop-types';
 
 import data from "../../data/all_modules"
 import DraggableSandwich from "../modules/DraggableSandwich";
+import FilterableSandwichContainer from "../modules/FilterableSandwichContainer";
 
 const emptySandwich = {};
 
