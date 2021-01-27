@@ -82,15 +82,20 @@ class CurriculumBuilder extends React.Component {
         return (
             <>
                 <div class="row">
-                    <div class="col-sm">
-                        Your curriculum:
-                                <NutritionFacts sandwichData={this.state.sandwichData} />
+                    <div class="col">
                     </div>
                 </div>
                 <input type="button" value="TODO: Clear All" onClick={this.clearAll} />
                 <br />
                 <div class="row">
-                    {holderList}
+                    <div class="col-9">
+                        <div class="row">
+                            {holderList}
+                        </div>
+                    </div>
+                    <div class="col-3">
+                                <NutritionFacts sandwichData={this.state.sandwichData} />
+                    </div>
                 </div>
                 <hr />
                 <FilterableSandwichContainer

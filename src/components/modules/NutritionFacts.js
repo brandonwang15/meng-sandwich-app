@@ -1,5 +1,6 @@
 import React, { Component } from "react";
-import './NutritionFacts.js'
+import './NutritionFacts.js';
+import './NutritionFacts.css';
 import PropTypes from 'prop-types';
 
 class NutritionFacts extends React.Component {
@@ -27,34 +28,76 @@ class NutritionFacts extends React.Component {
         });
 
 
-        return (<div class="container border border-primary">
-            <div class="row">
-                <div class="col-sm">
-                    <h1>Nutrition Facts</h1>
+        return (<div class="container border border-nutrition-outline">
+            <div class="row border-bottom border-nutrition-hr-thick">
+                <div class="col-sm border-bottom">
+                    <h3>Nutrition Facts</h3>
                 </div>
             </div>
-            <div class="row border">
-                <div class="col-sm">
-                    <h3>Content Type:</h3>
-                </div>
-                <div class="col-sm">
-                    <h3>Curriculum Coverage:</h3>
-                </div>
-            </div>
-            <div class="row border">
-                <div class="col-sm">
+            <div class="row border-bottom border-nutrition-hr-med">
+                <div class="col-9">
                     # of modules:
                 </div>
-                <div class="col-sm">
+                <div class="col-3">
                     {numSandwiches}
                 </div>
             </div>
-            <div class="row border">
-                <div class="col-sm">
-                    Tags covered
+            <div class="row border-bottom border-nutrition-hr-thin text-left">
+                <div class="col-12">
+                    Tags covered:
                 </div>
-                <div class="col-sm">
-                    {this.getCoveredTags(this.props.sandwichData).join(', ')}
+                <div class="col-12" style={{"font-size": "12px"}}>
+                    <em>
+                        {this.getCoveredTags(this.props.sandwichData).join(', ')}
+                    </em>
+                </div>
+            </div>
+            <div class="row border-bottom border-nutrition-hr-thin text-left">
+                <div class="col-9">
+                    Artificial Intelligence
+                </div>
+                <div class="col-3">
+                    75%
+                </div>
+            </div>
+            <div class="row border-bottom border-nutrition-hr-thin text-left">
+                <div class="col-9">
+                    Computational Thinking
+                </div>
+                <div class="col-3">
+                    90%
+                </div>
+            </div>
+            <div class="row border-bottom border-nutrition-hr-med text-left">
+                <div class="col-9">
+                    Design Thinking
+                </div>
+                <div class="col-3">
+                    50%
+                </div>
+            </div>
+            <div class="row border-bottom border-nutrition-hr-thin text-left small-text">
+                <div class="col-9">
+                    Creativity
+                </div>
+                <div class="col-3">
+                    Yes
+                </div>
+            </div>
+            <div class="row border-bottom border-nutrition-hr-thin text-left small-text">
+                <div class="col-9">
+                    Collaboration
+                </div>
+                <div class="col-3">
+                    Yes
+                </div>
+            </div>
+            <div class="row border-nutrition-hr-thin text-left small-text">
+                <div class="col-9">
+                    Reflection
+                </div>
+                <div class="col-3">
+                    Yes
                 </div>
             </div>
             
