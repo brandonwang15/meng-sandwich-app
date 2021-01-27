@@ -29,25 +29,21 @@ var data = {
         },
         {
             "uid": 4,
-            "title": "Debugging Detective",
+            "title": "DAILY AI",
             "tags": [
-                "debugging",
-                "Scratch",
-                "human skills"
+                "AI"
             ]
         },
         {
             "uid": 5,
-            "title": "Debugging Detective",
+            "title": "Design Thinking Bootcamp",
             "tags": [
-                "debugging",
-                "Scratch",
                 "human skills"
             ]
         },
         {
             "uid": 6,
-            "title": "Debugging Detective",
+            "title": "Robot Race",
             "tags": [
                 "debugging",
                 "Scratch",
@@ -56,7 +52,7 @@ var data = {
         },
         {
             "uid": 7,
-            "title": "Debugging Detective",
+            "title": "Seafloor Cleanup",
             "tags": [
                 "debugging",
                 "Scratch",

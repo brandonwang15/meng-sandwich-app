@@ -34,7 +34,7 @@ function DraggableSandwich(props) {
                 cursor: 'move',
             }}
         >
-            <h3>Title: {props.data.title}</h3>
+            <h3>{props.data.title}</h3>
             <p>UID: {props.data.uid}</p>
             <p>Tags: {props.data.tags.toString()}</p>
             <NavLink to={"/sandwich/"+props.data.uid}>See More</NavLink>

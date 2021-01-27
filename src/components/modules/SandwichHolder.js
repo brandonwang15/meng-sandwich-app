@@ -57,9 +57,9 @@ function SandwichHolder(props) {
                 }}
             >
                 <h1>#{props.index}</h1>
-                <h3>Title: {props.sandwichData.title}</h3>
+                <h3>{props.sandwichData.title}</h3>
                 <p>UID: {props.sandwichData.uid}</p>
-                <p>Tags: {props.sandwichData.tags.toString()}</p>
+                <p>Tags: <em>{props.sandwichData.tags.toString()}</em></p>
                 {(props.sandwichData.uid !== -1) && <NavLink to={"/sandwich/" + props.sandwichData.uid}>See More</NavLink>}<br />
                 <input type="button" value="Remove" onClick={() => props.clearSandwich(props.index)} />
             </div>
