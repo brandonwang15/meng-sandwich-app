@@ -9,7 +9,9 @@ class NutritionFacts extends React.Component {
         let allTags = new Set();
 
         sandwiches.forEach(sw => {
-            sw.tags.forEach(tag => allTags.add(tag));
+            if (Object.keys(sw).length !== 0) {
+                sw.tags.forEach(tag => allTags.add(tag));
+            }
         });
 
         return Array.from(allTags);
@@ -19,7 +21,7 @@ class NutritionFacts extends React.Component {
         let numSandwiches = 0;
 
         this.props.sandwichData.forEach((wich) => {
-            if (wich.uid !== -1) {
+            if (Object.keys(wich).length > 0) {
                 numSandwiches++;
             }
         });

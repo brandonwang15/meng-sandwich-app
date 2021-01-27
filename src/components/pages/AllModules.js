@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import DraggableSandwich from '../modules/DraggableSandwich';
+import Sandwich from '../modules/Sandwich';
 
 import { DndProvider } from 'react-dnd'
 import { HTML5Backend } from 'react-dnd-html5-backend'
@@ -16,7 +16,7 @@ class AllModules extends React.Component {
                         TODO: modules list goes here.
                         All Modules:
                     {data.all_modules.map((module) =>
-                        <DraggableSandwich
+                        <Sandwich
                             key={module.uid}
                             data={module}
                         />

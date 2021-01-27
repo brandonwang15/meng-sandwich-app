@@ -6,7 +6,6 @@ import PropTypes from 'prop-types';
 import ItemTypes from "../../constants";
 
 import { useDrop } from 'react-dnd';
-import Sandwich from './Sandwich';
 
 import {
     NavLink
@@ -37,23 +36,36 @@ function SandwichHolder(props) {
             props.onSandwichUpdate(props.index, data);
         },
     });
-
-    return (
-        <div className="Sandwich-holder"
+    if (props.isEmpty) {
+        return <div className="Sandwich-holder-empty"
             ref={drag}
             style={{
                 opacity: isDragging ? 0.5 : 1,
                 cursor: 'move',
             }}
         >
-            <h1>#{props.index}</h1>
-            <h3>Title: {props.sandwichData.title}</h3>
-            <p>UID: {props.sandwichData.uid}</p>
-            <p>Tags: {props.sandwichData.tags.toString()}</p>
-            {(props.sandwichData.uid !== -1) && <NavLink to={"/sandwich/" + props.sandwichData.uid}>See More</NavLink>}<br/>
-            <input type="button" value="Remove" onClick={() => props.clearSandwich(props.index)} />
+            <h1>+</h1>
+            <em>(add a sandwich!)</em>
         </div>
-    )
+    } else {
+        return (
+            <div className="Sandwich-holder"
+                ref={drag}
+                style={{
+                    opacity: isDragging ? 0.5 : 1,
+                    cursor: 'move',
+                }}
+            >
+                <h1>#{props.index}</h1>
+                <h3>Title: {props.sandwichData.title}</h3>
+                <p>UID: {props.sandwichData.uid}</p>
+                <p>Tags: {props.sandwichData.tags.toString()}</p>
+                {(props.sandwichData.uid !== -1) && <NavLink to={"/sandwich/" + props.sandwichData.uid}>See More</NavLink>}<br />
+                <input type="button" value="Remove" onClick={() => props.clearSandwich(props.index)} />
+            </div>
+        )
+    }
+
 }
 
 SandwichHolder.propTypes = {
@@ -61,6 +73,7 @@ SandwichHolder.propTypes = {
     sandwichData: PropTypes.object.isRequired,
     onSandwichUpdate: PropTypes.func.isRequired,
     clearSandwich: PropTypes.func.isRequired,
+    isEmpty: PropTypes.bool.isRequired,
 }
 
 export default SandwichHolder;
