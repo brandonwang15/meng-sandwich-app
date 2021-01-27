@@ -24,14 +24,14 @@ class CurriculumBuilder extends React.Component {
             sandwichData: [], // an empty object {}, is always assumed to denote an empty slot
         };
 
-        for (let i = 0; i < props.numSlots; i++){
+        for (let i = 0; i < props.numSlots; i++) {
             this.state.sandwichData.push(emptySandwich);
         }
     }
 
     // TODO: figure out why this only clears the last holder
     clearAll() {
-        for(let i = 0; i < this.props.numSlots; i++) {
+        for (let i = 0; i < this.props.numSlots; i++) {
             this.clearSandwichHolder(i);
         }
     }
@@ -58,10 +58,10 @@ class CurriculumBuilder extends React.Component {
                 return newData;
             } else {
                 return data;
-            }          
+            }
         });
 
-        this.setState({sandwichData: updatedSandwichData});
+        this.setState({ sandwichData: updatedSandwichData });
     }
 
     render() {
@@ -69,45 +69,34 @@ class CurriculumBuilder extends React.Component {
         for (let i = 0; i < this.props.numSlots; i++) {
             holderList.push(
                 <div class="col-sm">
-                    <SandwichHolder 
-                        key={i} 
-                        index={i} 
+                    <SandwichHolder
+                        key={i}
+                        index={i}
                         isEmpty={Object.keys(this.state.sandwichData[i]).length === 0}
-                        onSandwichUpdate={this.handleSandwichHolderUpdate} 
-                        sandwichData={this.state.sandwichData[i]} 
-                        clearSandwich={this.clearSandwichHolder}/>
+                        onSandwichUpdate={this.handleSandwichHolderUpdate}
+                        sandwichData={this.state.sandwichData[i]}
+                        clearSandwich={this.clearSandwichHolder} />
                 </div>)
-            }
+        }
 
         return (
             <>
                 <div class="row">
                     <div class="col-sm">
                         Your curriculum:
-                                <NutritionFacts sandwichData={this.state.sandwichData}/>
+                                <NutritionFacts sandwichData={this.state.sandwichData} />
                     </div>
                 </div>
-                <input type="button" value="TODO: Clear All" onClick={this.clearAll}/>
+                <input type="button" value="TODO: Clear All" onClick={this.clearAll} />
                 <br />
                 <div class="row">
                     {holderList}
                 </div>
                 <hr />
-                    <div class="container">
-                        <div class="row">
-                            {data.all_modules.map((module, index) => {
-                                let sandwichDiv = <div class="col-sm">
-                                    <DraggableSandwich
-                                        key={module.uid}
-                                        data={module}
-                                        canDrag={!this.isSandwichSelected(module.uid)}
-                                    />
-                                </div>;
-                                return sandwichDiv;
-                            }
-                            )}
-                        </div>
-                    </div>
+                <FilterableSandwichContainer
+                    sandwichData={data}
+                    draggableMode={true}
+                    isSandwichDraggable={this.isSandwichSelected} />
             </>
         )
     }

@@ -18,7 +18,10 @@ class AllModules extends React.Component {
                         <h1>Browse All Sandwiches</h1>
                     </div>
                     <div>
-                        <FilterableSandwichContainer sandwichData={data}/>
+                        <FilterableSandwichContainer
+                            sandwichData={data}
+                            draggableMode={false}
+                        />
                     </div>
                 </>
             </DndProvider>

@@ -62,36 +62,70 @@ class FilterableSandwichContainer extends React.Component {
             return this.state.sandwichIndicesToShow.includes(index);
         });
 
-        return (
-            <>
-                <div class="container">
-                    <div class="row">
-                        <div class="col-sm-2">
-                            Filter:
-                        </div>
-                        <div class="col-sm-8">
-                            <input id="searchField" type="text" class="form-control" placeholder="Add search terms!" onChange={this.onFilterTextChanged}/>
-                        </div>
-                    </div>
-
-                    {filteredModules.map((module) =>
+        if (this.props.draggableMode) {
+            return (
+                <>
+                    <div class="container">
                         <div class="row">
-                            <div class="col-sm">
-                                <Sandwich
-                                    key={module.uid}
-                                    data={module}
-                                />
+                            <div class="col-sm-2">
+                                Filter:
+                            </div>
+                            <div class="col-sm-8">
+                                <input id="searchField" type="text" class="form-control" placeholder="Add search terms!" onChange={this.onFilterTextChanged}/>
                             </div>
                         </div>
-                    )}
-                </div>
-            </>
-        )
+    
+                        {filteredModules.map((module) => {
+                            let sandwichDiv = <div class="col-sm">
+                                    <DraggableSandwich
+                                        key={module.uid}
+                                        data={module}
+                                        canDrag={!this.props.isSandwichDraggable(module.uid)}
+                                    />
+                                </div>;
+                                return sandwichDiv;
+                        }
+                        )}
+                    </div>
+                </>
+            )
+
+
+        } else {
+            return (
+                <>
+                    <div class="container">
+                        <div class="row">
+                            <div class="col-sm-2">
+                                Filter:
+                            </div>
+                            <div class="col-sm-8">
+                                <input id="searchField" type="text" class="form-control" placeholder="Add search terms!" onChange={this.onFilterTextChanged}/>
+                            </div>
+                        </div>
+    
+                        {filteredModules.map((module) =>
+                            <div class="row">
+                                <div class="col-sm">
+                                    <Sandwich
+                                        key={module.uid}
+                                        data={module}
+                                    />
+                                </div>
+                            </div>
+                        )}
+                    </div>
+                </>
+            )
+        }
     }
 }
 
 FilterableSandwichContainer.propTypes = {
     sandwichData: PropTypes.object.isRequired,
+    draggableMode: PropTypes.bool.isRequired,
+    // TODO: this whole draggable flow is a candidate for refactoring
+    isSandwichDraggable: PropTypes.func, // a function that determines whether the sandwich with the given uid is draggable
 }
 
 
