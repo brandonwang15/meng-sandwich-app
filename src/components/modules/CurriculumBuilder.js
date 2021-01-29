@@ -4,66 +4,15 @@ import NutritionFacts from "../modules/NutritionFacts";
 
 import PropTypes from 'prop-types';
 
+import AppContext from "../context/app_context";
 import data from "../../data/all_modules"
-import DraggableSandwich from "../modules/DraggableSandwich";
 import FilterableSandwichContainer from "../modules/FilterableSandwichContainer";
 
-const emptySandwich = {};
-
+// Displays the state of the user's curriculum sandwiches, along with 
+// a filterable list of all sandwiches. 
+// Sandwiches from the list can be dragged and dropped into the user's 
+// curriculum slots to modify the curriculum.
 class CurriculumBuilder extends React.Component {
-    constructor(props) {
-        super(props);
-
-        // bind class methods
-        this.handleSandwichHolderUpdate = this.handleSandwichHolderUpdate.bind(this);
-        this.clearSandwichHolder = this.clearSandwichHolder.bind(this);
-        this.clearAll = this.clearAll.bind(this);
-        this.isSandwichSelected = this.isSandwichSelected.bind(this);
-
-        this.state = {
-            sandwichData: [], // an empty object {}, is always assumed to denote an empty slot
-        };
-
-        for (let i = 0; i < props.numSlots; i++) {
-            this.state.sandwichData.push(emptySandwich);
-        }
-    }
-
-    // TODO: figure out why this only clears the last holder
-    clearAll() {
-        for (let i = 0; i < this.props.numSlots; i++) {
-            this.clearSandwichHolder(i);
-        }
-    }
-
-    isSandwichSelected(uid) {
-        for (let i = 0; i < this.props.numSlots; i++) {
-            if (this.state.sandwichData[i].uid === uid) {
-                return true;
-            }
-        }
-
-        return false;
-    }
-
-    clearSandwichHolder(indexToClear) {
-        console.log("CALLED CLEAR with %s", indexToClear);
-        this.handleSandwichHolderUpdate(indexToClear, emptySandwich);
-    }
-
-    handleSandwichHolderUpdate(indexToUpdate, newData) {
-        const updatedSandwichData = this.state.sandwichData.map((data, j) => {
-            if (j === indexToUpdate) {
-                console.log("updated %s", indexToUpdate);
-                return newData;
-            } else {
-                return data;
-            }
-        });
-
-        this.setState({ sandwichData: updatedSandwichData });
-    }
-
     render() {
         const holderList = []
         for (let i = 0; i < this.props.numSlots; i++) {
@@ -71,11 +20,7 @@ class CurriculumBuilder extends React.Component {
                 <div class="col-sm">
                     <SandwichHolder
                         key={i}
-                        index={i}
-                        isEmpty={Object.keys(this.state.sandwichData[i]).length === 0}
-                        onSandwichUpdate={this.handleSandwichHolderUpdate}
-                        sandwichData={this.state.sandwichData[i]}
-                        clearSandwich={this.clearSandwichHolder} />
+                        index={i}/>
                 </div>)
         }
 
@@ -85,7 +30,7 @@ class CurriculumBuilder extends React.Component {
                     <div class="col">
                     </div>
                 </div>
-                <input type="button" value="TODO: Clear All" onClick={this.clearAll} />
+                <input type="button" value="TODO: Clear All" onClick={this.context.clearUserCurriculum} />
                 <br />
                 <div class="row">
                     <div class="col-9">
@@ -94,14 +39,14 @@ class CurriculumBuilder extends React.Component {
                         </div>
                     </div>
                     <div class="col-3">
-                                <NutritionFacts sandwichData={this.state.sandwichData} />
+                                <NutritionFacts sandwichData={this.context.curriculumSandwiches} />
                     </div>
                 </div>
                 <hr />
                 <FilterableSandwichContainer
                     sandwichData={data}
                     draggableMode={true}
-                    isSandwichDraggable={this.isSandwichSelected} />
+                    isSandwichDraggable={this.context.isSandwichInUserCurriculum} />
             </>
         )
     }
@@ -109,7 +54,8 @@ class CurriculumBuilder extends React.Component {
 }
 
 CurriculumBuilder.propTypes = {
-    numSlots: PropTypes.number.isRequired,
 }
+
+CurriculumBuilder.contextType = AppContext;
 
 export default CurriculumBuilder;

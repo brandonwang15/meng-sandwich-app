@@ -13,14 +13,17 @@ import {
 
 import AppContext from "../context/app_context";
 
+// Represents a sandwich spot in the user's curriculum.
+// Takes an index into the curriculum sandwich list as a prop.
 class SandwichHolder extends React.Component {
     render() {
 
         // Grab the props injected by React DnD
         const { connectDropTarget } = this.props;
 
-
-        if (this.props.isEmpty) {
+        const heldSandwich = this.context.curriculumSandwiches[this.props.index];
+       
+        if (this.context.isSandwichSlotEmpty(this.props.index)) {
             return connectDropTarget(<div className="Sandwich-holder-empty"
                 style={{
                     cursor: 'move',
@@ -37,11 +40,11 @@ class SandwichHolder extends React.Component {
                     }}
                 >
                     <h1>#{this.props.index}</h1>
-                    <h3>{this.props.sandwichData.title}</h3>
-                    <p>UID: {this.props.sandwichData.uid}</p>
-                    <p>Tags: <em>{this.props.sandwichData.tags.toString()}</em></p>
-                    {(this.props.sandwichData.uid !== -1) && <NavLink to={"/sandwich/" + this.props.sandwichData.uid}>See More</NavLink>}<br />
-                    <input type="button" value="Remove" onClick={() => this.props.clearSandwich(this.props.index)} />
+                    <h3>{heldSandwich.title}</h3>
+                    <p>UID: {heldSandwich.uid}</p>
+                    <p>Tags: <em>{heldSandwich.tags.toString()}</em></p>
+                    {(heldSandwich.uid !== -1) && <NavLink to={"/sandwich/" + heldSandwich.uid}>See More</NavLink>}<br />
+                    <input type="button" value="Remove" onClick={() => this.context.deleteSandwichFromUserCurriculum(this.props.index)} />
                 </div>
             );
         }
@@ -50,10 +53,6 @@ class SandwichHolder extends React.Component {
 
 SandwichHolder.propTypes = {
     index: PropTypes.number.isRequired,
-    sandwichData: PropTypes.object.isRequired,
-    onSandwichUpdate: PropTypes.func.isRequired,
-    clearSandwich: PropTypes.func.isRequired,
-    isEmpty: PropTypes.bool.isRequired,
 }
 
 SandwichHolder.contextType = AppContext;
@@ -65,7 +64,7 @@ const sandwichTarget = {
         console.log("SandwichHolder: DROP");
         let data = monitor.getItem();
         console.log("Data: %o", data);
-        props.onSandwichUpdate(props.index, data);
+        component.context.updateSandwichInUserCurriculum(props.index, data);
     }
 }
 

@@ -11,6 +11,7 @@ import {
     NavLink
 } from "react-router-dom";
 
+// Draggable component that displays a 'thumbnail' card for the given sandwich object.
 function DraggableSandwich(props) {
     const [{isDragging}, drag] = useDrag({
         item: { type: ItemTypes.SANDWICH },
