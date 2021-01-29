@@ -47,7 +47,7 @@ function App() {
         }
 
         <Route path="/">
-          <h1 class="Page-title">404</h1>
+          <h1 class="Page-title">404 - Page not found!</h1>
         </Route>
 
       </Switch>
