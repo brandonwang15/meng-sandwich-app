@@ -30,8 +30,6 @@ class CurriculumBuilder extends React.Component {
                     <div class="col">
                     </div>
                 </div>
-                <input type="button" value="TODO: Clear All" onClick={this.context.clearUserCurriculum} />
-                <br />
                 <div class="row">
                     <div class="col-9">
                         <div class="row">
@@ -42,6 +40,9 @@ class CurriculumBuilder extends React.Component {
                                 <NutritionFacts sandwichData={this.context.curriculumSandwiches} />
                     </div>
                 </div>
+                <button type="button" class="btn btn-danger" value="Clear Curriculum" onClick={this.context.clearUserCurriculum}>
+                    Clear Curriculum
+                </button>
                 <hr />
                 <FilterableSandwichContainer
                     sandwichData={data}

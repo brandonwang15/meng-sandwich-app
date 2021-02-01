@@ -17,7 +17,6 @@ class SandwichPage extends React.Component {
                 </div>
                 <div class="row">
                     <div class="col-9 text-left">
-
                         <div class="row">
                             Tags: {this.props.sandwich.tags.join(", ")}
                         </div>

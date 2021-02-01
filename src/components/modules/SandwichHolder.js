@@ -44,7 +44,7 @@ class SandwichHolder extends React.Component {
                     <p>UID: {heldSandwich.uid}</p>
                     <p>Tags: <em>{heldSandwich.tags.toString()}</em></p>
                     {(heldSandwich.uid !== -1) && <NavLink to={"/sandwich/" + heldSandwich.uid}>See More</NavLink>}<br />
-                    <input type="button" value="Remove" onClick={() => this.context.deleteSandwichFromUserCurriculum(this.props.index)} />
+                    <button type="button" class="btn btn-warning" onClick={() => this.context.deleteSandwichFromUserCurriculum(this.props.index)}>Remove</button>
                 </div>
             );
         }

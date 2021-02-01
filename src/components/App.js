@@ -3,9 +3,9 @@ import './../styles.css';
 
 import React, { Component } from 'react';
 
-import Sandwich from './modules/Sandwich';
 import Navbar from './modules/Navbar';
 import SandwichPage from './pages/SandwichPage';
+import PresetCurricula from './pages/PresetCurricula';
 
 import Home from './pages/Home';
 import AllModules from './pages/AllModules';
@@ -20,6 +20,14 @@ import {
 } from "react-router-dom";
 
 const EMPTY_SANDWICH_DATA = {};
+
+function setElementInCurriculumSandwiches(index, newValue) {
+  return (previousState, currentProps) => {
+    let newCurriculumSandwiches = previousState.curriculumSandwiches;
+    newCurriculumSandwiches[index] = newValue;
+    return { ... previousState, curriculumSandwiches: newCurriculumSandwiches};
+  }
+}
 
 class App extends React.Component {
   constructor(props) {
@@ -43,6 +51,12 @@ class App extends React.Component {
 
   }
 
+  // Must be careful with how we go about modifying the app-wide state
+  // because these mutators are called multiple times in quick succession.
+  // Because setState is asynchronous, if we don't use the reducer-esque API to
+  // modifying state (where we pass setState a function that transforms previousState and props into new state))
+  // then we risk losing changes in the batch.
+  // Good explanation: https://medium.com/@wereHamster/beware-react-setstate-is-asynchronous-ce87ef1a9cf3
   clearUserCurriculum() {
     for (let i = 0; i < this.state.curriculumSlots; i++) {
       this.deleteSandwichFromUserCurriculum(i);
@@ -69,16 +83,9 @@ class App extends React.Component {
   }
 
   updateSandwichInUserCurriculum(index, newData) {
-    const updatedSandwichData = this.state.curriculumSandwiches.map((data, j) => {
-      if (j === index) {
-        console.log("updated %s", index);
-        return newData;
-      } else {
-        return data;
-      }
-    });
-
-    this.setState({ curriculumSandwiches: updatedSandwichData });
+    // Since we are actually modifying the state with thsi operation
+    // We use the reducer-y setState() interface
+    this.setState(setElementInCurriculumSandwiches(index, newData));
   }
 
   render() {
@@ -105,6 +112,11 @@ class App extends React.Component {
 
             <Route path="/builder">
               <BuildYourOwn />
+            </Route>
+
+
+            <Route path="/presets">
+              <PresetCurricula />
             </Route>
 
             <Route path="/all">
