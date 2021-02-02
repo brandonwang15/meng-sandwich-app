@@ -14,7 +14,7 @@ class AllModules extends React.Component {
         return (
             <DndProvider backend={HTML5Backend}>
                 <>
-                    <div class="Page-title">
+                    <div className="Page-title">
                         <h1>Browse All Sandwiches</h1>
                     </div>
                     <div>

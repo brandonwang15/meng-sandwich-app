@@ -12,9 +12,6 @@ class FilterableSandwichContainer extends React.Component {
         this.state = {
             sandwichIndicesToShow: [...Array(this.props.sandwichData.all_modules.length).keys()], // indices into sandwichData, indicating which sandwiches should be displayed
         };
-
-        
-
     }
 
     isSandwichMatching(data, searchText) {
@@ -65,20 +62,19 @@ class FilterableSandwichContainer extends React.Component {
         if (this.props.draggableMode) {
             return (
                 <>
-                    <div class="container">
-                        <div class="row">
-                            <div class="col-sm-2">
+                    <div className="container">
+                        <div className="row">
+                            <div className="col-sm-2">
                                 Filter:
                             </div>
-                            <div class="col-sm-8">
-                                <input id="searchField" type="text" class="form-control" placeholder="Add search terms!" onChange={this.onFilterTextChanged}/>
+                            <div className="col-sm-8">
+                                <input id="searchField" type="text" className="form-control" placeholder="Add search terms!" onChange={this.onFilterTextChanged}/>
                             </div>
                         </div>
     
                         {filteredModules.map((module) => {
-                            let sandwichDiv = <div class="col-sm">
+                            let sandwichDiv = <div className="col-sm" key={module.uid}>
                                     <DraggableSandwich
-                                        key={module.uid}
                                         data={module}
                                         canDrag={!this.props.isSandwichDraggable(module.uid)}
                                     />
@@ -94,21 +90,20 @@ class FilterableSandwichContainer extends React.Component {
         } else {
             return (
                 <>
-                    <div class="container">
-                        <div class="row">
-                            <div class="col-sm-2">
+                    <div className="container">
+                        <div className="row">
+                            <div className="col-sm-2">
                                 Filter:
                             </div>
-                            <div class="col-sm-8">
-                                <input id="searchField" type="text" class="form-control" placeholder="Add search terms!" onChange={this.onFilterTextChanged}/>
+                            <div className="col-sm-8">
+                                <input id="searchField" type="text" className="form-control" placeholder="Add search terms!" onChange={this.onFilterTextChanged}/>
                             </div>
                         </div>
     
                         {filteredModules.map((module) =>
-                            <div class="row">
-                                <div class="col-sm">
+                            <div key={module.uid} className="row">
+                                <div className="col-sm">
                                     <Sandwich
-                                        key={module.uid}
                                         data={module}
                                     />
                                 </div>

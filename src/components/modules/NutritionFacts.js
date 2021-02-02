@@ -28,75 +28,75 @@ class NutritionFacts extends React.Component {
         });
 
 
-        return (<div class="container border border-nutrition-outline">
-            <div class="row border-bottom border-nutrition-hr-thick">
-                <div class="col-sm border-bottom">
+        return (<div className="container border border-nutrition-outline">
+            <div className="row border-bottom border-nutrition-hr-thick">
+                <div className="col-sm border-bottom">
                     <h3>Nutrition Facts</h3>
                 </div>
             </div>
-            <div class="row border-bottom border-nutrition-hr-med">
-                <div class="col-9">
+            <div className="row border-bottom border-nutrition-hr-med">
+                <div className="col-9">
                     # of modules:
                 </div>
-                <div class="col-3">
+                <div className="col-3">
                     {numSandwiches}
                 </div>
             </div>
-            <div class="row border-bottom border-nutrition-hr-thin text-left">
-                <div class="col-12">
+            <div className="row border-bottom border-nutrition-hr-thin text-left">
+                <div className="col-12">
                     Tags covered:
                 </div>
-                <div class="col-12" style={{"font-size": "12px"}}>
+                <div className="col-12" style={{"fontSize": "12px"}}>
                     <em>
                         {this.getCoveredTags(this.props.sandwichData).join(', ')}
                     </em>
                 </div>
             </div>
-            <div class="row border-bottom border-nutrition-hr-thin text-left">
-                <div class="col-9">
+            <div className="row border-bottom border-nutrition-hr-thin text-left">
+                <div className="col-9">
                     Artificial Intelligence
                 </div>
-                <div class="col-3">
+                <div className="col-3">
                     75%
                 </div>
             </div>
-            <div class="row border-bottom border-nutrition-hr-thin text-left">
-                <div class="col-9">
+            <div className="row border-bottom border-nutrition-hr-thin text-left">
+                <div className="col-9">
                     Computational Thinking
                 </div>
-                <div class="col-3">
+                <div className="col-3">
                     90%
                 </div>
             </div>
-            <div class="row border-bottom border-nutrition-hr-med text-left">
-                <div class="col-9">
+            <div className="row border-bottom border-nutrition-hr-med text-left">
+                <div className="col-9">
                     Design Thinking
                 </div>
-                <div class="col-3">
+                <div className="col-3">
                     50%
                 </div>
             </div>
-            <div class="row border-bottom border-nutrition-hr-thin text-left small-text">
-                <div class="col-9">
+            <div className="row border-bottom border-nutrition-hr-thin text-left small-text">
+                <div className="col-9">
                     Creativity
                 </div>
-                <div class="col-3">
+                <div className="col-3">
                     Yes
                 </div>
             </div>
-            <div class="row border-bottom border-nutrition-hr-thin text-left small-text">
-                <div class="col-9">
+            <div className="row border-bottom border-nutrition-hr-thin text-left small-text">
+                <div className="col-9">
                     Collaboration
                 </div>
-                <div class="col-3">
+                <div className="col-3">
                     Yes
                 </div>
             </div>
-            <div class="row border-nutrition-hr-thin text-left small-text">
-                <div class="col-9">
+            <div className="row border-nutrition-hr-thin text-left small-text">
+                <div className="col-9">
                     Reflection
                 </div>
-                <div class="col-3">
+                <div className="col-3">
                     Yes
                 </div>
             </div>
@@ -106,7 +106,7 @@ class NutritionFacts extends React.Component {
 }
 
 NutritionFacts.propTypes = {
-    sandwichData: PropTypes.object.isRequired,
+    sandwichData: PropTypes.array.isRequired,
 }
 
 export default NutritionFacts;

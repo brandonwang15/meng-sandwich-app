@@ -133,7 +133,7 @@ class App extends React.Component {
             }
 
             <Route path="/">
-              <h1 class="Page-title">404 - Page not found!</h1>
+              <h1 className="Page-title">404 - Page not found!</h1>
             </Route>
 
           </Switch>

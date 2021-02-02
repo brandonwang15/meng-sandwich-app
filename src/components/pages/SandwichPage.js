@@ -9,40 +9,40 @@ class SandwichPage extends React.Component {
     render() {
 
         return (
-            <div class="container">
-                <div class="row Page-title">
-                    <div class="col-sm">
+            <div className="container">
+                <div className="row Page-title">
+                    <div className="col-sm">
                         <h1>{this.props.sandwich.title}</h1>
                     </div>
                 </div>
-                <div class="row">
-                    <div class="col-9 text-left">
-                        <div class="row">
+                <div className="row">
+                    <div className="col-9 text-left">
+                        <div className="row">
                             Tags: {this.props.sandwich.tags.join(", ")}
                         </div>
-                        <div class="row">
+                        <div className="row">
                             Blurb: {this.props.sandwich.short_description}
                         </div>
-                        <div class="row">
+                        <div className="row">
                             Grade versions:
                         </div>
-                        <div class="row">
+                        <div className="row">
                             Related Modules:
                         </div>
-                        <div class="row text-center">
-                            <div class="col">
+                        <div className="row text-center">
+                            <div className="col">
                                 <h4> Resources:</h4>
-                                {this.props.sandwich.resources.map((resource) => <div class="container">
-                                    <a href={process.env.PUBLIC_URL + resource.url}>{resource.text}</a>
+                                {this.props.sandwich.resources.map((resource, index) => <div className="container">
+                                    <a key={index} href={process.env.PUBLIC_URL + resource.url}>{resource.text}</a>
                                 </div>)}
-                                <div class="container">
-                                    <a href={process.env.PUBLIC_URL + "/sandwich/" + this.props.sandwich.uid + "/sandwich-" + this.props.sandwich.uid + ".zip"} class="btn btn-info" role="button">.ZIP File</a>
+                                <div className="container">
+                                    <a href={process.env.PUBLIC_URL + "/sandwich/" + this.props.sandwich.uid + "/sandwich-" + this.props.sandwich.uid + ".zip"} className="btn btn-info" role="button">.ZIP File</a>
                                 </div>
                             </div>
                         </div>
                     </div>
 
-                    <div class="col-3">
+                    <div className="col-3">
                         <NutritionFacts sandwichData={[this.props.sandwich]} />
                     </div>
                 </div>

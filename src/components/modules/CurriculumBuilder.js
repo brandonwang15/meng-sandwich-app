@@ -17,30 +17,29 @@ class CurriculumBuilder extends React.Component {
         const holderList = []
         for (let i = 0; i < this.props.numSlots; i++) {
             holderList.push(
-                <div class="col-sm">
+                <div className="col-sm" key={i}>
                     <SandwichHolder
-                        key={i}
                         index={i}/>
                 </div>)
         }
 
         return (
             <>
-                <div class="row">
-                    <div class="col">
+                <div className="row">
+                    <div className="col">
                     </div>
                 </div>
-                <div class="row">
-                    <div class="col-9">
-                        <div class="row">
+                <div className="row">
+                    <div className="col-9">
+                        <div className="row">
                             {holderList}
                         </div>
                     </div>
-                    <div class="col-3">
+                    <div className="col-3">
                                 <NutritionFacts sandwichData={this.context.curriculumSandwiches} />
                     </div>
                 </div>
-                <button type="button" class="btn btn-danger" value="Clear Curriculum" onClick={this.context.clearUserCurriculum}>
+                <button type="button" className="btn btn-danger" value="Clear Curriculum" onClick={this.context.clearUserCurriculum}>
                     Clear Curriculum
                 </button>
                 <hr />

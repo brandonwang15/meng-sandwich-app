@@ -47,36 +47,35 @@ class PresetCurricula extends React.Component {
 
     render() {
         return (
-            <div class="container">
-                <div class="row Page-title">
-                    <div class="col-sm">
+            <div className="container">
+                <div className="row Page-title">
+                    <div className="col-sm">
                         <h1>Preset Curricula</h1>
                     </div>
                 </div>
                 {curricula_presets.curricula.map((curricula) =>
-                    <>
-                        <div class="row">
+                    <div key={curricula.uid}>
+                        <div className="row">
                             <h3>{curricula.title}</h3>
                             <Link to="/builder">
                                 <button
-                                    class="btn btn-info"
+                                    className="btn btn-info"
                                     onClick={() => {
                                         this.loadPresetCurriculaInUserCurricula(curricula.uid);
                                     }}> Use this! </button>
                             </Link>
                         </div>
-                        <div class="row">
+                        <div className="row">
                             {
                                 curricula.sequence.map((uid) =>
-                                    <div class="col">
+                                    <div key={uid} className="col">
                                         <Sandwich
-                                            key={uid}
                                             data={this.getSandwichData(uid)}
                                         />
                                     </div>)
                             }
                         </div>
-                    </>
+                    </div>
                 )}
             </div>
         )

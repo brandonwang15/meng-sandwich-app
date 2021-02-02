@@ -3,7 +3,7 @@ import "../../styles.css"
 function Home() {
     return (
         <>
-            <h1 class="Page-title">Welcome to the home page</h1>
+            <h1 className="Page-title">Welcome to the home page</h1>
             <div>
                 On this website you'll be able to:
                 <ul>

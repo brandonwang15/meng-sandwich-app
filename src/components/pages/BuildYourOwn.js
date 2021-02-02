@@ -12,11 +12,11 @@ class BuildYourOwn extends React.Component {
         return (
             <DndProvider backend={HTML5Backend}>
                 <>
-                    <div class="col-sm Page-title">
+                    <div className="col-sm Page-title">
                         <h1>Build Your Own Module</h1>
                     </div>
-                    <div class="container">
-                        <div class="row">
+                    <div className="container">
+                        <div className="row">
                         </div>
                         <CurriculumBuilder numSlots="3"/>
                     </div>
