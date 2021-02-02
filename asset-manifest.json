@@ -1,8 +1,8 @@
 {
   "files": {
     "main.css": "/meng-sandwich-app/static/css/main.4e18e04d.chunk.css",
-    "main.js": "/meng-sandwich-app/static/js/main.cb39ccac.chunk.js",
-    "main.js.map": "/meng-sandwich-app/static/js/main.cb39ccac.chunk.js.map",
+    "main.js": "/meng-sandwich-app/static/js/main.3e17fe0a.chunk.js",
+    "main.js.map": "/meng-sandwich-app/static/js/main.3e17fe0a.chunk.js.map",
     "runtime-main.js": "/meng-sandwich-app/static/js/runtime-main.dde30c9a.js",
     "runtime-main.js.map": "/meng-sandwich-app/static/js/runtime-main.dde30c9a.js.map",
     "static/js/2.91bc7492.chunk.js": "/meng-sandwich-app/static/js/2.91bc7492.chunk.js",
@@ -17,6 +17,6 @@
     "static/js/runtime-main.dde30c9a.js",
     "static/js/2.91bc7492.chunk.js",
     "static/css/main.4e18e04d.chunk.css",
-    "static/js/main.cb39ccac.chunk.js"
+    "static/js/main.3e17fe0a.chunk.js"
   ]
 }
