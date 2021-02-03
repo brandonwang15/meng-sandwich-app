@@ -19,6 +19,8 @@ class Navbar extends React.Component {
                         <NavLink to="/presets">Preset Curriculum</NavLink>
                         {' '}|{' '}
                         <NavLink to="/all">All Modules</NavLink>
+                        {' '}|{' '}
+                        <NavLink to="/condiments">All Condiments</NavLink>
                     </ul>
                     </nav>
 

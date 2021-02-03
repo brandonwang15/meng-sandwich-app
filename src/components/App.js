@@ -9,6 +9,7 @@ import PresetCurricula from './pages/PresetCurricula';
 
 import Home from './pages/Home';
 import AllModules from './pages/AllModules';
+import AllCondiments from './pages/AllCondiments';
 import BuildYourOwn from "./pages/BuildYourOwn";
 
 import data from "../data/all_modules";
@@ -122,6 +123,11 @@ class App extends React.Component {
             <Route path="/all">
               <AllModules />
             </Route>
+
+            <Route path="/condiments">
+              <AllCondiments />
+            </Route>
+
 
             {
               // TODO: generate Routes for each module page
