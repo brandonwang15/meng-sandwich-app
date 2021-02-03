@@ -6,25 +6,34 @@ import {
     NavLink
 } from "react-router-dom";
 
+import data from '../../data/all_condiments';
 
 import PropTypes from 'prop-types';
 
 class CondimentCard extends React.Component {
     render() {
+        let condimentData = {};
+
+        data.condiments.forEach((value) => {
+            if (value.uid === this.props.uid) {
+                condimentData = value;
+            }
+        });
+
         return (
             <div className="Condiment-container" >
-                <h3>{this.props.data.title}</h3>
-                <p><em>{this.props.data.short_description}</em></p>
-                <p>Tags: {this.props.data.tags.toString()}</p>
-                <NavLink to={"/condiment/"+this.props.data.uid}>See More</NavLink>
-                <p>UID: {this.props.data.uid}</p>
+                <b>{condimentData.title}</b>
+                <p><em>{condimentData.short_description}</em></p>
+                <p>Tags: {condimentData.tags.toString()}</p>
+                <NavLink to={"/condiment/"+condimentData.uid}>See More</NavLink>
+                <p>UID: {condimentData.uid}</p>
             </div>
         )
     }
 }
 
 CondimentCard.propTypes = {
-    data: PropTypes.object.isRequired,
+    uid: PropTypes.number.isRequired,
 }
 
 export default CondimentCard;

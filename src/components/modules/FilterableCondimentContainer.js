@@ -77,7 +77,7 @@ class FilterableCondimentContainer extends React.Component {
                     {filteredModules.map((module) =>
                         <div key={module.uid} className="row">
                             <div className="col-sm">
-                                <CondimentCard data={module}/>
+                                <CondimentCard uid={module.uid}/>
                             </div>
                         </div>
                     )}

@@ -18,7 +18,8 @@ var data = {
                     "url": "/sandwich/1/test.pdf",
                     "text": "Here's a PDF!",
                 }
-            ]
+            ],
+            "suggested_condiments": [1,2],
         },
         {
             "uid": 2,
@@ -29,6 +30,8 @@ var data = {
                 "Teachable Machines"
             ],
             "resources": [],
+            "suggested_condiments": [2],
+
         },
         {
             "uid": 3,
@@ -39,6 +42,7 @@ var data = {
                 "human skills"
             ],
             "resources": [],
+            "suggested_condiments": [1,3],
         },
         {
             "uid": 4,
@@ -47,6 +51,7 @@ var data = {
                 "AI"
             ],
             "resources": [],
+            "suggested_condiments": [1],
         },
         {
             "uid": 5,
@@ -65,6 +70,7 @@ var data = {
                 "human skills"
             ],
             "resources": [],
+            "suggested_condiments": [3],
         },
         {
             "uid": 7,
