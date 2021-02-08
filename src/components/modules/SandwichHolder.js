@@ -39,7 +39,7 @@ class SandwichHolder extends React.Component {
                         cursor: 'move',
                     }}
                 >
-                    <h1>#{this.props.index}</h1>
+                    <h5>#{this.props.index + 1}</h5>
                     <h3>{heldSandwich.title}</h3>
                     <p>UID: {heldSandwich.uid}</p>
                     <p>Tags: <em>{heldSandwich.tags.toString()}</em></p>

@@ -68,7 +68,7 @@ class PresetCurricula extends React.Component {
                         <div className="row">
                             {
                                 curricula.sequence.map((uid) =>
-                                    <div key={uid} className="col">
+                                    <div key={uid} className="col-sm-4">
                                         <Sandwich
                                             data={this.getSandwichData(uid)}
                                         />

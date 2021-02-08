@@ -1,8 +1,9 @@
 .Draggable-sandwich-container {
     border-radius: 15px;
     border:1px solid black;
-    margin-left: 10%;
-    margin-right: 10%;
+    margin: 10px;
+    padding: 20px;
+    height: auto;
 }
 
 .enabled {

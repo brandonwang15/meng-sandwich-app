@@ -40,9 +40,9 @@ class FilterableCondimentContainer extends React.Component {
         console.log("searchText: %s", searchText)
         if (searchText.trim() === "") {
             console.log("show all");
-         
-            newIndicesToShow = [...Array(this.props.data.condiments.length).keys()]; 
-            this.setState({indicesToShow: newIndicesToShow});
+
+            newIndicesToShow = [...Array(this.props.data.condiments.length).keys()];
+            this.setState({ indicesToShow: newIndicesToShow });
             return;
         }
 
@@ -53,7 +53,7 @@ class FilterableCondimentContainer extends React.Component {
             }
         });
 
-        this.setState({indicesToShow: newIndicesToShow});
+        this.setState({ indicesToShow: newIndicesToShow });
     }
 
     render() {
@@ -61,7 +61,7 @@ class FilterableCondimentContainer extends React.Component {
             return this.state.indicesToShow.includes(index);
         });
 
-       
+
         return (
             <>
                 <div className="container">
@@ -70,17 +70,18 @@ class FilterableCondimentContainer extends React.Component {
                             Filter:
                         </div>
                         <div className="col-sm-8">
-                            <input id="searchField" type="text" className="form-control" placeholder="Add search terms!" onChange={this.onFilterTextChanged}/>
+                            <input id="searchField" type="text" className="form-control" placeholder="Add search terms!" onChange={this.onFilterTextChanged} />
                         </div>
                     </div>
-
-                    {filteredModules.map((module) =>
-                        <div key={module.uid} className="row">
-                            <div className="col-sm">
-                                <CondimentCard uid={module.uid}/>
-                            </div>
+                    <div className="container">
+                        <div className="row">
+                            {filteredModules.map((module) =>
+                                <div className="col-sm-4">
+                                    <CondimentCard uid={module.uid} />
+                                </div>
+                            )}
                         </div>
-                    )}
+                    </div>
                 </div>
             </>
         );

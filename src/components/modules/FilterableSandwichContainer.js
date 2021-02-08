@@ -2,6 +2,7 @@ import React, { Component } from "react";
 import DraggableSandwich from "./DraggableSandwich";
 import Sandwich from "./Sandwich";
 import PropTypes from 'prop-types';
+import './FilterableSandwichContainer.css';
 
 class FilterableSandwichContainer extends React.Component {
     constructor(props) {
@@ -38,9 +39,9 @@ class FilterableSandwichContainer extends React.Component {
         console.log("searchText: %s", searchText)
         if (searchText.trim() === "") {
             console.log("show all");
-         
-            newSandwichIndicesToShow = [...Array(this.props.sandwichData.all_modules.length).keys()]; 
-            this.setState({sandwichIndicesToShow: newSandwichIndicesToShow});
+
+            newSandwichIndicesToShow = [...Array(this.props.sandwichData.all_modules.length).keys()];
+            this.setState({ sandwichIndicesToShow: newSandwichIndicesToShow });
             return;
         }
 
@@ -51,7 +52,7 @@ class FilterableSandwichContainer extends React.Component {
             }
         });
 
-        this.setState({sandwichIndicesToShow: newSandwichIndicesToShow});
+        this.setState({ sandwichIndicesToShow: newSandwichIndicesToShow });
     }
 
     render() {
@@ -68,20 +69,24 @@ class FilterableSandwichContainer extends React.Component {
                                 Filter:
                             </div>
                             <div className="col-sm-8">
-                                <input id="searchField" type="text" className="form-control" placeholder="Add search terms!" onChange={this.onFilterTextChanged}/>
+                                <input id="searchField" type="text" className="form-control" placeholder="Add search terms!" onChange={this.onFilterTextChanged} />
                             </div>
                         </div>
-    
-                        {filteredModules.map((module) => {
-                            let sandwichDiv = <div className="col-sm" key={module.uid}>
-                                    <DraggableSandwich
-                                        data={module}
-                                        canDrag={!this.props.isSandwichDraggable(module.uid)}
-                                    />
-                                </div>;
-                                return sandwichDiv;
-                        }
-                        )}
+
+                        <div className="Scrollable-container">
+                            <div className="row">
+                                {filteredModules.map((module) => {
+                                    let sandwichDiv = <div className="col-sm-4" key={module.uid}>
+                                        <DraggableSandwich
+                                            data={module}
+                                            canDrag={!this.props.isSandwichDraggable(module.uid)}
+                                        />
+                                    </div>;
+                                    return sandwichDiv;
+                                }
+                                )}
+                            </div>
+                        </div>
                     </div>
                 </>
             )
@@ -96,19 +101,20 @@ class FilterableSandwichContainer extends React.Component {
                                 Filter:
                             </div>
                             <div className="col-sm-8">
-                                <input id="searchField" type="text" className="form-control" placeholder="Add search terms!" onChange={this.onFilterTextChanged}/>
+                                <input id="searchField" type="text" className="form-control" placeholder="Add search terms!" onChange={this.onFilterTextChanged} />
                             </div>
                         </div>
-    
-                        {filteredModules.map((module) =>
+                        <div className="container">
                             <div key={module.uid} className="row">
-                                <div className="col-sm">
-                                    <Sandwich
-                                        data={module}
-                                    />
-                                </div>
+                                {filteredModules.map((module) =>
+                                    <div className="col-sm-4">
+                                        <Sandwich
+                                            data={module}
+                                        />
+                                    </div>
+                                )}
                             </div>
-                        )}
+                        </div>
                     </div>
                 </>
             )
