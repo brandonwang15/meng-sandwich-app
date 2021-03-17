@@ -11,13 +11,40 @@ class FilterableSandwichContainer extends React.Component {
 
         this.onFilterTextChanged = this.onFilterTextChanged.bind(this);
         this.onStarButtonClicked = this.onStarButtonClicked.bind(this);
-        this.updateTextFiltering = this.updateTextFiltering.bind(this);
+        this.getVisibleSandwichIndices = this.getVisibleSandwichIndices.bind(this);
 
         this.state = {
-            sandwichIndicesToShow: [...Array(this.props.sandwichData.all_modules.length).keys()], // indices into sandwichData, indicating which sandwiches should be displayed
             starFilter: false,
             filterText: "",
         };
+    }
+
+    getVisibleSandwichIndices() {
+        let newSandwichIndicesToShow = []
+
+        // Apply filterText filter
+        console.log("filterText: %s", this.state.filterText)
+        if (this.state.filterText.trim() === "") {
+            console.log("show all");
+
+            newSandwichIndicesToShow = [...Array(this.props.sandwichData.all_modules.length).keys()];
+        } else {
+            this.props.sandwichData.all_modules.forEach((value, index) => {    
+                if (this.isSandwichMatching(value, this.state.filterText)) {
+                    newSandwichIndicesToShow.push(index);
+                }
+            });
+        }
+
+        // Apply star filter
+        newSandwichIndicesToShow = newSandwichIndicesToShow.filter((index) => {
+            let uid = this.props.sandwichData.all_modules[index].uid
+            let passesStarFilter = (!this.state.starFilter || this.context.isSandwichStarred(uid))
+
+            return passesStarFilter
+        })
+
+        return newSandwichIndicesToShow
     }
 
     isSandwichMatching(data, searchText) {
@@ -36,62 +63,26 @@ class FilterableSandwichContainer extends React.Component {
         return false;
     }
 
-    updateTextFiltering(starFilter, searchText) {
-        let newSandwichIndicesToShow = []
-
-        console.log("starFilter: ", starFilter)
-
-        // Apply searchText filter
-        console.log("searchText: %s", searchText)
-        if (searchText.trim() === "") {
-            console.log("show all");
-
-            newSandwichIndicesToShow = [...Array(this.props.sandwichData.all_modules.length).keys()];
-        } else {
-            this.props.sandwichData.all_modules.forEach((value, index) => {    
-                if (this.isSandwichMatching(value, searchText)) {
-                    newSandwichIndicesToShow.push(index);
-                }
-            });
-        }
-
-        // Apply star filter
-        newSandwichIndicesToShow = newSandwichIndicesToShow.filter((index) => {
-            let uid = this.props.sandwichData.all_modules[index].uid
-            let passesStarFilter = (!starFilter || this.context.isSandwichStarred(uid))
-
-            return passesStarFilter
-        })
-
-
-
-
-        this.setState({ 
-            starFilter: starFilter,
-            filterText: searchText,
-            sandwichIndicesToShow: newSandwichIndicesToShow 
-        });
-    }
-
     onStarButtonClicked() {
-        this.updateTextFiltering(!this.state.starFilter, this.state.filterText)
+        this.setState({ 
+            starFilter: !this.state.starFilter,
+        });
+
     }
 
     onFilterTextChanged(e) {
         const searchText = e.target.value;
-        this.updateTextFiltering(this.state.starFilter, searchText)
-    
+        this.setState({
+            filterText: searchText,
+        })
     }
 
     render() {
-        let filteredModules = this.props.sandwichData.all_modules.filter((value, index) => {
-            return this.state.sandwichIndicesToShow.includes(index);
-        });
+        let indicesToShow = this.getVisibleSandwichIndices()
 
-        // TODO: if we ever add a StarButton to the cards on this page, we need to do extra work to make sure
-        // this.state.sandwichIndiciesToShow is updated when that changes.
-        // The context update will only cause render() to be called again, but render does not currently force
-        // a recalculation of this.state.sandwichIndiciesToShow
+        let filteredModules = this.props.sandwichData.all_modules.filter((value, index) => {
+            return indicesToShow.includes(index);
+        });
 
         if (this.props.draggableMode) {
             return (

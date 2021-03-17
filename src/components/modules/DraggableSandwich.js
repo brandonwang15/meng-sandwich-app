@@ -40,6 +40,7 @@ function DraggableSandwich(props) {
             <p>UID: {props.data.uid}</p>
             <p>Tags: {props.data.tags.toString()}</p>
             <p><NavLink to={"/sandwich/"+props.data.uid}>See More</NavLink></p>
+            <p><StarButton sandwichUID={props.data.uid}></StarButton></p>
         </div>
     )
 }
