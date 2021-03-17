@@ -10,6 +10,7 @@ import { useDrag } from 'react-dnd';
 import {
     NavLink
 } from "react-router-dom";
+import StarButton from './StarButton';
 
 // Draggable component that displays a 'thumbnail' card for the given sandwich object.
 function DraggableSandwich(props) {
@@ -38,7 +39,7 @@ function DraggableSandwich(props) {
             <h3>{props.data.title}</h3>
             <p>UID: {props.data.uid}</p>
             <p>Tags: {props.data.tags.toString()}</p>
-            <NavLink to={"/sandwich/"+props.data.uid}>See More</NavLink>
+            <p><NavLink to={"/sandwich/"+props.data.uid}>See More</NavLink></p>
         </div>
     )
 }

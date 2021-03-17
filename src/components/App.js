@@ -39,17 +39,53 @@ class App extends React.Component {
     this.deleteSandwichFromUserCurriculum = this.deleteSandwichFromUserCurriculum.bind(this);
     this.updateSandwichInUserCurriculum = this.updateSandwichInUserCurriculum.bind(this);
     this.isSandwichSlotEmpty = this.isSandwichSlotEmpty.bind(this);
+    this.starSandwich = this.starSandwich.bind(this);
+    this.unstarSandwich = this.unstarSandwich.bind(this);
+    this.toggleStarSandwich = this.toggleStarSandwich.bind(this);
+    this.isSandwichStarred = this.isSandwichStarred.bind(this);
 
     // App-wide state propagated via React Context
     this.state = {
       curriculumSlots: 3,
       curriculumSandwiches: [],
+      starredSandwiches: null,
     }
+
+    this.state.starredSandwiches = new Set()
 
     for (let i = 0; i < this.state.curriculumSlots; i++) {
       this.state.curriculumSandwiches.push({});
     }
 
+  }
+
+  isSandwichStarred(uid) {
+    return this.state.starredSandwiches.has(uid)
+  }
+
+  toggleStarSandwich(uid) {
+    if (this.state.starredSandwiches.has(uid)) {
+      this.unstarSandwich(uid)
+    } else {
+      this.starSandwich(uid)
+    }
+  }
+
+  starSandwich(uid) {
+    // this.state.starredSandwiches.add(uid)
+    let newStarredSandwiches = new Set(this.state.starredSandwiches)
+    newStarredSandwiches.add(uid)
+    this.setState({starredSandwiches: newStarredSandwiches})
+    console.log(this.state.starredSandwiches)
+  }
+
+  unstarSandwich(uid) {
+    // this.state.starredSandwiches.delete(uid)
+    let newStarredSandwiches = new Set(this.state.starredSandwiches)
+    newStarredSandwiches.delete(uid)
+    this.setState({starredSandwiches: newStarredSandwiches})
+    // console.log("Unstarring "+uid)
+    console.log(this.state.starredSandwiches)
   }
 
   // Must be careful with how we go about modifying the app-wide state
@@ -99,6 +135,10 @@ class App extends React.Component {
         deleteSandwichFromUserCurriculum: this.deleteSandwichFromUserCurriculum,
         updateSandwichInUserCurriculum: this.updateSandwichInUserCurriculum,
         isSandwichSlotEmpty: this.isSandwichSlotEmpty,
+        starSandwich: this.starSandwich,
+        unstarSandwich: this.unstarSandwich,
+        toggleStarSandwich: this.toggleStarSandwich,
+        isSandwichStarred: this.isSandwichStarred,
       }}>
         <div className="App">
           <header className="App-header">
