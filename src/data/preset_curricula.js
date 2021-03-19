@@ -3,12 +3,14 @@ var curricula_presets = {
     {
         "uid": 1,
         "title": "Preset 1",
-        "sequence": [1,2,3],
+        "sequence": [1],
+        // "sequence": [1,2,3],
     },
     {
         "uid": 2,
         "title": "Preset 2",
-        "sequence": [3,2,5],
+        "sequence": [1],
+        // "sequence": [3,2,5],
     }],
 };
 

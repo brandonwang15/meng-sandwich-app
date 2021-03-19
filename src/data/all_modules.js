@@ -9,6 +9,7 @@ var data = {
                 "Scratch",
                 "plugged"
             ],
+            "numSlots": 3,
             "resources": [
                 {
                     "url": "/sandwich/1/image.png",
@@ -62,67 +63,88 @@ var data = {
                 }
             ]
         },
-        {
-            "uid": 2,
-            "title": "Creativity & AI",
-            "tags": [
-                "algorithms",
-                "Scratch",
-                "Teachable Machines"
-            ],
-            "resources": [],
-            "suggested_condiments": [2],
+        // {
+        //     "uid": 2,
+        //     "title": "Creativity & AI",
+        //     "numSlots": 10,
+        //     "tags": [
+        //         "algorithms",
+        //         "Scratch",
+        //         "Teachable Machines"
+        //     ],
+        //     "resources": [],
+        //     "suggested_condiments": [2],
+        //     "optional_teacher_fillings" : [ // teacher-curated fillings
+        //         {
+        //             "title": "Fine-tuning models",
+        //             "difficulty": "intermediate",
+        //             "ordering": [8, 12],
+        //         },
+        //         {
+        //             "title": "Testing your model",
+        //             "difficulty": "beginner",
+        //         },
+        //         {
+        //             "title": "Bias activity",
+        //             "difficulty": "beginner",
+        //         }
 
-        },
-        {
-            "uid": 3,
-            "title": "Debugging Detective",
-            "tags": [
-                "debugging",
-                "Scratch",
-                "human skills"
-            ],
-            "resources": [],
-            "suggested_condiments": [1,3],
-        },
-        {
-            "uid": 4,
-            "title": "DAILY AI",
-            "tags": [
-                "AI"
-            ],
-            "resources": [],
-            "suggested_condiments": [1],
-        },
-        {
-            "uid": 5,
-            "title": "Design Thinking Bootcamp",
-            "tags": [
-                "human skills"
-            ],
-            "resources": [],
-        },
-        {
-            "uid": 6,
-            "title": "Robot Race",
-            "tags": [
-                "debugging",
-                "Scratch",
-                "human skills"
-            ],
-            "resources": [],
-            "suggested_condiments": [3],
-        },
-        {
-            "uid": 7,
-            "title": "Seafloor Cleanup",
-            "tags": [
-                "debugging",
-                "Scratch",
-                "human skills"
-            ],
-            "resources": [],
-        }
+        //     ],
+        // },
+        // {
+        //     "uid": 3,
+        //     "title": "Debugging Detective",
+        //     "numSlots": 10,
+        //     "tags": [
+        //         "debugging",
+        //         "Scratch",
+        //         "human skills"
+        //     ],
+        //     "resources": [],
+        //     "suggested_condiments": [1,3],
+        // },
+        // {
+        //     "uid": 4,
+        //     "title": "DAILY AI",
+        //     "numSlots": 10,
+        //     "tags": [
+        //         "AI"
+        //     ],
+        //     "resources": [],
+        //     "suggested_condiments": [1],
+        // },
+        // {
+        //     "uid": 5,
+        //     "title": "Design Thinking Bootcamp",
+        //     "numSlots": 10,
+        //     "tags": [
+        //         "human skills"
+        //     ],
+        //     "resources": [],
+        // },
+        // {
+        //     "uid": 6,
+        //     "title": "Robot Race",
+        //     "numSlots": 10,
+        //     "tags": [
+        //         "debugging",
+        //         "Scratch",
+        //         "human skills"
+        //     ],
+        //     "resources": [],
+        //     "suggested_condiments": [3],
+        // },
+        // {
+        //     "uid": 7,
+        //     "title": "Seafloor Cleanup",
+        //     "numSlots": 10,
+        //     "tags": [
+        //         "debugging",
+        //         "Scratch",
+        //         "human skills"
+        //     ],
+        //     "resources": [],
+        // }
     ]
 };
 
