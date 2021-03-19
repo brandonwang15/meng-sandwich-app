@@ -19,20 +19,29 @@ class FillingSlot extends React.Component {
         const heldSandwich = this.context.curriculumSandwiches[this.props.index];
 
         if (this.props.filling == null) {
-            return (<>
-                <div className={"Filling-slot-container "}>
+
+            return connectDropTarget(<div className="Filling-slot-container"
+                style={{
+                    cursor: 'move',
+                }}
+            >
+                <div >
                     EMPTY
                 </div>
-            </>)
+            </div>);
 
         } else {
-            return (<>
-                {/* <div className={"Filling-slot-container "}> */}
-                <div className={"Filling-slot-container " + (this.props.filling.isRequired ? "disabled" : "enabled")}>
-                    {this.props.filling == null ? "EMPTY" : this.props.filling.title}
+            return connectDropTarget(
+                <div className={"Filling-slot-container " + (this.props.filling.isRequired ? "disabled" : "enabled")}
+                    style={{
+                        cursor: 'move',
+                    }}
+                >
+                    <div>
+                        {this.props.filling == null ? "EMPTY" : this.props.filling.title}
+                    </div>
                 </div>
-            </>)
-
+            );
         }
 
 
@@ -78,7 +87,7 @@ const fillingTarget = {
         let data = monitor.getItem();
         console.log("Data: %o", data);
 
-        // TODO:
+        // TODO
         // component.context.updateSandwichInUserCurriculum(props.index, data);
     }
 }
@@ -89,6 +98,6 @@ function collect(connect, monitor) {
     }
 }
 
-export default FillingSlot
+// export default FillingSlot
 
-// export default DropTarget(ItemTypes.FILLING, fillingTarget, collect)(FillingSlot);
+export default DropTarget(ItemTypes.FILLING, fillingTarget, collect)(FillingSlot);

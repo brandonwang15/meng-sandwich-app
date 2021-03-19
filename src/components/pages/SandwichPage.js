@@ -1,6 +1,11 @@
 import "./../../styles.css"
 import React, { Component } from "react";
 
+
+import { DndProvider } from 'react-dnd'
+import { HTML5Backend } from 'react-dnd-html5-backend'
+
+
 import NutritionFacts from "../modules/NutritionFacts";
 import CondimentCard from "../modules/CondimentCard";
 import SandwichFrame from "../modules/sandwich/SandwichFrame";
@@ -10,8 +15,9 @@ import PropTypes from 'prop-types';
 
 class SandwichPage extends React.Component {
     render() {
-
         return (
+            <DndProvider backend={HTML5Backend}>
+            <>
             <div className="container">
                 <div className="row Page-title">
                     <div className="col-sm">
@@ -67,6 +73,8 @@ class SandwichPage extends React.Component {
                 </div>
 
             </div>
+            </>
+            </DndProvider>
         )
     }
 }

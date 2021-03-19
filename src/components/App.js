@@ -93,7 +93,7 @@ class App extends React.Component {
     console.log(this.state.customSandwichData);
   }
 
-
+  
 
   isSandwichStarred(uid) {
     return this.state.starredSandwiches.has(uid)

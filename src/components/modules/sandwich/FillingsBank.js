@@ -17,7 +17,7 @@ class FillingsBank extends React.Component {
         for (let i = 0; i < numOptional; i++) {
             let filling = sandwichObject.optionalFillings[i]
             fillingsList.push(
-                <DraggableFilling key={i} filling={filling} />
+                <DraggableFilling key={i} filling={filling} canDrag={true}/>
             )
         }
 
