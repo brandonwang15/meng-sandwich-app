@@ -19,7 +19,48 @@ var data = {
                     "text": "Here's a PDF!",
                 }
             ],
+            // TODO: think about how to represent fillings. Will they be stored in another file and linked via id?
+            // For now, view these entries as stubs.
+            "required_fillings": [
+                {
+                    "title": "Project Launch",
+                    "type": "top-bun",
+                    "class_num": "1",
+                },
+                {
+                    "title": "Intro to machine perception",
+                    "type": "req-filling",
+                    "class_num": "2",
+                },
+                {
+                    "title": "Client interviews",
+                    "type": "req-filling",
+                    "class_num": "7",
+                }
+            ],
+            "optional_teacher_fillings" : [ // teacher-curated fillings
+                {
+                    "title": "Fine-tuning models",
+                    "difficulty": "intermediate",
+                    "ordering": [8, 12],
+                },
+                {
+                    "title": "Testing your model",
+                    "difficulty": "beginner",
+                },
+                {
+                    "title": "Bias activity",
+                    "difficulty": "beginner",
+                }
+
+            ],
             "suggested_condiments": [1,2],
+            "example_student_projects": [
+                {
+                    "title": "Example Student Project 1",
+                    "url": "/studentproject/1"
+                }
+            ]
         },
         {
             "uid": 2,
