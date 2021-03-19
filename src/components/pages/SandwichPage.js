@@ -3,6 +3,8 @@ import React, { Component } from "react";
 
 import NutritionFacts from "../modules/NutritionFacts";
 import CondimentCard from "../modules/CondimentCard";
+import SandwichFrame from "../modules/sandwich/SandwichFrame";
+import FillingsBank from "../modules/sandwich/FillingsBank";
 
 import PropTypes from 'prop-types';
 
@@ -16,6 +18,15 @@ class SandwichPage extends React.Component {
                         <h1>{this.props.sandwich.title}</h1>
                     </div>
                 </div>
+                <div className="row">
+                    <div className="col-6">
+                        <FillingsBank numLayers="5"></FillingsBank>
+                    </div>
+                    <div className="col-6">
+                        <SandwichFrame numLayers={10}/>
+                    </div>
+                </div>
+                <hr/>
                 <div className="row">
                     <div className="col-9 text-left">
                         <div className="row">
