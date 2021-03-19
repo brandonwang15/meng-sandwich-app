@@ -10,16 +10,21 @@ class FillingsBank extends React.Component {
     render() {
         let fillingsList = []
 
-        for (let i = 0; i < this.props.numLayers; i++) {
+        console.log(this.props.sandwichUID)
+        let sandwichObject = this.context.customSandwichData[this.props.sandwichUID];
+        let numOptional = sandwichObject.optionalFillings.length;
+
+        for (let i = 0; i < numOptional; i++) {
+            let filling = sandwichObject.optionalFillings[i]
             fillingsList.push(
-                <DraggableFilling key={i}/>
+                <DraggableFilling key={i} filling={filling} />
             )
         }
 
         return (
             <>
-            Fillings Bank
-            {fillingsList}
+                Fillings Bank
+                {fillingsList}
             </>
         )
     }
@@ -27,7 +32,7 @@ class FillingsBank extends React.Component {
 }
 
 FillingsBank.propTypes = {
-    // numLayers: PropTypes.number.isRequired,
+    sandwichUID: PropTypes.number.isRequired,
 }
 
 FillingsBank.contextType = AppContext;

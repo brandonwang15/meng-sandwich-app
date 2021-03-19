@@ -17,12 +17,24 @@ class FillingSlot extends React.Component {
         const { connectDropTarget } = this.props;
 
         const heldSandwich = this.context.curriculumSandwiches[this.props.index];
-       
-        return (<>
-        <div className="Filling-slot-container">
-            FILLING SLOT
-        </div>
-        </>)
+
+        if (this.props.filling == null) {
+            return (<>
+                <div className={"Filling-slot-container "}>
+                    EMPTY
+                </div>
+            </>)
+
+        } else {
+            return (<>
+                {/* <div className={"Filling-slot-container "}> */}
+                <div className={"Filling-slot-container " + (this.props.filling.isRequired ? "disabled" : "enabled")}>
+                    {this.props.filling == null ? "EMPTY" : this.props.filling.title}
+                </div>
+            </>)
+
+        }
+
 
         // if (this.context.isSandwichSlotEmpty(this.props.index)) {
         //     return connectDropTarget(<div className="Sandwich-holder-empty"

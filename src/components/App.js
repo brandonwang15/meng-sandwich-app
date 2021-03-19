@@ -15,10 +15,13 @@ import BuildYourOwn from "./pages/BuildYourOwn";
 import data from "../data/all_modules";
 import AppContext from "./context/app_context";
 
+import { CustomSandwichData, SandwichFillingData } from '../misc/SandwichObjects';
+
 import {
   Route,
   Switch,
 } from "react-router-dom";
+import Sandwich from './modules/Sandwich';
 
 const EMPTY_SANDWICH_DATA = {};
 
@@ -26,10 +29,11 @@ function setElementInCurriculumSandwiches(index, newValue) {
   return (previousState, currentProps) => {
     let newCurriculumSandwiches = previousState.curriculumSandwiches;
     newCurriculumSandwiches[index] = newValue;
-    return { ... previousState, curriculumSandwiches: newCurriculumSandwiches};
+    return { ...previousState, curriculumSandwiches: newCurriculumSandwiches };
   }
 }
 
+// TODO: refactor context stuff here
 class App extends React.Component {
   constructor(props) {
     super(props);
@@ -44,11 +48,14 @@ class App extends React.Component {
     this.toggleStarSandwich = this.toggleStarSandwich.bind(this);
     this.isSandwichStarred = this.isSandwichStarred.bind(this);
 
+    // filling related state stored in context
+
     // App-wide state propagated via React Context
     this.state = {
       curriculumSlots: 3,
       curriculumSandwiches: [],
       starredSandwiches: null,
+      customSandwichData: {}
     }
 
     this.state.starredSandwiches = new Set()
@@ -57,7 +64,36 @@ class App extends React.Component {
       this.state.curriculumSandwiches.push({});
     }
 
+    // Initialize sandwich data from presets
+    data.all_modules.forEach((value) => {
+      let optionalFillings;
+      
+      if ("optional_teacher_fillings" in value) {
+        optionalFillings = value.optional_teacher_fillings.map((value) => {
+          return new SandwichFillingData(value.title, false, -1);
+        });
+      } else {
+        optionalFillings = [];
+      }
+
+      let requiredFillings;
+      if ("required_fillings" in value) {
+        requiredFillings = value.required_fillings.map((value) => {
+          // class_num is one-indexed, SandwichFillingData.index is zero-indexed
+          return new SandwichFillingData(value.title, true, value.class_num-1);
+        });
+      } else {
+        requiredFillings = [];
+      } 
+
+      let sandwich = new CustomSandwichData(value.title, value.numSlots, requiredFillings, optionalFillings);
+      this.state.customSandwichData[value.uid] = sandwich;
+    })
+
+    console.log(this.state.customSandwichData);
   }
+
+
 
   isSandwichStarred(uid) {
     return this.state.starredSandwiches.has(uid)
@@ -75,7 +111,7 @@ class App extends React.Component {
     // this.state.starredSandwiches.add(uid)
     let newStarredSandwiches = new Set(this.state.starredSandwiches)
     newStarredSandwiches.add(uid)
-    this.setState({starredSandwiches: newStarredSandwiches})
+    this.setState({ starredSandwiches: newStarredSandwiches })
     console.log(this.state.starredSandwiches)
   }
 
@@ -83,7 +119,7 @@ class App extends React.Component {
     // this.state.starredSandwiches.delete(uid)
     let newStarredSandwiches = new Set(this.state.starredSandwiches)
     newStarredSandwiches.delete(uid)
-    this.setState({starredSandwiches: newStarredSandwiches})
+    this.setState({ starredSandwiches: newStarredSandwiches })
     // console.log("Unstarring "+uid)
     console.log(this.state.starredSandwiches)
   }
@@ -139,6 +175,7 @@ class App extends React.Component {
         unstarSandwich: this.unstarSandwich,
         toggleStarSandwich: this.toggleStarSandwich,
         isSandwichStarred: this.isSandwichStarred,
+        customSandwichData: this.state.customSandwichData,
       }}>
         <div className="App">
           <header className="App-header">

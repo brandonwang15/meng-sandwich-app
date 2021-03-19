@@ -40,13 +40,13 @@ function DraggableFilling(props) {
 
     return (
         <div className="Draggable-filling-container">
-            DRAGGABLE FILLING
+            <h1>{props.filling.title}</h1>
         </div>
     )
 }
 
 DraggableFilling.propTypes = {
-    // data: PropTypes.object.isRequired,
+    filling: PropTypes.object.isRequired,
     // canDrag: PropTypes.bool.isRequired,
 }
 {/* 

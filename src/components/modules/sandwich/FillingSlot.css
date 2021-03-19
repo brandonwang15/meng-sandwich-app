@@ -11,6 +11,7 @@
 }
 
 .disabled {
-    color: gray;
+    color: black;
+    border:3px dotted black;
     background-color: lightblue;
 }

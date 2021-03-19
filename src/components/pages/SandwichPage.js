@@ -20,10 +20,10 @@ class SandwichPage extends React.Component {
                 </div>
                 <div className="row">
                     <div className="col-6">
-                        <FillingsBank numLayers="5"></FillingsBank>
+                        <FillingsBank sandwichUID={this.props.sandwich.uid}></FillingsBank>
                     </div>
                     <div className="col-6">
-                        <SandwichFrame numLayers={10}/>
+                        <SandwichFrame sandwichUID={this.props.sandwich.uid}/>
                     </div>
                 </div>
                 <hr/>
