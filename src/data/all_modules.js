@@ -9,7 +9,7 @@ var data = {
                 "Scratch",
                 "plugged"
             ],
-            "numSlots": 3,
+            "numSlots": 7,
             "resources": [
                 {
                     "url": "/sandwich/1/image.png",

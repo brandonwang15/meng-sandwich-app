@@ -1,4 +1,5 @@
 import React, { Component } from "react";
+import { connect } from 'react-redux'
 import PropTypes from 'prop-types';
 
 import AppContext from "../../context/app_context";
@@ -8,16 +9,17 @@ import DraggableFilling from "./DraggableFilling";
 
 class FillingsBank extends React.Component {
     render() {
+        console.log("fillingsBank: ", this.props.optionalFillings);
+
         let fillingsList = []
 
         console.log(this.props.sandwichUID)
-        let sandwichObject = this.context.customSandwichData[this.props.sandwichUID];
-        let numOptional = sandwichObject.optionalFillings.length;
+        let numOptional = this.props.optionalFillings.length;
 
         for (let i = 0; i < numOptional; i++) {
-            let filling = sandwichObject.optionalFillings[i]
+            let filling = this.props.optionalFillings[i]
             fillingsList.push(
-                <DraggableFilling key={i} filling={filling} canDrag={true}/>
+                <DraggableFilling key={i} filling={filling} canDrag={true} />
             )
         }
 
@@ -31,10 +33,15 @@ class FillingsBank extends React.Component {
 
 }
 
+function mapStateToProps(state, ownProps) {
+    let thisSandwichData = state.sandwiches[ownProps.sandwichUID]
+    return { optionalFillings: thisSandwichData.optionalFillings }
+}
+
 FillingsBank.propTypes = {
     sandwichUID: PropTypes.number.isRequired,
 }
 
 FillingsBank.contextType = AppContext;
 
-export default FillingsBank;
+export default connect(mapStateToProps)(FillingsBank);

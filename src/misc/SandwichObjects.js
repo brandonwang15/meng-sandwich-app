@@ -4,6 +4,7 @@ export class CustomSandwichData {
     this.numSlots = numSlots;
     this.requiredFillings = requiredFillings;
     this.optionalFillings = optionalFillings;
+    this.contents = {}
   }
 }
 

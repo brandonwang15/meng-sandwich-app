@@ -1,5 +1,9 @@
 import React, { Component, useState } from 'react';
 
+import { connect } from 'react-redux'
+import { setFilling } from '../../../actions'
+
+
 import './FillingSlot.css';
 
 import PropTypes from 'prop-types';
@@ -10,15 +14,14 @@ import { DropTarget } from 'react-dnd';
 
 import AppContext from "../../context/app_context";
 
+import store from '../../../store'
+
 class FillingSlot extends React.Component {
     render() {
-
         // Grab the props injected by React DnD
         const { connectDropTarget } = this.props;
 
-        const heldSandwich = this.context.curriculumSandwiches[this.props.index];
-
-        if (this.props.filling == null) {
+        if (this.props.fillingObject == null) {
 
             return connectDropTarget(<div className="Filling-slot-container"
                 style={{
@@ -32,13 +35,13 @@ class FillingSlot extends React.Component {
 
         } else {
             return connectDropTarget(
-                <div className={"Filling-slot-container " + (this.props.filling.isRequired ? "disabled" : "enabled")}
+                <div className={"Filling-slot-container " + (this.props.fillingObject.isRequired ? "disabled" : "enabled")}
                     style={{
                         cursor: 'move',
                     }}
                 >
                     <div>
-                        {this.props.filling == null ? "EMPTY" : this.props.filling.title}
+                        {this.props.fillingObject.title}
                     </div>
                 </div>
             );
@@ -74,7 +77,7 @@ class FillingSlot extends React.Component {
 }
 
 FillingSlot.propTypes = {
-    // index: PropTypes.number.isRequired,
+    sandwichUID: PropTypes.number.isRequired,
 }
 
 FillingSlot.contextType = AppContext;
@@ -89,6 +92,8 @@ const fillingTarget = {
 
         // TODO
         // component.context.updateSandwichInUserCurriculum(props.index, data);
+        console.log("props.fillingIndex ", props.fillingIndex);
+        store.dispatch(setFilling(props.sandwichUID, props.fillingIndex, data));
     }
 }
 
@@ -98,6 +103,13 @@ function collect(connect, monitor) {
     }
 }
 
+function mapStateToProps(state, props) {
+    let thisSandwich = state.sandwiches[props.sandwichUID];
+    let thisFilling = thisSandwich.contents[props.fillingIndex];
+    console.log("FillingSlot.mapStateToProps() called");
+    return {fillingObject: thisFilling};
+}
+
 // export default FillingSlot
 
-export default DropTarget(ItemTypes.FILLING, fillingTarget, collect)(FillingSlot);
+export default connect(mapStateToProps)(DropTarget(ItemTypes.FILLING, fillingTarget, collect)(FillingSlot));

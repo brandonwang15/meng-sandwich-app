@@ -14,6 +14,8 @@ import BuildYourOwn from "./pages/BuildYourOwn";
 
 import data from "../data/all_modules";
 import AppContext from "./context/app_context";
+import { Provider } from 'react-redux'
+import store from '../store'
 
 import { CustomSandwichData, SandwichFillingData } from '../misc/SandwichObjects';
 
@@ -21,7 +23,6 @@ import {
   Route,
   Switch,
 } from "react-router-dom";
-import Sandwich from './modules/Sandwich';
 
 const EMPTY_SANDWICH_DATA = {};
 
@@ -32,6 +33,7 @@ function setElementInCurriculumSandwiches(index, newValue) {
     return { ...previousState, curriculumSandwiches: newCurriculumSandwiches };
   }
 }
+
 
 // TODO: refactor context stuff here
 class App extends React.Component {
@@ -67,7 +69,7 @@ class App extends React.Component {
     // Initialize sandwich data from presets
     data.all_modules.forEach((value) => {
       let optionalFillings;
-      
+
       if ("optional_teacher_fillings" in value) {
         optionalFillings = value.optional_teacher_fillings.map((value) => {
           return new SandwichFillingData(value.title, false, -1);
@@ -80,20 +82,22 @@ class App extends React.Component {
       if ("required_fillings" in value) {
         requiredFillings = value.required_fillings.map((value) => {
           // class_num is one-indexed, SandwichFillingData.index is zero-indexed
-          return new SandwichFillingData(value.title, true, value.class_num-1);
+          return new SandwichFillingData(value.title, true, value.class_num - 1);
         });
       } else {
         requiredFillings = [];
-      } 
+      }
 
       let sandwich = new CustomSandwichData(value.title, value.numSlots, requiredFillings, optionalFillings);
       this.state.customSandwichData[value.uid] = sandwich;
     })
 
-    console.log(this.state.customSandwichData);
+    console.log("Initial Redux store state: ", store.getState());
   }
 
-  
+  updateFillingForSandwich(sandwichUID, fillingIndex, newValue) {
+
+  }
 
   isSandwichStarred(uid) {
     return this.state.starredSandwiches.has(uid)
@@ -163,65 +167,67 @@ class App extends React.Component {
 
   render() {
     return (
-      <AppContext.Provider value={{
-        curriculumSlots: this.state.curriculumSlots,
-        curriculumSandwiches: this.state.curriculumSandwiches,
-        clearUserCurriculum: this.clearUserCurriculum,
-        isSandwichInUserCurriculum: this.isSandwichInUserCurriculum,
-        deleteSandwichFromUserCurriculum: this.deleteSandwichFromUserCurriculum,
-        updateSandwichInUserCurriculum: this.updateSandwichInUserCurriculum,
-        isSandwichSlotEmpty: this.isSandwichSlotEmpty,
-        starSandwich: this.starSandwich,
-        unstarSandwich: this.unstarSandwich,
-        toggleStarSandwich: this.toggleStarSandwich,
-        isSandwichStarred: this.isSandwichStarred,
-        customSandwichData: this.state.customSandwichData,
-      }}>
-        <div className="App">
-          <header className="App-header">
-            Ethical AI for Computational Action
+      <Provider store={store}>
+        <AppContext.Provider value={{
+          curriculumSlots: this.state.curriculumSlots,
+          curriculumSandwiches: this.state.curriculumSandwiches,
+          clearUserCurriculum: this.clearUserCurriculum,
+          isSandwichInUserCurriculum: this.isSandwichInUserCurriculum,
+          deleteSandwichFromUserCurriculum: this.deleteSandwichFromUserCurriculum,
+          updateSandwichInUserCurriculum: this.updateSandwichInUserCurriculum,
+          isSandwichSlotEmpty: this.isSandwichSlotEmpty,
+          starSandwich: this.starSandwich,
+          unstarSandwich: this.unstarSandwich,
+          toggleStarSandwich: this.toggleStarSandwich,
+          isSandwichStarred: this.isSandwichStarred,
+          customSandwichData: this.state.customSandwichData,
+        }}>
+          <div className="App">
+            <header className="App-header">
+              Ethical AI for Computational Action
         </header>
-          <Navbar />
-          <Switch>
-            <Route path="/home">
-              <Home />
-            </Route>
+            <Navbar />
+            <Switch>
+              <Route path="/home">
+                <Home />
+              </Route>
 
 
-            <Route path="/builder">
-              <BuildYourOwn />
-            </Route>
+              <Route path="/builder">
+                <BuildYourOwn />
+              </Route>
 
 
-            <Route path="/presets">
-              <PresetCurricula />
-            </Route>
+              <Route path="/presets">
+                <PresetCurricula />
+              </Route>
 
-            <Route path="/all">
-              <AllModules />
-            </Route>
+              <Route path="/all">
+                <AllModules />
+              </Route>
 
-            <Route path="/condiments">
-              <AllCondiments />
-            </Route>
+              <Route path="/condiments">
+                <AllCondiments />
+              </Route>
 
 
-            {
-              // TODO: generate Routes for each module page
-              data.all_modules.map(module => {
-                return <Route key={module.uid} path={"/sandwich/" + module.uid}>
-                  <SandwichPage sandwich={module} />
-                </Route>
-              })
-            }
+              {
+                // TODO: generate Routes for each module page
+                data.all_modules.map(module => {
+                  return <Route key={module.uid} path={"/sandwich/" + module.uid}>
+                    <SandwichPage sandwich={module} />
+                  </Route>
+                })
+              }
 
-            <Route path="/">
-              <h1 className="Page-title">404 - Page not found!</h1>
-            </Route>
+              <Route path="/">
+                <h1 className="Page-title">404 - Page not found!</h1>
+              </Route>
 
-          </Switch>
-        </div>
-      </AppContext.Provider>
+            </Switch>
+          </div>
+        </AppContext.Provider>
+      </Provider>
     );
   }
 }
