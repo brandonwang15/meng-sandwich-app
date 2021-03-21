@@ -93,6 +93,14 @@ const fillingTarget = {
         // TODO
         // component.context.updateSandwichInUserCurriculum(props.index, data);
         console.log("props.fillingIndex ", props.fillingIndex);
+
+        let fillingState = store.getState().sandwiches[props.sandwichUID].contents[props.fillingIndex];
+        if (fillingState != null && fillingState.isRequired) {
+            // Don't override required fillings
+            console.log("onDrop(): ignoring, because would override required filling.");
+            return;
+        }
+
         store.dispatch(setFilling(props.sandwichUID, props.fillingIndex, data));
     }
 }
@@ -106,7 +114,7 @@ function collect(connect, monitor) {
 function mapStateToProps(state, props) {
     let thisSandwich = state.sandwiches[props.sandwichUID];
     let thisFilling = thisSandwich.contents[props.fillingIndex];
-    console.log("FillingSlot.mapStateToProps() called");
+    console.log("FillingSlot.mapStateToProps() called"); 
     return {fillingObject: thisFilling};
 }
 
