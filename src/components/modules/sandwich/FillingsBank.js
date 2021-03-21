@@ -8,6 +8,24 @@ import FillingSlot from "./FillingSlot";
 import DraggableFilling from "./DraggableFilling";
 
 class FillingsBank extends React.Component {
+
+    constructor(props) {
+        super(props);
+        this.isFillingPickedAlready = this.isFillingPickedAlready.bind(this);
+    }
+
+    isFillingPickedAlready(filling) {
+        console.log("inside is fillingpickedalready");
+        console.log(this.props.fillingContents);
+        let pickedFillings = Object.values(this.props.fillingContents);
+        for (let i = 0; i < pickedFillings.length; i++){
+            if (pickedFillings[i].title == filling.title) {
+                return true;
+            }
+        }
+        return false;
+    }
+
     render() {
         console.log("fillingsBank: ", this.props.optionalFillings);
 
@@ -19,7 +37,7 @@ class FillingsBank extends React.Component {
         for (let i = 0; i < numOptional; i++) {
             let filling = this.props.optionalFillings[i]
             fillingsList.push(
-                <DraggableFilling key={i} filling={filling} canDrag={true} />
+                <DraggableFilling key={i} filling={filling} canDrag={!this.isFillingPickedAlready(filling)} />
             )
         }
 
@@ -35,7 +53,10 @@ class FillingsBank extends React.Component {
 
 function mapStateToProps(state, ownProps) {
     let thisSandwichData = state.sandwiches[ownProps.sandwichUID]
-    return { optionalFillings: thisSandwichData.optionalFillings }
+    return {
+        optionalFillings: thisSandwichData.optionalFillings,
+        fillingContents: thisSandwichData.contents
+    }
 }
 
 FillingsBank.propTypes = {
