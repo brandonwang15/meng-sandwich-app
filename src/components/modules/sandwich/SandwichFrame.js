@@ -35,7 +35,7 @@ class SandwichFrame extends React.Component {
 
         return (
             <>
-                SANDWICH FRAME
+                <h3>The Sandwich</h3>
                 {holderList}
             </>
         )

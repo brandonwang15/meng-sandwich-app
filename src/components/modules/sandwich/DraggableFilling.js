@@ -3,7 +3,7 @@ import './DraggableFilling.css';
 
 import PropTypes from 'prop-types';
 
-import ItemTypes from "../../../constants";
+import ItemTypes, { FillingColors } from "../../../constants";
 
 import { useDrag } from 'react-dnd';
 
@@ -22,15 +22,18 @@ function DraggableFilling(props) {
         },
     });
 
+    console.log("DraggableFilling.render()");
+
     return (
         <div className={"Draggable-filling-container " + (props.canDrag ? "enabled" : "disabled")}
             ref={drag}
             style={{
                 opacity: isDragging ? 0.5 : 1,
                 cursor: 'move',
+                "background-color": FillingColors[props.filling.type]
             }}
         >
-            <h1>{props.filling.title}</h1>
+            <div>{props.filling.title}</div>
         </div>
     )
 }

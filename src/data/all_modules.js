@@ -34,8 +34,8 @@ var data = {
                     "class_num": "2",
                 },
                 {
-                    "title": "Client interviews",
-                    "type": "req-filling",
+                    "title": "Community Presentation",
+                    "type": "bottom-bun",
                     "class_num": "7",
                 }
             ],
@@ -43,14 +43,17 @@ var data = {
                 {
                     "title": "Fine-tuning models",
                     "difficulty": "intermediate",
+                    "type": "opt-filling",
                     "ordering": [8, 12],
                 },
                 {
                     "title": "Testing your model",
+                    "type": "opt-filling",
                     "difficulty": "beginner",
                 },
                 {
                     "title": "Bias activity",
+                    "type": "opt-filling",
                     "difficulty": "beginner",
                 }
 

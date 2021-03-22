@@ -1,8 +1,9 @@
 import React, { Component, useState } from 'react';
 
 import { connect } from 'react-redux'
-import { setFilling } from '../../../actions'
+import { deleteFilling, setFilling } from '../../../actions'
 
+import { FillingColors } from '../../../constants';
 
 import './FillingSlot.css';
 
@@ -17,7 +18,18 @@ import AppContext from "../../context/app_context";
 import store from '../../../store'
 
 class FillingSlot extends React.Component {
+    constructor(props) {
+        super(props);
+        this.removeFilling = this.removeFilling.bind(this);
+    }
+
+    removeFilling() {
+        store.dispatch(deleteFilling(this.props.sandwichUID, this.props.fillingIndex));
+    }
+
     render() {
+        console.log("FillingSlot.render()");
+
         // Grab the props injected by React DnD
         const { connectDropTarget } = this.props;
 
@@ -35,44 +47,20 @@ class FillingSlot extends React.Component {
 
         } else {
             return connectDropTarget(
-                <div className={"Filling-slot-container " + (this.props.fillingObject.isRequired ? "disabled" : "enabled")}
+                <div 
+                    className={"Filling-slot-container " + (this.props.fillingObject.isRequired ? "disabled" : "enabled")}
                     style={{
                         cursor: 'move',
+                        "background-color": FillingColors[this.props.fillingObject.type]
                     }}
                 >
                     <div>
-                        {this.props.fillingObject.title}
+                        {this.props.fillingObject.title}<br />
+                        {this.props.fillingObject.isRequired ? <div className="text-danger"><small>(required)</small></div> : <button className="btn btn-outline-danger btn-sm" onClick={this.removeFilling}>Remove</button>}
                     </div>
                 </div>
             );
         }
-
-
-        // if (this.context.isSandwichSlotEmpty(this.props.index)) {
-        //     return connectDropTarget(<div className="Sandwich-holder-empty"
-        //         style={{
-        //             cursor: 'move',
-        //         }}
-        //     >
-        //         <h1>+</h1>
-        //         <em>(add a sandwich!)</em>
-        //     </div>);
-        // } else {
-        //     return connectDropTarget(
-        //         <div className="Sandwich-holder"
-        //             style={{
-        //                 cursor: 'move',
-        //             }}
-        //         >
-        //             <h5>#{this.props.index + 1}</h5>
-        //             <h3>{heldSandwich.title}</h3>
-        //             <p>UID: {heldSandwich.uid}</p>
-        //             <p>Tags: <em>{heldSandwich.tags.toString()}</em></p>
-        //             {(heldSandwich.uid !== -1) && <NavLink to={"/sandwich/" + heldSandwich.uid}>See More</NavLink>}<br />
-        //             <button type="button" className="btn btn-warning" onClick={() => this.context.deleteSandwichFromUserCurriculum(this.props.index)}>Remove</button>
-        //         </div>
-        //     );
-        // }
     }
 }
 
@@ -114,8 +102,8 @@ function collect(connect, monitor) {
 function mapStateToProps(state, props) {
     let thisSandwich = state.sandwiches[props.sandwichUID];
     let thisFilling = thisSandwich.contents[props.fillingIndex];
-    console.log("FillingSlot.mapStateToProps() called"); 
-    return {fillingObject: thisFilling};
+    console.log("FillingSlot.mapStateToProps() called");
+    return { fillingObject: thisFilling };
 }
 
 // export default FillingSlot

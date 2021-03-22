@@ -9,10 +9,11 @@ export class CustomSandwichData {
 }
 
 export class SandwichFillingData {
-    constructor(title, isRequired, index) {
+    constructor(title, isRequired, index, type) {
       this.title = title;
       this.isRequired = isRequired;
       this.index = index;
+      this.type = type;
     }
   }
   
