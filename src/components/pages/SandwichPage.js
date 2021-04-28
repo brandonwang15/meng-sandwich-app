@@ -12,6 +12,7 @@ import SandwichFrame from "../modules/sandwich/SandwichFrame";
 import FillingsBank from "../modules/sandwich/FillingsBank";
 
 import PropTypes from 'prop-types';
+import SandwichBuilderWeekly from "./SandwichBuilderWeekly";
 
 class SandwichPage extends React.Component {
     render() {
@@ -26,8 +27,10 @@ class SandwichPage extends React.Component {
                         </div>
                         <hr />
                         <div className="row">
-                            <div className="col-9 text-left">
-                                <div className="row">
+                            <SandwichBuilderWeekly sandwich={this.props.sandwich} />
+                        </div>
+
+                        <div className="row">
                                     Tags: {this.props.sandwich.tags.join(", ")}
                                 </div>
                                 <div className="row">
@@ -39,14 +42,15 @@ class SandwichPage extends React.Component {
                                 <div className="row">
                                     Related Modules:
                         </div>
-                                <div className="row text-center">
-                                    <div className="col-6">
-                                        <FillingsBank sandwichUID={this.props.sandwich.uid}></FillingsBank>
-                                    </div>
-                                    <div className="col-6">
-                                        <SandwichFrame sandwichUID={this.props.sandwich.uid} />
-                                    </div>
+
+                                <div className="row">
+                                    Suggested Condiments:
+                            {this.props.sandwich.suggested_condiments ? this.props.sandwich.suggested_condiments.map((uid) => <div className="col-sm" key={uid}>
+                                    <CondimentCard uid={uid} />
+                                </div>) :
+                                        <div className="col">None</div>}
                                 </div>
+
                                 <div className="row text-center">
                                     <div className="col">
                                         <h4> Resources:</h4>
@@ -58,19 +62,6 @@ class SandwichPage extends React.Component {
                                         </div>
                                     </div>
                                 </div>
-                                <div className="row">
-                                    Suggested Condiments:
-                            {this.props.sandwich.suggested_condiments ? this.props.sandwich.suggested_condiments.map((uid) => <div className="col-sm" key={uid}>
-                                    <CondimentCard uid={uid} />
-                                </div>) :
-                                        <div className="col">None</div>}
-                                </div>
-                            </div>
-
-                            <div className="col-3">
-                                <NutritionFacts sandwichData={[this.props.sandwich]} />
-                            </div>
-                        </div>
 
                     </div>
                 </>
