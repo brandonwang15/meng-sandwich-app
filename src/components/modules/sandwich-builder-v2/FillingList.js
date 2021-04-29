@@ -21,7 +21,6 @@ class FillingList extends React.Component {
     // }
 
     render() {
-        console.log("STATE = ", this.state);
         console.log("FillingList.props = ", this.props);
         
         return (
@@ -38,7 +37,7 @@ class FillingList extends React.Component {
                                     <FillingListEntry
                                         sandwichID={this.props.sandwich.uid}
                                         fillingID={filling.uid}
-                                        key={listIndex}
+                                        key={filling.uid}
                                         index={listIndex}
                                     />
                                 )}

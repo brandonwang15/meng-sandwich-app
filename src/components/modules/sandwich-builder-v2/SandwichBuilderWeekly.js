@@ -43,9 +43,44 @@ class SandwichBuilderWeekly extends React.Component {
         // TODO: implement
         console.log("onDragEnd(): ", result);
 
+        const {destination, source, draggableId} = result;
+
+        // Check if no-op
+        if (!destination) {
+            return;
+        }
+
+        if (destination.droppableId === source.droppableId && destination.index === source.index) {
+            return;
+        }
+
         // Get the source list and destination list
-        let sourceList = this.state.weekLists
-        // this.state.weekLists
+        let sourceObj = this.state.weekLists[result.source.droppableId];
+        
+        // Get the object that was dragged
+        let draggableObj = sourceObj.contents[source.index];
+
+        // TODO: handle dragging between different lists
+        // let destinationList = this.state.weekLists[result.destination.droppableId];
+        const newSourceContents = Array.from(sourceObj.contents);
+        newSourceContents.splice(source.index, 1);
+        newSourceContents.splice(destination.index, 0, draggableObj);
+
+        const newSourceObj = {
+            ...sourceObj,
+            contents: newSourceContents,
+        }
+
+        const newState = {
+            weekLists: {
+                ...this.state.weekLists,
+                [newSourceObj.id]: newSourceObj,
+            }
+        }
+
+        console.log("New state after drag: ", newState);
+
+        this.setState(newState);
     }
 
     render() {
