@@ -12,7 +12,7 @@ import SandwichFrame from "../modules/sandwich/SandwichFrame";
 import FillingsBank from "../modules/sandwich/FillingsBank";
 
 import PropTypes from 'prop-types';
-import SandwichBuilderWeekly from "./SandwichBuilderWeekly";
+import SandwichBuilderWeekly from "../modules/sandwich-builder-v2/SandwichBuilderWeekly";
 
 class SandwichPage extends React.Component {
     render() {
