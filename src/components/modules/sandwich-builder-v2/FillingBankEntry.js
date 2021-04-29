@@ -2,23 +2,35 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
 import { Draggable } from 'react-beautiful-dnd';
+import store from '../../../store';
+
 
 const Container = styled.div`
     border: 1px solid lightgray;
     margin-bottom: 8px;
+    padding: 5px;
 `;
+
+const Title = styled.h6`
+    text-style: bold;
+`;
+
 
 
 class FillingBankEntry extends React.Component {
     render() {
+        let sandwich = store.getState().sandwiches[this.props.sandwichID];
+        let filling = sandwich.allFillings[this.props.fillingID];
+
         return (
-            <Draggable draggableId={this.props.fillingID}>
+            <Draggable draggableId={this.props.fillingID} index={this.props.index}>
                 {(provided) => (
                     <Container
                         {...provided.draggableProps}
                         {...provided.dragHandleProps}
-                        innerRef={provided.innerRef}
+                        ref={provided.innerRef}
                     >
+                        <Title>{filling.title}</Title>
                         <div>
                             Sandwich ID: {this.props.sandwichID}
                         </div>
@@ -37,7 +49,8 @@ class FillingBankEntry extends React.Component {
 
 FillingBankEntry.propTypes = {
     sandwichID: PropTypes.number.isRequired,
-    fillingID: PropTypes.number.isRequired,
+    fillingID: PropTypes.string.isRequired,
+    index: PropTypes.number.isRequired,
 }
 
 export default FillingBankEntry;

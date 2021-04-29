@@ -16,16 +16,12 @@ const ContentsList = styled.div`
 
 class FillingList extends React.Component {
 
-    // state = {
-    //     "contents": ["filling-a", "filling-b", "filling-c"],
-    // }
-
     render() {
         console.log("FillingList.props = ", this.props);
         
         return (
             <Container>
-                <h3>List: {this.props.listID}</h3>
+                <h3>{this.props.displayTitle}</h3>
                 <Droppable droppableId={this.props.listID}>
                     {(providedDroppable) => {
                         return (
@@ -33,11 +29,11 @@ class FillingList extends React.Component {
                                 ref={providedDroppable.innerRef}
                                 {...providedDroppable.droppableProps}>
 
-                                {this.props.contents.map((filling, listIndex) =>
+                                {this.props.contents.map((fillingID, listIndex) =>
                                     <FillingListEntry
                                         sandwichID={this.props.sandwich.uid}
-                                        fillingID={filling.uid}
-                                        key={filling.uid}
+                                        fillingID={fillingID}
+                                        key={fillingID}
                                         index={listIndex}
                                     />
                                 )}
@@ -53,6 +49,7 @@ class FillingList extends React.Component {
 }
 
 FillingList.propTypes = {
+    displayTitle: PropTypes.string.isRequired,
     listID: PropTypes.string.isRequired,
     sandwich: PropTypes.object.isRequired,
     contents: PropTypes.array.isRequired,

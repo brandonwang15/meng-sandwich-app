@@ -17,21 +17,41 @@ class FillingBank extends React.Component {
     render() {
         return (
             <Container>
-                <h3>Bank: {this.props.id}</h3>
-                <ContentsList>
-                    {this.props.fillingIDs.map(id =>
-                        <FillingBankEntry sandwichID={this.props.sandwichID} fillingID={id} />)
+                <h3>{this.props.displayTitle}</h3>
+
+
+                <Droppable droppableId={this.props.listID}>
+                    {(providedDroppable) => {
+                        return (
+                            <ContentsList
+                                ref={providedDroppable.innerRef}
+                                {...providedDroppable.droppableProps}>
+
+                                {this.props.contents.map((fillingID, listIndex) =>
+                                    <FillingBankEntry 
+                                        key={fillingID} 
+                                        fillingID={fillingID} 
+                                        sandwichID={this.props.sandwich.uid} 
+                                        index={listIndex}
+                                    />
+
+                                )}
+                                {providedDroppable.placeholder}
+                            </ContentsList>
+                        )
                     }
-                </ContentsList>
+                    }
+                </Droppable>
             </Container>
         )
     }
 }
 
 FillingBank.propTypes = {
-    id: PropTypes.string.isRequired,
-    fillingIDs: PropTypes.array.isRequired,
-    sandwichID: PropTypes.number.isRequired,
+    displayTitle: PropTypes.string.isRequired,
+    listID: PropTypes.string.isRequired,
+    contents: PropTypes.array.isRequired,
+    sandwich: PropTypes.object.isRequired,
 }
 
 export default FillingBank;
