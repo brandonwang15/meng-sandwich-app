@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
+import { Draggable } from 'react-beautiful-dnd';
 
 const Container = styled.div`
     border: 1px solid lightgray;
@@ -11,14 +12,25 @@ const Container = styled.div`
 class FillingBankEntry extends React.Component {
     render() {
         return (
-            <Container>
-                <div>
-                    Sandwich ID: {this.props.sandwichID}
-                </div>
-                <div>
-                    Filling ID: {this.props.fillingID}
-                </div>
-            </Container>
+            <Draggable draggableId={this.props.fillingID}>
+                {(provided) => (
+                    <Container
+                        {...provided.draggableProps}
+                        {...provided.dragHandleProps}
+                        innerRef={provided.innerRef}
+                    >
+                        <div>
+                            Sandwich ID: {this.props.sandwichID}
+                        </div>
+                        <div>
+                            Filling ID: {this.props.fillingID}
+                        </div>
+                    </Container>
+
+                )
+
+                }
+            </Draggable>
         )
     }
 }

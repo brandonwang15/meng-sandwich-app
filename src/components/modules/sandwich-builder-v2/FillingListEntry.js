@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
+import { Draggable } from 'react-beautiful-dnd';
 
 const Container = styled.div`
     border: 1px solid lightgray;
@@ -11,21 +12,30 @@ const Container = styled.div`
 class FillingListEntry extends React.Component {
     render() {
         return (
-            <Container>
-                <div>
-                    Sandwich ID: {this.props.sandwichID}
-                </div>
-                <div>
-                    Filling ID: {this.props.fillingID}
-                </div>
-            </Container>
+            <Draggable draggableId={this.props.fillingID} index={this.props.index}>
+                {providedDraggable => {
+                    return (<Container
+                        {...providedDraggable.draggableProps}
+                        {...providedDraggable.dragHandleProps}
+                        ref={providedDraggable.innerRef}
+                    >
+                        <div>
+                            Sandwich ID: {this.props.sandwichID}
+                        </div>
+                        <div>
+                            Filling ID: {this.props.fillingID}
+                        </div>
+                    </Container>);
+                }}
+            </Draggable>
         )
     }
 }
 
 FillingListEntry.propTypes = {
     sandwichID: PropTypes.number.isRequired,
-    fillingID: PropTypes.number.isRequired,
+    fillingID: PropTypes.string.isRequired,
+    index: PropTypes.number.isRequired,
 }
 
 export default FillingListEntry;
