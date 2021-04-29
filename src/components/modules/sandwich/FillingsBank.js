@@ -53,7 +53,7 @@ class FillingsBank extends React.Component {
 
 function mapStateToProps(state, ownProps) {
     let thisSandwichData = state.sandwiches[ownProps.sandwichUID]
-    console.log("FillingsBank: mapStateToProps() called: ", thisSandwichData.contents);
+    console.log("FillingsBank: mapStateToProps() called: ", thisSandwichData);
     return {
         optionalFillings: thisSandwichData.optionalFillings,
         fillingContents: thisSandwichData.contents

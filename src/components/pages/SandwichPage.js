@@ -16,6 +16,7 @@ import SandwichBuilderWeekly from "./SandwichBuilderWeekly";
 
 class SandwichPage extends React.Component {
     render() {
+
         return (
             <DndProvider backend={HTML5Backend}>
                 <>

@@ -20,41 +20,49 @@ var data = {
                     "text": "Here's a PDF!",
                 }
             ],
+            weekly_hours: [5,5,5],
             // TODO: think about how to represent fillings. Will they be stored in another file and linked via id?
             // For now, view these entries as stubs.
-            "required_fillings": [
+            "fillings": [
                 {
-                    "title": "Project Launch",
-                    "type": "top-bun",
-                    "class_num": "1",
+                    title: "Project Launch",
+                    type: "top-bun",
+                    isRequired: true,
+                    assigned_week: 0,
+                    assigned_day: 0,
                 },
                 {
-                    "title": "Intro to machine perception",
-                    "type": "req-filling",
-                    "class_num": "2",
+                    title: "Intro to machine perception",
+                    type: "filling",
+                    isRequired: true,
+                    assigned_week: 0,
+                    assigned_day: 1,
+
                 },
                 {
-                    "title": "Community Presentation",
-                    "type": "bottom-bun",
-                    "class_num": "7",
-                }
-            ],
-            "optional_teacher_fillings" : [ // teacher-curated fillings
-                {
-                    "title": "Fine-tuning models",
-                    "difficulty": "intermediate",
-                    "type": "opt-filling",
-                    "ordering": [8, 12],
+                    title: "Community Presentation",
+                    type: "bottom-bun",
+                    isRequired: true,
+                    assigned_week: 3,
+                    assigned_day: 3,
                 },
                 {
-                    "title": "Testing your model",
-                    "type": "opt-filling",
-                    "difficulty": "beginner",
+                    title: "Fine-tuning models",
+                    type: "filling",
+                    isRequired: false,
+                    suggested_week: 2,
                 },
                 {
-                    "title": "Bias activity",
-                    "type": "opt-filling",
-                    "difficulty": "beginner",
+                    title: "Testing your model",
+                    type: "filling",
+                    isRequired: false,
+                    suggested_week: 2,
+                },
+                {
+                    title: "Bias activity",
+                    type: "filling",
+                    isRequired: false,
+                    suggested_week: 1,
                 }
 
             ],

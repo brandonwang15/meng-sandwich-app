@@ -68,27 +68,20 @@ class App extends React.Component {
 
     // Initialize sandwich data from presets
     data.all_modules.forEach((value) => {
-      let optionalFillings;
+      
+      let allFillings;
 
-      if ("optional_teacher_fillings" in value) {
-        optionalFillings = value.optional_teacher_fillings.map((value) => {
-          return new SandwichFillingData(value.title, false, -1);
+      if ("fillings" in value) {
+        allFillings = value.fillings.map((rawJSON) => {
+          return new SandwichFillingData(rawJSON);
         });
-      } else {
-        optionalFillings = [];
       }
 
-      let requiredFillings;
-      if ("required_fillings" in value) {
-        requiredFillings = value.required_fillings.map((value) => {
-          // class_num is one-indexed, SandwichFillingData.index is zero-indexed
-          return new SandwichFillingData(value.title, true, value.class_num - 1);
-        });
-      } else {
-        requiredFillings = [];
-      }
+      let requiredFillings = allFillings.filter(filling => filling.isRequired);
+      let optionalFillings = allFillings.filter(filling => !filling.isRequired);
 
-      let sandwich = new CustomSandwichData(value.title, value.numSlots, requiredFillings, optionalFillings);
+      let sandwich = new CustomSandwichData(value.title, value.numSlots, requiredFillings, optionalFillings, value.weekly_slots);
+      console.log("SANDWICH ", sandwich);
       this.state.customSandwichData[value.uid] = sandwich;
     })
 
