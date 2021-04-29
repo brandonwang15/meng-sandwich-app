@@ -7,6 +7,7 @@ import { Droppable } from 'react-beautiful-dnd';
 const Container = styled.div`
     border: 1px solid gray;
     padding: 10px;
+    margin-bottom: 20px;
 `;
 
 const ContentsList = styled.div`
@@ -15,27 +16,34 @@ const ContentsList = styled.div`
 
 class FillingList extends React.Component {
 
-    state = {
-        "contents": ["filling-a", "filling-b", "filling-c"],
-    }
+    // state = {
+    //     "contents": ["filling-a", "filling-b", "filling-c"],
+    // }
 
     render() {
         console.log("STATE = ", this.state);
+        console.log("FillingList.props = ", this.props);
+        
         return (
             <Container>
-                <h3>List: {this.props.fillingListID}</h3>
-                <Droppable droppableId={this.props.fillingListID}>
+                <h3>List: {this.props.listID}</h3>
+                <Droppable droppableId={this.props.listID}>
                     {(providedDroppable) => {
                         return (
-                        <ContentsList
-                            ref={providedDroppable.innerRef}
-                            {...providedDroppable.droppableProps}>
+                            <ContentsList
+                                ref={providedDroppable.innerRef}
+                                {...providedDroppable.droppableProps}>
 
-                            {this.state.contents.map((fillingID, listIndex) =>
-                                <FillingListEntry sandwichID={this.props.sandwichID} fillingID={fillingID} key={listIndex} index={listIndex} />
-                            )}
-                            {providedDroppable.placeholder}
-                        </ContentsList>
+                                {this.props.contents.map((filling, listIndex) =>
+                                    <FillingListEntry
+                                        sandwichID={this.props.sandwich.uid}
+                                        fillingID={filling.uid}
+                                        key={listIndex}
+                                        index={listIndex}
+                                    />
+                                )}
+                                {providedDroppable.placeholder}
+                            </ContentsList>
                         )
                     }
                     }
@@ -46,8 +54,9 @@ class FillingList extends React.Component {
 }
 
 FillingList.propTypes = {
-    fillingListID: PropTypes.string.isRequired,
-    sandwichID: PropTypes.number.isRequired,
+    listID: PropTypes.string.isRequired,
+    sandwich: PropTypes.object.isRequired,
+    contents: PropTypes.array.isRequired,
 }
 
 export default FillingList;

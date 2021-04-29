@@ -10,15 +10,46 @@ import PropTypes from 'prop-types';
 
 class SandwichBuilderWeekly extends React.Component {
 
+    constructor(props) {
+        super(props);
+        const sandwich = props.sandwich;
+
+        this.state = {
+            weekLists: {},
+        }
+
+        console.log("PROPS.sandwich", sandwich);
+
+        for (let i = 0; i < sandwich.nWeeks; i++) {
+            let id = "week-list-" + i;
+            this.state.weekLists[id] = {
+                id: "week-list-" + i,
+                contents: []
+            }; // push an empty list for each week
+        }
+
+        console.log("SandwichBuilderWeekly.state", this.state);
+
+        // Seed initial fillings for the list
+        this.state.weekLists["week-list-0"].contents.push(props.sandwich.allFillings['filling-launch']);
+        this.state.weekLists["week-list-0"].contents.push(props.sandwich.allFillings['filling-bias']);
+        this.state.weekLists["week-list-0"].contents.push(props.sandwich.allFillings['filling-comm-preso']);
+
+        // Bind class functions
+        this.onDragEnd = this.onDragEnd.bind(this);
+    }
+
     onDragEnd(result) {
         // TODO: implement
         console.log("onDragEnd(): ", result);
+
+        // Get the source list and destination list
+        let sourceList = this.state.weekLists
+        // this.state.weekLists
     }
 
     render() {
-
-        let fillings = [1,2,3,4,5];
-
+        console.log("sandwich: ", this.props.sandwich)
         return (
             <>
                 <div className="container">
@@ -27,7 +58,19 @@ class SandwichBuilderWeekly extends React.Component {
                             <div className="row text-center">
                                 <DragDropContext onDragEnd={this.onDragEnd}>
                                     <div className="col-6">
-                                        <FillingList sandwichID={this.props.sandwich.uid} fillingListID={"list-1"}/>
+                                        {
+                                            Object.entries(this.state.weekLists).map(tuple => {
+                                                let obj = tuple[1];
+                                                return <FillingList
+                                                    key={obj.id}
+                                                    listID={obj.id}
+                                                    sandwich={this.props.sandwich}
+                                                    contents={obj.contents}
+                                                />
+                                            }
+                                            )
+                                        }
+
                                     </div>
                                     <div className="col-6">
                                         {/* <FillingBank id={"A"} sandwichID={this.props.sandwich.uid} fillingIDs={fillings}/> */}

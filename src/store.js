@@ -31,26 +31,9 @@ function setRequiredFillings(sandwichObject) {
 function createInitialReduxStoreState() {
     let initialState = {sandwiches: {}};
   
-    data.all_modules.forEach((value) => {
-      let allFillings;
-
-      if ("fillings" in value) {
-        allFillings = value.fillings.map((rawJSON) => {
-          return new SandwichFillingData(rawJSON);
-        });
-      }
-
-      let requiredFillings = allFillings.filter(filling => filling.isRequired);
-      let optionalFillings = allFillings.filter(filling => !filling.isRequired);
-
-      let sandwich = new CustomSandwichData(value.title, value.numSlots, requiredFillings, optionalFillings);
-      
-      // Initialze the .contents map with required fillings
-      requiredFillings.forEach((filling) => {
-          sandwich.contents[filling] = value 
-      })
-  
-      initialState.sandwiches[value.uid] = sandwich;
+    data.all_modules.forEach((rawJSON) => {
+      let sandwich = new CustomSandwichData(rawJSON);
+      initialState.sandwiches[sandwich.uid] = sandwich;
     })
   
     console.log("initial state: ", initialState);

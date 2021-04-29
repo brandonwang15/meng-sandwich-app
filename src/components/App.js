@@ -67,22 +67,10 @@ class App extends React.Component {
     }
 
     // Initialize sandwich data from presets
-    data.all_modules.forEach((value) => {
-      
-      let allFillings;
-
-      if ("fillings" in value) {
-        allFillings = value.fillings.map((rawJSON) => {
-          return new SandwichFillingData(rawJSON);
-        });
-      }
-
-      let requiredFillings = allFillings.filter(filling => filling.isRequired);
-      let optionalFillings = allFillings.filter(filling => !filling.isRequired);
-
-      let sandwich = new CustomSandwichData(value.title, value.numSlots, requiredFillings, optionalFillings, value.weekly_slots);
+    data.all_modules.forEach((rawJSON) => {
+      let sandwich = new CustomSandwichData(rawJSON);
       console.log("SANDWICH ", sandwich);
-      this.state.customSandwichData[value.uid] = sandwich;
+      this.state.customSandwichData[sandwich.uid] = sandwich;
     })
 
     console.log("Initial Redux store state: ", store.getState());
@@ -159,6 +147,9 @@ class App extends React.Component {
   }
 
   render() {
+    console.log("AAA: ", store.getState().sandwiches);
+    console.log(Object.entries(store.getState().sandwiches));
+
     return (
       <Provider store={store}>
         <AppContext.Provider value={{
@@ -205,10 +196,12 @@ class App extends React.Component {
 
 
               {
-                // TODO: generate Routes for each module page
-                data.all_modules.map(module => {
-                  return <Route key={module.uid} path={"/sandwich/" + module.uid}>
-                    <SandwichPage sandwich={module} />
+                // TODO: generate Routes to the sandwich page for each sandwich
+                
+                Object.entries(store.getState().sandwiches).map(tuple => {
+                  let sandwich = tuple[1];
+                  return <Route key={sandwich.uid} path={"/sandwich/" + sandwich.uid}>
+                    <SandwichPage sandwich={sandwich} />
                   </Route>
                 })
               }

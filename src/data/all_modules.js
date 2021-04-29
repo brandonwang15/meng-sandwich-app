@@ -9,7 +9,7 @@ var data = {
                 "Scratch",
                 "plugged"
             ],
-            "numSlots": 7,
+            "numWeeks": 3,
             "resources": [
                 {
                     "url": "/sandwich/1/image.png",
@@ -25,40 +25,46 @@ var data = {
             // For now, view these entries as stubs.
             "fillings": [
                 {
+                    id: "filling-launch",
                     title: "Project Launch",
                     type: "top-bun",
                     isRequired: true,
-                    assigned_week: 0,
-                    assigned_day: 0,
+                    suggested_week: 0,
+                    suggested_day: 0,
                 },
                 {
+                    id: "filling-intro-machine-percept",
                     title: "Intro to machine perception",
                     type: "filling",
                     isRequired: true,
-                    assigned_week: 0,
-                    assigned_day: 1,
+                    suggested_week: 0,
+                    suggested_day: 1,
 
                 },
                 {
+                    id: "filling-comm-preso",
                     title: "Community Presentation",
                     type: "bottom-bun",
                     isRequired: true,
-                    assigned_week: 3,
-                    assigned_day: 3,
+                    suggested_week: 3,
+                    suggested_day: 3,
                 },
                 {
+                    id: "filling-fine-tuning-models",
                     title: "Fine-tuning models",
                     type: "filling",
                     isRequired: false,
                     suggested_week: 2,
                 },
                 {
+                    id: "filling-testing-models",
                     title: "Testing your model",
                     type: "filling",
                     isRequired: false,
                     suggested_week: 2,
                 },
                 {
+                    id: "filling-bias",
                     title: "Bias activity",
                     type: "filling",
                     isRequired: false,
