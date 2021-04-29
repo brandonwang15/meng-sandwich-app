@@ -37,12 +37,13 @@ class SandwichBuilderWeekly extends React.Component {
 
         // Bind class functions
         this.onDragEnd = this.onDragEnd.bind(this);
+        this.dragBetweenLists = this.dragBetweenLists.bind(this);
+        this.dragWithinList = this.dragWithinList.bind(this);
+
+
     }
 
-    onDragEnd(result) {
-        // TODO: implement
-        console.log("onDragEnd(): ", result);
-
+    dragBetweenLists(result) {
         const {destination, source, draggableId} = result;
 
         // Check if no-op
@@ -56,13 +57,64 @@ class SandwichBuilderWeekly extends React.Component {
 
         // Get the source list and destination list
         let sourceObj = this.state.weekLists[result.source.droppableId];
+        let destinationObj = this.state.weekLists[result.destination.droppableId];
         
         // Get the object that was dragged
         let draggableObj = sourceObj.contents[source.index];
 
-        // TODO: handle dragging between different lists
-        // let destinationList = this.state.weekLists[result.destination.droppableId];
+        
         const newSourceContents = Array.from(sourceObj.contents);
+        const newDestinationContents = Array.from(destinationObj.contents);
+
+        // Remove element from source        
+        newSourceContents.splice(source.index, 1);
+        // Insert element at destination
+        newDestinationContents.splice(destination.index, 0, draggableObj);
+
+        const newSourceObj = {
+            ...sourceObj,
+            contents: newSourceContents,
+        }
+
+        const newDestinationObj = {
+            ...destinationObj,
+            contents: newDestinationContents,
+        }
+
+        const newState = {
+            weekLists: {
+                ...this.state.weekLists,
+                [newSourceObj.id]: newSourceObj,
+                [newDestinationObj.id]: newDestinationObj,
+            }
+        }
+
+        console.log("New state after drag: ", newState);
+
+        this.setState(newState);
+
+    }
+
+    dragWithinList(result) {
+        const {destination, source, draggableId} = result;
+        // Check if no-op
+        if (!destination) {
+            return;
+        }
+
+        if (destination.droppableId === source.droppableId && destination.index === source.index) {
+            return;
+        }
+
+        // Get the list
+        let sourceObj = this.state.weekLists[result.source.droppableId];
+        
+        // Get the object that was dragged
+        let draggableObj = sourceObj.contents[source.index];
+
+        const newSourceContents = Array.from(sourceObj.contents);
+
+        // Remove element from old index and insert at new index  
         newSourceContents.splice(source.index, 1);
         newSourceContents.splice(destination.index, 0, draggableObj);
 
@@ -81,6 +133,20 @@ class SandwichBuilderWeekly extends React.Component {
         console.log("New state after drag: ", newState);
 
         this.setState(newState);
+    }
+
+    onDragEnd(result) {
+        // TODO: implement
+        console.log("onDragEnd(): ", result);
+
+        const {destination, source} = result;
+
+        if (source.droppableId === destination.droppableId){
+            this.dragWithinList(result);
+        } else {
+            this.dragBetweenLists(result);
+        }
+      
     }
 
     render() {
