@@ -40,6 +40,13 @@ class SandwichBuilderWeekly extends React.Component {
 
     }
 
+    makeTestBackendRequest() {
+        const url = "/test";
+        fetch(url)
+            .then(data=>{return data.text()})
+            .then(res => {console.log("http response: ", res)});        
+    }
+
     onDragEnd(result) {
         // TODO: implement
         console.log("onDragEnd(): ", result);
@@ -132,6 +139,7 @@ class SandwichBuilderWeekly extends React.Component {
 
                 <div className="col-3">
                     <WeeklySandwichNutritionFacts sandwichId={[this.props.sandwich.uid]} />
+                    <button className="btn btn-primary" onClick={this.makeTestBackendRequest}>Send Test Request</button>
                 </div>
             </>
         )
