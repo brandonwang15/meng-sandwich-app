@@ -8,25 +8,46 @@ import FillingList from "./FillingList";
 
 import PropTypes from 'prop-types';
 
+import styled from 'styled-components';
+
+const WeekDivider = styled.h3`
+    margin-top: 20px;
+    margin-bottom: 10px;
+    border-bottom: 5px solid black;
+    text-align: left;
+    // padding-left: 10px;
+    padding-bottom: 5px;
+`
+
 class SandwichBuilderWeekly extends React.Component {
+
+    // Parse a plan id string of the format: "plan-list-{week}-{day}"
+    // into [week, day]
+    parsePlanListId(planListId) {
+        let tokens = planListId.split("-");
+        return [tokens[2], tokens[3]];
+    }
 
     constructor(props) {
         super(props);
         const sandwich = props.sandwich;
 
         this.state = {
-            weekLists: {}, // entries in each week
+            planLists: {}, // entries for each day
             bankLists: {}, // entries in each bank
         }
 
         console.log("PROPS.sandwich", sandwich);
 
         for (let i = 0; i < sandwich.nWeeks; i++) {
-            let weekId = "week-list-" + i;
-            this.state.weekLists[weekId] = {
-                id: weekId,
-                contents: [], // filling ids
-            };
+
+            for (let day = 0; day < sandwich.daysInWeek; day++) {
+                let listId = "plan-list-" + i + "-" + day;
+                this.state.planLists[listId] = {
+                    id: listId,
+                    contents: [], // filling ids
+                };
+            }
 
             let bankId = "bank-list-" + i;
             this.state.bankLists[bankId] = {
@@ -41,7 +62,7 @@ class SandwichBuilderWeekly extends React.Component {
         Object.entries(props.sandwich.allFillings).forEach(tuple => {
             let filling = tuple[1];
             if (filling.isRequired) {
-                this.state.weekLists["week-list-0"].contents.push(filling.uid);
+                this.state.planLists["plan-list-0-0"].contents.push(filling.uid);
             }
         })
 
@@ -55,14 +76,14 @@ class SandwichBuilderWeekly extends React.Component {
 
         // Bind class functions
         this.onDragEnd = this.onDragEnd.bind(this);
-        this.dragBetweenLists = this.dragBetweenWeekLists.bind(this);
-        this.dragWithinList = this.dragWithinWeekList.bind(this);
+        this.dragBetweenLists = this.dragBetweenPlanLists.bind(this);
+        this.dragWithinList = this.dragWithinPlanList.bind(this);
         this.dragWithinBankList = this.dragWithinBankList.bind(this);
         this.dragBetweenDifferentTypedLists = this.dragBetweenDifferentTypedLists.bind(this);
 
     }
 
-    dragBetweenWeekLists(result) {
+    dragBetweenPlanLists(result) {
         const { destination, source, draggableId } = result;
 
         // Check if no-op
@@ -75,8 +96,8 @@ class SandwichBuilderWeekly extends React.Component {
         }
 
         // Get the source list and destination list
-        let sourceObj = this.state.weekLists[result.source.droppableId];
-        let destinationObj = this.state.weekLists[result.destination.droppableId];
+        let sourceObj = this.state.planLists[result.source.droppableId];
+        let destinationObj = this.state.planLists[result.destination.droppableId];
 
         // Get the object that was dragged
         let draggableObj = sourceObj.contents[source.index];
@@ -101,8 +122,8 @@ class SandwichBuilderWeekly extends React.Component {
         }
 
         const newState = {
-            weekLists: {
-                ...this.state.weekLists,
+            planLists: {
+                ...this.state.planLists,
                 [newSourceObj.id]: newSourceObj,
                 [newDestinationObj.id]: newDestinationObj,
             }
@@ -114,7 +135,7 @@ class SandwichBuilderWeekly extends React.Component {
 
     }
 
-    dragWithinWeekList(result) {
+    dragWithinPlanList(result) {
         const { destination, source, draggableId } = result;
         // Check if no-op
         if (!destination) {
@@ -126,7 +147,7 @@ class SandwichBuilderWeekly extends React.Component {
         }
 
         // Get the list
-        let sourceObj = this.state.weekLists[result.source.droppableId];
+        let sourceObj = this.state.planLists[result.source.droppableId];
 
         // Get the object that was dragged
         let draggableObj = sourceObj.contents[source.index];
@@ -143,8 +164,8 @@ class SandwichBuilderWeekly extends React.Component {
         }
 
         const newState = {
-            weekLists: {
-                ...this.state.weekLists,
+            planLists: {
+                ...this.state.planLists,
                 [newSourceObj.id]: newSourceObj,
             }
         }
@@ -215,8 +236,8 @@ class SandwichBuilderWeekly extends React.Component {
         let destinationObj;
 
         switch (sourceType) {
-            case "week":
-                sourceObj = this.state.weekLists[result.source.droppableId];
+            case "plan":
+                sourceObj = this.state.planLists[result.source.droppableId];
                 break;
             case "bank":
                 sourceObj = this.state.bankLists[result.source.droppableId];
@@ -226,8 +247,8 @@ class SandwichBuilderWeekly extends React.Component {
         }
 
         switch (destinationType) {
-            case "week":
-                destinationObj = this.state.weekLists[result.destination.droppableId];
+            case "plan":
+                destinationObj = this.state.planLists[result.destination.droppableId];
                 break;
             case "bank":
                 destinationObj = this.state.bankLists[result.destination.droppableId];
@@ -258,10 +279,10 @@ class SandwichBuilderWeekly extends React.Component {
         }
 
         let newState;
-        if (sourceType === "week" && destinationType === "bank") {
+        if (sourceType === "plan" && destinationType === "bank") {
             newState = {
-                weekLists: {
-                    ...this.state.weekLists,
+                planLists: {
+                    ...this.state.planLists,
                     [newSourceObj.id]: newSourceObj,
                 },
                 bankLists: {
@@ -270,10 +291,10 @@ class SandwichBuilderWeekly extends React.Component {
                 }
             }
 
-        } else if (sourceType === "bank" && destinationType === "week") {
+        } else if (sourceType === "bank" && destinationType === "plan") {
             newState = {
-                weekLists: {
-                    ...this.state.weekLists,
+                planLists: {
+                    ...this.state.planLists,
                     [newDestinationObj.id]: newDestinationObj,
                 },
                 bankLists: {
@@ -314,8 +335,8 @@ class SandwichBuilderWeekly extends React.Component {
         const sameListType = destinationListType === sourceListType;
 
         if (sameList) {
-            if (destinationListType == "week") {
-                this.dragWithinWeekList(result);
+            if (destinationListType == "plan") {
+                this.dragWithinPlanList(result);
                 return;
             } else if (destinationListType == "bank") {
                 this.dragWithinBankList(result);
@@ -325,8 +346,8 @@ class SandwichBuilderWeekly extends React.Component {
             }
         } else {
             if (destinationListType == sourceListType) {
-                if (destinationListType == "week") {
-                    this.dragBetweenWeekLists(result);
+                if (destinationListType == "plan") {
+                    this.dragBetweenPlanLists(result);
                     return;
                 } else if (destinationListType == "bank") {
                     return; // no-op, we don't allow dragging between bank lists
@@ -345,6 +366,32 @@ class SandwichBuilderWeekly extends React.Component {
 
     render() {
         console.log("sandwich: ", this.props.sandwich)
+
+        let fillingListComponents = [];
+
+        for (const planListId in this.state.planLists) {
+
+            let obj = this.state.planLists[planListId];
+            let [week, day] = this.parsePlanListId(planListId);
+            week = parseInt(week);
+            day = parseInt(day);
+
+            if (day === 0) {
+                fillingListComponents.push(
+                    <WeekDivider key={"week-divider-"+week}>{"Week "+ (week +1)}</WeekDivider>
+                );
+            }
+
+            fillingListComponents.push(<FillingList
+                key={obj.id}
+                displayTitle={"Day " + (day + 1)}
+                listID={obj.id}
+                sandwich={this.props.sandwich}
+                contents={obj.contents}
+            />);
+
+        }
+
         return (
             <>
                 <div className="container">
@@ -353,19 +400,7 @@ class SandwichBuilderWeekly extends React.Component {
                             <div className="row text-center">
                                 <DragDropContext onDragEnd={this.onDragEnd}>
                                     <div className="col-6">
-                                        {
-                                            Object.entries(this.state.weekLists).map((tuple, index) => {
-                                                let obj = tuple[1];
-                                                return <FillingList
-                                                    key={obj.id}
-                                                    displayTitle={"Week " + (index+1)}
-                                                    listID={obj.id}
-                                                    sandwich={this.props.sandwich}
-                                                    contents={obj.contents}
-                                                />
-                                            }
-                                            )
-                                        }
+                                        {fillingListComponents}
 
                                     </div>
                                     <div className="col-6">
@@ -373,7 +408,7 @@ class SandwichBuilderWeekly extends React.Component {
                                             let obj = tuple[1];
                                             return <FillingBank
                                                 key={obj.id}
-                                                displayTitle={"Suggested Fillings for Week " + (index+1)}
+                                                displayTitle={"Suggested Fillings for Week " + (index + 1)}
                                                 listID={obj.id}
                                                 sandwich={this.props.sandwich}
                                                 contents={obj.contents}

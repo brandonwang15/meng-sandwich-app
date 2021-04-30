@@ -15,6 +15,7 @@ class CustomSandwichData {
     }
 
     this.nWeeks = rawJSON.numWeeks; // number of weeks in the curriculum
+    this.daysInWeek = 3;
     
     // Array of the contents of each week
     // this.contents[i] = an ordered list of the fillings in week i

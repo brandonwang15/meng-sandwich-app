@@ -5,12 +5,16 @@ import FillingListEntry from './FillingListEntry';
 import { Droppable } from 'react-beautiful-dnd';
 
 const Container = styled.div`
-    border: 1px solid gray;
+    border: 1px dashed gray;
     padding: 10px;
     margin-bottom: 20px;
 `;
 
 const ContentsList = styled.div`
+
+`;
+
+const ListTitle = styled.h4`
 
 `;
 
@@ -21,7 +25,7 @@ class FillingList extends React.Component {
         
         return (
             <Container>
-                <h3>{this.props.displayTitle}</h3>
+                <ListTitle>{this.props.displayTitle}</ListTitle>
                 <Droppable droppableId={this.props.listID}>
                     {(providedDroppable) => {
                         return (
