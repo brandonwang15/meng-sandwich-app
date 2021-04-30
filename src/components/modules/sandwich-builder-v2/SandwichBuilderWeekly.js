@@ -61,10 +61,10 @@ class SandwichBuilderWeekly extends React.Component {
         const sameListType = destinationListType === sourceListType;
 
         store.dispatch(builderMoveFilling(
-            this.props.sandwich.uid, 
-            source.droppableId, 
-            destination.droppableId, 
-            source.index, 
+            this.props.sandwich.uid,
+            source.droppableId,
+            destination.droppableId,
+            source.index,
             destination.index));
     }
 
@@ -72,7 +72,7 @@ class SandwichBuilderWeekly extends React.Component {
         console.log("sandwich: ", this.props.sandwich)
 
         // Generate the components to hold each week's plan lists
-        let fillingListComponents = {}; 
+        let fillingListComponents = {};
         for (let i = 0; i < this.props.sandwich.nWeeks; i++) {
             fillingListComponents[i] = [];
         }
@@ -106,8 +106,8 @@ class SandwichBuilderWeekly extends React.Component {
 
 
             let planCol = <div className="col-6">{fillingListComponents[week]}</div>;
-            
-            let bankListObj = this.props.builderState.bankLists["bank-list-"+week];
+
+            let bankListObj = this.props.builderState.bankLists["bank-list-" + week];
             let bankCol = <div className="col-6">
                 <FillingBank
                     key={bankListObj.id}
@@ -123,18 +123,14 @@ class SandwichBuilderWeekly extends React.Component {
 
         return (
             <>
-                <div className="container">
-                    <div className="row">
-                        <div className="col-9 text-left">
-                            <DragDropContext onDragEnd={this.onDragEnd}>
-                                {finalComponents}
-                            </DragDropContext>
-                        </div>
-                        
-                        <div className="col-3">
-                            <NutritionFacts sandwichData={[this.props.sandwich]} />
-                        </div>
-                    </div>
+                <div className="col-9 text-left">
+                    <DragDropContext onDragEnd={this.onDragEnd}>
+                        {finalComponents}
+                    </DragDropContext>
+                </div>
+
+                <div className="col-3">
+                    <NutritionFacts sandwichData={[this.props.sandwich]} />
                 </div>
             </>
         )

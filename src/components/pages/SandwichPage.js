@@ -34,7 +34,6 @@ const Subheading = styled.h4`
 
 const BuilderContainer = styled.div`
     border: 1px solid lightgray;
-    margin: 0px;
     padding: 20px;
 `;
 
@@ -89,11 +88,9 @@ class SandwichPage extends React.Component {
                         </InfoBox>
 
                         <Subheading>Customize it!</Subheading>
-                        <div className="row">
-                            <BuilderContainer>
+                        <BuilderContainer className="row">
                                 <SandwichBuilderWeekly sandwich={this.props.sandwich} />
-                            </BuilderContainer>
-                        </div>
+                        </BuilderContainer>
 
 
 
