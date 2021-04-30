@@ -8,6 +8,7 @@ const Container = styled.div`
     border: 1px solid lightgray;
     margin-bottom: 8px;
     padding: 5px;
+    background-color: white;
 `;
 
 const Title = styled.h6`
@@ -37,6 +38,9 @@ class FillingListEntry extends React.Component {
                         <div>
                             Filling ID: {this.props.fillingID}
                         </div>
+                        <b>
+                            {filling.duration + " min."}
+                        </b>
                     </Container>);
                 }}
             </Draggable>

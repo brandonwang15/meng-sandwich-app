@@ -62,7 +62,7 @@ class SandwichBuilderWeekly extends React.Component {
         Object.entries(props.sandwich.allFillings).forEach(tuple => {
             let filling = tuple[1];
             if (filling.isRequired) {
-                this.state.planLists["plan-list-0-0"].contents.push(filling.uid);
+                this.state.planLists["plan-list-"+filling.suggestedWeek+"-"+filling.suggestedDay].contents.push(filling.uid);
             }
         })
 
@@ -70,7 +70,7 @@ class SandwichBuilderWeekly extends React.Component {
         Object.entries(props.sandwich.allFillings).forEach(tuple => {
             let filling = tuple[1];
             if (!filling.isRequired) {
-                this.state.bankLists["bank-list-0"].contents.push(filling.uid);
+                this.state.bankLists["bank-list-"+filling.suggestedWeek].contents.push(filling.uid);
             }
         })
 
@@ -397,8 +397,9 @@ class SandwichBuilderWeekly extends React.Component {
         // The row will contain a column containing the planLists for the week, and a column containing
         // the bank for the week.
         for (let week = 0; week < this.props.sandwich.nWeeks; week++) {
-                   
+            let totalDurationOfFillings = 0;
             finalComponents.push(<WeekDivider key={"week-divider-" + week}>{"Week " + (week + 1)}</WeekDivider>)
+
 
             let planCol = <div className="col-6">{fillingListComponents[week]}</div>;
             
@@ -406,7 +407,7 @@ class SandwichBuilderWeekly extends React.Component {
             let bankCol = <div className="col-6">
                 <FillingBank
                     key={bankListObj.id}
-                    displayTitle={"Suggested Fillings for Week " + (week + 1)}
+                    displayTitle={"Suggested Fillings"}
                     listID={bankListObj.id}
                     sandwich={this.props.sandwich}
                     contents={bankListObj.contents}

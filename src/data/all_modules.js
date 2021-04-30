@@ -31,6 +31,7 @@ var data = {
                     isRequired: true,
                     suggested_week: 0,
                     suggested_day: 0,
+                    duration: 15,
                 },
                 {
                     id: "filling-intro-machine-percept",
@@ -39,6 +40,7 @@ var data = {
                     isRequired: true,
                     suggested_week: 0,
                     suggested_day: 1,
+                    duration: 15,
 
                 },
                 {
@@ -46,8 +48,19 @@ var data = {
                     title: "Community Presentation",
                     type: "bottom-bun",
                     isRequired: true,
-                    suggested_week: 3,
-                    suggested_day: 3,
+                    suggested_week: 2,
+                    suggested_day: 2,
+                    duration: 15,
+
+                },
+                {
+                    id: "filling-debugging",
+                    title: "Intro to Debugging",
+                    type: "filling",
+                    isRequired: false,
+                    suggested_week: 0,
+                    duration: 15,
+
                 },
                 {
                     id: "filling-fine-tuning-models",
@@ -55,6 +68,8 @@ var data = {
                     type: "filling",
                     isRequired: false,
                     suggested_week: 2,
+                    duration: 15,
+
                 },
                 {
                     id: "filling-testing-models",
@@ -62,6 +77,8 @@ var data = {
                     type: "filling",
                     isRequired: false,
                     suggested_week: 2,
+                    duration: 15,
+
                 },
                 {
                     id: "filling-bias",
@@ -69,6 +86,8 @@ var data = {
                     type: "filling",
                     isRequired: false,
                     suggested_week: 1,
+                    duration: 15,
+
                 }
 
             ],

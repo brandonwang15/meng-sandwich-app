@@ -18,14 +18,25 @@ const ListTitle = styled.h4`
 
 `;
 
+const DurationTotal = styled.div`
+    font-weight: bold;
+    margin-bottom: 10px;
+`;
+
 class FillingList extends React.Component {
 
     render() {
         console.log("FillingList.props = ", this.props);
         
+        let totalDurationOfFillings = 0;
+        this.props.contents.forEach(fillingId => {
+            totalDurationOfFillings += this.props.sandwich.allFillings[fillingId].duration;
+        });
+
         return (
             <Container>
                 <ListTitle>{this.props.displayTitle}</ListTitle>
+                <DurationTotal>{"Total: "+ totalDurationOfFillings + " min."}</DurationTotal>
                 <Droppable droppableId={this.props.listID}>
                     {(providedDroppable) => {
                         return (
