@@ -367,8 +367,13 @@ class SandwichBuilderWeekly extends React.Component {
     render() {
         console.log("sandwich: ", this.props.sandwich)
 
-        let fillingListComponents = [];
+        // Generate the components to hold each week's plan lists
+        let fillingListComponents = {}; 
+        for (let i = 0; i < this.props.sandwich.nWeeks; i++) {
+            fillingListComponents[i] = [];
+        }
 
+        // Note: this assumes that we iterate in ascending order by week and then day
         for (const planListId in this.state.planLists) {
 
             let obj = this.state.planLists[planListId];
@@ -376,13 +381,7 @@ class SandwichBuilderWeekly extends React.Component {
             week = parseInt(week);
             day = parseInt(day);
 
-            if (day === 0) {
-                fillingListComponents.push(
-                    <WeekDivider key={"week-divider-"+week}>{"Week "+ (week +1)}</WeekDivider>
-                );
-            }
-
-            fillingListComponents.push(<FillingList
+            fillingListComponents[week].push(<FillingList
                 key={obj.id}
                 displayTitle={"Day " + (day + 1)}
                 listID={obj.id}
@@ -392,35 +391,41 @@ class SandwichBuilderWeekly extends React.Component {
 
         }
 
+        let finalComponents = [];
+
+        // Generate the final layout by creating a row for each week.
+        // The row will contain a column containing the planLists for the week, and a column containing
+        // the bank for the week.
+        for (let week = 0; week < this.props.sandwich.nWeeks; week++) {
+                   
+            finalComponents.push(<WeekDivider key={"week-divider-" + week}>{"Week " + (week + 1)}</WeekDivider>)
+
+            let planCol = <div className="col-6">{fillingListComponents[week]}</div>;
+            
+            let bankListObj = this.state.bankLists["bank-list-"+week];
+            let bankCol = <div className="col-6">
+                <FillingBank
+                    key={bankListObj.id}
+                    displayTitle={"Suggested Fillings for Week " + (week + 1)}
+                    listID={bankListObj.id}
+                    sandwich={this.props.sandwich}
+                    contents={bankListObj.contents}
+                />
+            </div>;
+
+            finalComponents.push(<div className="row text-center">{planCol}{bankCol}</div>)
+        }
+
         return (
             <>
                 <div className="container">
                     <div className="row">
                         <div className="col-9 text-left">
-                            <div className="row text-center">
-                                <DragDropContext onDragEnd={this.onDragEnd}>
-                                    <div className="col-6">
-                                        {fillingListComponents}
-
-                                    </div>
-                                    <div className="col-6">
-                                        {Object.entries(this.state.bankLists).map((tuple, index) => {
-                                            let obj = tuple[1];
-                                            return <FillingBank
-                                                key={obj.id}
-                                                displayTitle={"Suggested Fillings for Week " + (index + 1)}
-                                                listID={obj.id}
-                                                sandwich={this.props.sandwich}
-                                                contents={obj.contents}
-                                            />
-                                        })}
-
-                                        {/* <FillingBank id={"A"} sandwichID={this.props.sandwich.uid} fillingIDs={fillings}/> */}
-                                    </div>
-                                </DragDropContext>
-                            </div>
+                            <DragDropContext onDragEnd={this.onDragEnd}>
+                                {finalComponents}
+                            </DragDropContext>
                         </div>
-
+                        
                         <div className="col-3">
                             <NutritionFacts sandwichData={[this.props.sandwich]} />
                         </div>
