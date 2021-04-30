@@ -5,14 +5,12 @@ import React, { Component } from "react";
 import { DndProvider } from 'react-dnd'
 import { HTML5Backend } from 'react-dnd-html5-backend'
 
-
-import NutritionFacts from "../modules/NutritionFacts";
 import CondimentCard from "../modules/CondimentCard";
-import SandwichFrame from "../modules/sandwich/SandwichFrame";
-import FillingsBank from "../modules/sandwich/FillingsBank";
 
 import PropTypes from 'prop-types';
 import SandwichBuilderWeekly from "../modules/sandwich-builder-v2/SandwichBuilderWeekly";
+import LearningGoalsDisplay from "../modules/sandwich-builder-v2/LearningGoalsDisplay";
+
 
 import styled from "styled-components";
 
@@ -32,6 +30,18 @@ const Subheading = styled.h4`
     text-align: left;
 `;
 
+const LearningGoalCategory = styled.div`
+    margin-bottom: 20px;
+`;
+
+const LearningGoalContent = styled.div`
+    text-align: left;
+`;
+
+const LearningSubgoals = styled.div`
+    font-size: small;
+`;
+
 const BuilderContainer = styled.div`
     border: 1px solid lightgray;
     padding: 20px;
@@ -46,6 +56,7 @@ class SandwichPage extends React.Component {
                     <div className="container">
                         <MainHeading>{this.props.sandwich.title}</MainHeading>
                         <Subheading>At a glance:</Subheading>
+                        <LearningGoalsDisplay sandwich={this.props.sandwich}/>
                         <InfoBox className="row">
                             <div className="col">
                                 <div className="row">
@@ -89,7 +100,7 @@ class SandwichPage extends React.Component {
 
                         <Subheading>Customize it!</Subheading>
                         <BuilderContainer className="row">
-                                <SandwichBuilderWeekly sandwich={this.props.sandwich} />
+                            <SandwichBuilderWeekly sandwich={this.props.sandwich} />
                         </BuilderContainer>
 
 

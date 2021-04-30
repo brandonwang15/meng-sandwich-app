@@ -6,6 +6,12 @@ class CustomSandwichData {
     this.tags = rawJSON.tags;
     this.resources = rawJSON.resources;
     
+    this.learningGoals = rawJSON.learning_goals;
+    this.toothpick = rawJSON.toothpick;
+    this.drivingQuestion = rawJSON.driving_question;
+    this.projectQuestion = rawJSON.project_question;
+
+
     this.allFillings = {}; // filling_id -> SandwichFillingData map 
     if ("fillings" in rawJSON) {
       rawJSON.fillings.forEach((rawJSON) => {

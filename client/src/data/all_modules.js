@@ -9,6 +9,9 @@ var data = {
                 "Scratch",
                 "plugged"
             ],
+            "toothpick": "Creating an interactive public art exhibit using AI tools.",
+            "driving_question": "driving question todo",
+            "project_question": "project question todo",
             "numWeeks": 3,
             "resources": [
                 {
@@ -20,7 +23,7 @@ var data = {
                     "text": "Here's a PDF!",
                 }
             ],
-            weekly_hours: [5,5,5],
+            weekly_hours: [5, 5, 5],
             // TODO: think about how to represent fillings. Will they be stored in another file and linked via id?
             // For now, view these entries as stubs.
             "fillings": [
@@ -100,7 +103,58 @@ var data = {
                 }
 
             ],
-            "suggested_condiments": [1,2],
+            "learning_goals": {
+                knowledge: { // 1st level category
+                    title: "Knowledge",
+                    goals: [ // 2nd level category
+                        {
+                            title: "Perception", // atomic learning goal
+                            type: "AI",
+                            description: "Explain how images &/or audio is perceived from the surroundings and represented digitally in a computer.",
+                            subgoals: [ // learning goal subgoals
+                                "Computers used sensors to perceive the world around them: cameras are used to sense images and microphones are used to sense sounds from the environment.",
+                                "Images are encoded as 2D arrays of pixels, where each pixel is a number indicating the brightness of that piece of the image, or an RGB value indicating the brightness of the red, green, and blue components of that piece",
+                                "Sounds are digitally encoded by sampling the waveform at discrete points (typically several thousand samples per second), yielding a series of numbers.",
+
+                            ]
+                        },
+                        {
+                            title: "Learning",
+                            type: "AI",
+                            description: "Explain how machines classify two different types of media from a dataset. ",
+                            subgoals: [
+                                "Computers take collections of media (such as images) as input datasets.",
+                                "Computers learn to identify visual features in the images to learn to form classes or categories of images from this training data.",
+                            ]
+                        },
+                        {
+                            title: "Natural Interaction",
+                            type: "AI",
+                            description: "Explain how humans and machines interact with each other and the kinds of knowledge that machines require to interact with humans",
+                            subgoals: [
+                                "Identify what data computers use to interact with humans",
+                            ]
+                        }
+                    ]
+
+                },
+                skills: {
+                    title: "Skills",
+                    goals: [
+                        {
+                            title: "Stakeholders",
+                            type: "DT",
+                            description: "Identify stakeholders and their needs and goals. Gather information from users and other sources that will help them understand the experiences, emotions, and motivations of users.",
+                            subgoals: [],
+                        }
+                    ]
+                },
+                attitudes: {
+                    title: "Attitudes",
+                    goals: [],
+                }
+            },
+            "suggested_condiments": [1, 2],
             "example_student_projects": [
                 {
                     "title": "Example Student Project 1",
@@ -109,14 +163,73 @@ var data = {
             ]
         },
         {
-            "uid": 2,
-            "title": "v2 Cities of the Future",
-            "short_description": "Students envision what their communities will look like in the future, and create demonstrations that incorporate automation.",
+            "uid": 1,
+            "title": "Interactive Public Art",
+            "short_description": "Students explore AI tools that meld creativity and technology and partner with stakeholders in their community to design and create a public art installation.",
             "tags": [
                 "algorithms",
                 "Scratch",
                 "plugged"
             ],
+            "toothpick": "Creating an interactive public art exhibit using AI tools.",
+            "driving_question": "driving question todo",
+            "project_question": "project question todo",
+            "learning_goals": {
+                knowledge: { // 1st level category
+                    title: "Knowledge",
+                    goals: [ // 2nd level category
+                        {
+                            title: "Perception", // atomic learning goal
+                            type: "AI",
+                            description: "Explain how images &/or audio is perceived from the surroundings and represented digitally in a computer.",
+                            subgoals: [ // learning goal subgoals
+                                "Computers used sensors to perceive the world around them: cameras are used to sense images and microphones are used to sense sounds from the environment.",
+                                "Images are encoded as 2D arrays of pixels, where each pixel is a number indicating the brightness of that piece of the image, or an RGB value indicating the brightness of the red, green, and blue components of that piece",
+                                "Sounds are digitally encoded by sampling the waveform at discrete points (typically several thousand samples per second), yielding a series of numbers.",
+
+                            ]
+                        },
+                        {
+                            title: "Learning",
+                            type: "AI",
+                            description: "Explain how machines classify two different types of media from a dataset. ",
+                            subgoals: [
+                                "Computers take collections of media (such as images) as input datasets.",
+                                "Computers learn to identify visual features in the images to learn to form classes or categories of images from this training data.",
+                            ]
+                        },
+                        {
+                            title: "Natural Interaction",
+                            type: "AI",
+                            description: "Explain how humans and machines interact with each other and the kinds of knowledge that machines require to interact with humans",
+                            subgoals: [
+                                "Identify what data computers use to interact with humans",
+                            ]
+                        }
+                    ]
+
+                },
+                skills: {
+                    title: "Skills",
+                    goals: [
+                        {
+                            title: "Stakeholders",
+                            type: "DT",
+                            description: "Identify stakeholders and their needs and goals. Gather information from users and other sources that will help them understand the experiences, emotions, and motivations of users.",
+                            subgoals: [],
+                        }
+                    ]
+                },
+                attitudes: {
+                    title: "Attitudes",
+                    goals: [ {
+                        title: "Students will identify more as AI creators",
+                        type: "",
+                        description: "",
+                        subgoals: [],
+                    }],
+                }
+            },
             "numWeeks": 3,
             "resources": [
                 {
@@ -128,7 +241,7 @@ var data = {
                     "text": "Here's a PDF!",
                 }
             ],
-            weekly_hours: [5,5,5],
+            weekly_hours: [5, 5, 5],
             // TODO: think about how to represent fillings. Will they be stored in another file and linked via id?
             // For now, view these entries as stubs.
             "fillings": [
@@ -208,7 +321,7 @@ var data = {
                 }
 
             ],
-            "suggested_condiments": [1,2],
+            "suggested_condiments": [1, 2],
             "example_student_projects": [
                 {
                     "title": "Example Student Project 1",
