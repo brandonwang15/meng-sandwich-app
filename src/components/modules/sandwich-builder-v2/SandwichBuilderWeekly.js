@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-
+import { connect } from 'react-redux'
 import { DragDropContext } from 'react-beautiful-dnd';
 
 import NutritionFacts from "../NutritionFacts";
@@ -9,6 +9,9 @@ import FillingList from "./FillingList";
 import PropTypes from 'prop-types';
 
 import styled from 'styled-components';
+import store from "../../../store";
+import { builderMoveFilling } from '../../../actions'
+
 
 const WeekDivider = styled.h3`
     margin-top: 20px;
@@ -30,288 +33,11 @@ class SandwichBuilderWeekly extends React.Component {
 
     constructor(props) {
         super(props);
-        const sandwich = props.sandwich;
-
-        this.state = {
-            planLists: {}, // entries for each day
-            bankLists: {}, // entries in each bank
-        }
-
-        console.log("PROPS.sandwich", sandwich);
-
-        for (let i = 0; i < sandwich.nWeeks; i++) {
-
-            for (let day = 0; day < sandwich.daysInWeek; day++) {
-                let listId = "plan-list-" + i + "-" + day;
-                this.state.planLists[listId] = {
-                    id: listId,
-                    contents: [], // filling ids
-                };
-            }
-
-            let bankId = "bank-list-" + i;
-            this.state.bankLists[bankId] = {
-                id: bankId,
-                contents: [], // filling ids
-            };
-        }
-
-        console.log("SandwichBuilderWeekly.state", this.state);
-
-        // Seed initial fillings for the list from the required fillings
-        Object.entries(props.sandwich.allFillings).forEach(tuple => {
-            let filling = tuple[1];
-            if (filling.isRequired) {
-                this.state.planLists["plan-list-"+filling.suggestedWeek+"-"+filling.suggestedDay].contents.push(filling.uid);
-            }
-        })
-
-        // Seed the bank with optional fillings
-        Object.entries(props.sandwich.allFillings).forEach(tuple => {
-            let filling = tuple[1];
-            if (!filling.isRequired) {
-                this.state.bankLists["bank-list-"+filling.suggestedWeek].contents.push(filling.uid);
-            }
-        })
 
         // Bind class functions
         this.onDragEnd = this.onDragEnd.bind(this);
-        this.dragBetweenLists = this.dragBetweenPlanLists.bind(this);
-        this.dragWithinList = this.dragWithinPlanList.bind(this);
-        this.dragWithinBankList = this.dragWithinBankList.bind(this);
-        this.dragBetweenDifferentTypedLists = this.dragBetweenDifferentTypedLists.bind(this);
 
     }
-
-    dragBetweenPlanLists(result) {
-        const { destination, source, draggableId } = result;
-
-        // Check if no-op
-        if (!destination) {
-            return;
-        }
-
-        if (destination.droppableId === source.droppableId && destination.index === source.index) {
-            return;
-        }
-
-        // Get the source list and destination list
-        let sourceObj = this.state.planLists[result.source.droppableId];
-        let destinationObj = this.state.planLists[result.destination.droppableId];
-
-        // Get the object that was dragged
-        let draggableObj = sourceObj.contents[source.index];
-
-
-        const newSourceContents = Array.from(sourceObj.contents);
-        const newDestinationContents = Array.from(destinationObj.contents);
-
-        // Remove element from source        
-        newSourceContents.splice(source.index, 1);
-        // Insert element at destination
-        newDestinationContents.splice(destination.index, 0, draggableObj);
-
-        const newSourceObj = {
-            ...sourceObj,
-            contents: newSourceContents,
-        }
-
-        const newDestinationObj = {
-            ...destinationObj,
-            contents: newDestinationContents,
-        }
-
-        const newState = {
-            planLists: {
-                ...this.state.planLists,
-                [newSourceObj.id]: newSourceObj,
-                [newDestinationObj.id]: newDestinationObj,
-            }
-        }
-
-        console.log("New state after drag: ", newState);
-
-        this.setState(newState);
-
-    }
-
-    dragWithinPlanList(result) {
-        const { destination, source, draggableId } = result;
-        // Check if no-op
-        if (!destination) {
-            return;
-        }
-
-        if (destination.droppableId === source.droppableId && destination.index === source.index) {
-            return;
-        }
-
-        // Get the list
-        let sourceObj = this.state.planLists[result.source.droppableId];
-
-        // Get the object that was dragged
-        let draggableObj = sourceObj.contents[source.index];
-
-        const newSourceContents = Array.from(sourceObj.contents);
-
-        // Remove element from old index and insert at new index  
-        newSourceContents.splice(source.index, 1);
-        newSourceContents.splice(destination.index, 0, draggableObj);
-
-        const newSourceObj = {
-            ...sourceObj,
-            contents: newSourceContents,
-        }
-
-        const newState = {
-            planLists: {
-                ...this.state.planLists,
-                [newSourceObj.id]: newSourceObj,
-            }
-        }
-
-        console.log("New state after drag: ", newState);
-
-        this.setState(newState);
-    }
-
-    dragWithinBankList(result) {
-        const { destination, source, draggableId } = result;
-        // Check if no-op
-        if (!destination) {
-            return;
-        }
-
-        if (destination.droppableId === source.droppableId && destination.index === source.index) {
-            return;
-        }
-
-        // Get the list
-        let sourceObj = this.state.bankLists[result.source.droppableId];
-
-        // Get the object that was dragged
-        let draggableObj = sourceObj.contents[source.index];
-
-        const newSourceContents = Array.from(sourceObj.contents);
-
-        // Remove element from old index and insert at new index  
-        newSourceContents.splice(source.index, 1);
-        newSourceContents.splice(destination.index, 0, draggableObj);
-
-        const newSourceObj = {
-            ...sourceObj,
-            contents: newSourceContents,
-        }
-
-        const newState = {
-            bankLists: {
-                ...this.state.bankLists,
-                [newSourceObj.id]: newSourceObj,
-            }
-        }
-
-        console.log("New state after drag: ", newState);
-
-        this.setState(newState);
-    }
-
-    dragBetweenDifferentTypedLists(result) {
-        const { destination, source, draggableId } = result;
-
-        // Check if no-op
-        if (!destination) {
-            return;
-        }
-
-        if (destination.droppableId === source.droppableId && destination.index === source.index) {
-            return;
-        }
-
-        // Get the source list and destination list
-        let sourceType = result.source.droppableId.substring(0, 4);
-        let destinationType = result.destination.droppableId.substring(0, 4);
-
-
-        let sourceObj;
-        let destinationObj;
-
-        switch (sourceType) {
-            case "plan":
-                sourceObj = this.state.planLists[result.source.droppableId];
-                break;
-            case "bank":
-                sourceObj = this.state.bankLists[result.source.droppableId];
-                break;
-            default:
-                throw "unrecognized type: " + sourceType;
-        }
-
-        switch (destinationType) {
-            case "plan":
-                destinationObj = this.state.planLists[result.destination.droppableId];
-                break;
-            case "bank":
-                destinationObj = this.state.bankLists[result.destination.droppableId];
-                break;
-            default:
-                throw "unrecognized type: " + sourceType;
-        }
-
-        // Get the object that was dragged
-        let draggableObj = sourceObj.contents[source.index];
-
-        const newSourceContents = Array.from(sourceObj.contents);
-        const newDestinationContents = Array.from(destinationObj.contents);
-
-        // Remove element from source        
-        newSourceContents.splice(source.index, 1);
-        // Insert element at destination
-        newDestinationContents.splice(destination.index, 0, draggableObj);
-
-        const newSourceObj = {
-            ...sourceObj,
-            contents: newSourceContents,
-        }
-
-        const newDestinationObj = {
-            ...destinationObj,
-            contents: newDestinationContents,
-        }
-
-        let newState;
-        if (sourceType === "plan" && destinationType === "bank") {
-            newState = {
-                planLists: {
-                    ...this.state.planLists,
-                    [newSourceObj.id]: newSourceObj,
-                },
-                bankLists: {
-                    ...this.state.bankLists,
-                    [newDestinationObj.id]: newDestinationObj,
-                }
-            }
-
-        } else if (sourceType === "bank" && destinationType === "plan") {
-            newState = {
-                planLists: {
-                    ...this.state.planLists,
-                    [newDestinationObj.id]: newDestinationObj,
-                },
-                bankLists: {
-                    ...this.state.bankLists,
-                    [newSourceObj.id]: newSourceObj,
-                }
-            }
-        } else {
-            throw "Unexpected combination of source and destination types: " + sourceType + ", " + destinationType;
-        }
-
-        console.log("New state after drag: ", newState);
-
-        this.setState(newState);
-
-    }
-
 
     onDragEnd(result) {
         // TODO: implement
@@ -334,34 +60,12 @@ class SandwichBuilderWeekly extends React.Component {
         const sameList = destination.droppableId === source.droppableId;
         const sameListType = destinationListType === sourceListType;
 
-        if (sameList) {
-            if (destinationListType == "plan") {
-                this.dragWithinPlanList(result);
-                return;
-            } else if (destinationListType == "bank") {
-                this.dragWithinBankList(result);
-                return;
-            } else {
-                throw "unrecognized list type: " + destinationListType;
-            }
-        } else {
-            if (destinationListType == sourceListType) {
-                if (destinationListType == "plan") {
-                    this.dragBetweenPlanLists(result);
-                    return;
-                } else if (destinationListType == "bank") {
-                    return; // no-op, we don't allow dragging between bank lists
-                } else {
-                    throw "unrecognized list type: " + destinationListType;
-                }
-            }
-
-            // TODO: Handle dragging between list types
-            this.dragBetweenDifferentTypedLists(result);
-            return;
-        }
-
-        throw "should never get here";
+        store.dispatch(builderMoveFilling(
+            this.props.sandwich.uid, 
+            source.droppableId, 
+            destination.droppableId, 
+            source.index, 
+            destination.index));
     }
 
     render() {
@@ -374,9 +78,9 @@ class SandwichBuilderWeekly extends React.Component {
         }
 
         // Note: this assumes that we iterate in ascending order by week and then day
-        for (const planListId in this.state.planLists) {
+        for (const planListId in this.props.builderState.planLists) {
 
-            let obj = this.state.planLists[planListId];
+            let obj = this.props.builderState.planLists[planListId];
             let [week, day] = this.parsePlanListId(planListId);
             week = parseInt(week);
             day = parseInt(day);
@@ -403,7 +107,7 @@ class SandwichBuilderWeekly extends React.Component {
 
             let planCol = <div className="col-6">{fillingListComponents[week]}</div>;
             
-            let bankListObj = this.state.bankLists["bank-list-"+week];
+            let bankListObj = this.props.builderState.bankLists["bank-list-"+week];
             let bankCol = <div className="col-6">
                 <FillingBank
                     key={bankListObj.id}
@@ -437,8 +141,14 @@ class SandwichBuilderWeekly extends React.Component {
     }
 }
 
+function mapStateToProps(state, props) {
+    return {
+        builderState: state.sandwichBuilder[props.sandwich.uid]
+    };
+}
+
 SandwichBuilderWeekly.propTypes = {
     sandwich: PropTypes.object.isRequired,
 }
 
-export default SandwichBuilderWeekly;
+export default connect(mapStateToProps)(SandwichBuilderWeekly);

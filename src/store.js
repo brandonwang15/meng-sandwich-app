@@ -28,15 +28,59 @@ function setRequiredFillings(sandwichObject) {
 
 }
 
+function initialStoreStateForSandwichBuilder(sandwich) {
+    const state = {
+        planLists: {}, // entries for each day
+        bankLists: {}, // entries in each bank
+    }
+
+    for (let i = 0; i < sandwich.nWeeks; i++) {
+
+        for (let day = 0; day < sandwich.daysInWeek; day++) {
+            let listId = "plan-list-" + i + "-" + day;
+            state.planLists[listId] = {
+                id: listId,
+                contents: [], // filling ids
+            };
+        }
+
+        let bankId = "bank-list-" + i;
+        state.bankLists[bankId] = {
+            id: bankId,
+            contents: [], // filling ids
+        };
+    }
+
+    // Seed initial fillings for the list from the required fillings
+    Object.entries(sandwich.allFillings).forEach(tuple => {
+        let filling = tuple[1];
+        if (filling.isRequired) {
+            state.planLists["plan-list-"+filling.suggestedWeek+"-"+filling.suggestedDay].contents.push(filling.uid);
+        }
+    })
+
+    // Seed the bank with optional fillings
+    Object.entries(sandwich.allFillings).forEach(tuple => {
+        let filling = tuple[1];
+        if (!filling.isRequired) {
+            state.bankLists["bank-list-"+filling.suggestedWeek].contents.push(filling.uid);
+        }
+    })
+
+    return state;
+}
+
 function createInitialReduxStoreState() {
-    let initialState = {sandwiches: {}};
+    let initialState = {sandwiches: {}, sandwichBuilder: {}};
   
     data.all_modules.forEach((rawJSON) => {
       let sandwich = new CustomSandwichData(rawJSON);
       initialState.sandwiches[sandwich.uid] = sandwich;
+      initialState.sandwichBuilder[sandwich.uid] = initialStoreStateForSandwichBuilder(sandwich);
     })
   
-    console.log("initial state: ", initialState);
+
+    console.log("initial redux store state: ", initialState);
   
     return initialState
   }

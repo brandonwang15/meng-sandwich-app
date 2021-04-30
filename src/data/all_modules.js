@@ -34,6 +34,123 @@ var data = {
                     duration: 15,
                 },
                 {
+                    id: "filling-intro-to-qft",
+                    title: "Intro to QFT",
+                    type: "top-bun",
+                    isRequired: true,
+                    suggested_week: 0,
+                    suggested_day: 0,
+                    duration: 15,
+                },
+                {
+                    id: "filling-intro-machine-percept",
+                    title: "Intro to machine perception",
+                    type: "filling",
+                    isRequired: true,
+                    suggested_week: 0,
+                    suggested_day: 1,
+                    duration: 15,
+
+                },
+                {
+                    id: "filling-comm-preso",
+                    title: "Community Presentation",
+                    type: "bottom-bun",
+                    isRequired: true,
+                    suggested_week: 2,
+                    suggested_day: 2,
+                    duration: 15,
+
+                },
+                {
+                    id: "filling-debugging",
+                    title: "Intro to Debugging",
+                    type: "filling",
+                    isRequired: false,
+                    suggested_week: 0,
+                    duration: 15,
+
+                },
+                {
+                    id: "filling-fine-tuning-models",
+                    title: "Fine-tuning models",
+                    type: "filling",
+                    isRequired: false,
+                    suggested_week: 2,
+                    duration: 15,
+
+                },
+                {
+                    id: "filling-testing-models",
+                    title: "Testing your model",
+                    type: "filling",
+                    isRequired: false,
+                    suggested_week: 2,
+                    duration: 15,
+
+                },
+                {
+                    id: "filling-bias",
+                    title: "Bias activity",
+                    type: "filling",
+                    isRequired: false,
+                    suggested_week: 1,
+                    duration: 15,
+
+                }
+
+            ],
+            "suggested_condiments": [1,2],
+            "example_student_projects": [
+                {
+                    "title": "Example Student Project 1",
+                    "url": "/studentproject/1"
+                }
+            ]
+        },
+        {
+            "uid": 2,
+            "title": "v2 Cities of the Future",
+            "short_description": "Students envision what their communities will look like in the future, and create demonstrations that incorporate automation.",
+            "tags": [
+                "algorithms",
+                "Scratch",
+                "plugged"
+            ],
+            "numWeeks": 3,
+            "resources": [
+                {
+                    "url": "/sandwich/1/image.png",
+                    "text": "Sandwich picture.",
+                },
+                {
+                    "url": "/sandwich/1/test.pdf",
+                    "text": "Here's a PDF!",
+                }
+            ],
+            weekly_hours: [5,5,5],
+            // TODO: think about how to represent fillings. Will they be stored in another file and linked via id?
+            // For now, view these entries as stubs.
+            "fillings": [
+                {
+                    id: "filling-launch",
+                    title: "Project Launch",
+                    type: "top-bun",
+                    isRequired: true,
+                    suggested_week: 0,
+                    suggested_day: 0,
+                    duration: 15,
+                },
+                {
+                    id: "filling-intro-to-qft",
+                    title: "Intro to QFT",
+                    type: "top-bun",
+                    isRequired: true,
+                    suggested_week: 0,
+                    suggested_day: 0,
+                    duration: 15,
+                },
+                {
                     id: "filling-intro-machine-percept",
                     title: "Intro to machine perception",
                     type: "filling",
