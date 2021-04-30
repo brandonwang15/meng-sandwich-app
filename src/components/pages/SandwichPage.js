@@ -14,6 +14,30 @@ import FillingsBank from "../modules/sandwich/FillingsBank";
 import PropTypes from 'prop-types';
 import SandwichBuilderWeekly from "../modules/sandwich-builder-v2/SandwichBuilderWeekly";
 
+import styled from "styled-components";
+
+const InfoBox = styled.div`
+    border: 1px solid lightgray;
+    padding: 10px;
+    margin-bottom: 20px;
+`;
+
+const MainHeading = styled.h1`
+    margin-top: 20px;
+    margin-left: 10%;
+    margin-left: 10%;
+`;
+
+const Subheading = styled.h4`
+    text-align: left;
+`;
+
+const BuilderContainer = styled.div`
+    border: 1px solid lightgray;
+    margin: 0px;
+    padding: 20px;
+`;
+
 class SandwichPage extends React.Component {
     render() {
 
@@ -21,17 +45,11 @@ class SandwichPage extends React.Component {
             <DndProvider backend={HTML5Backend}>
                 <>
                     <div className="container">
-                        <div className="row Page-title">
-                            <div className="col-sm">
-                                <h1>{this.props.sandwich.title}</h1>
-                            </div>
-                        </div>
-                        <hr />
-                        <div className="row">
-                            <SandwichBuilderWeekly sandwich={this.props.sandwich} />
-                        </div>
-
-                        <div className="row">
+                        <MainHeading>{this.props.sandwich.title}</MainHeading>
+                        <Subheading>At a glance:</Subheading>
+                        <InfoBox className="row">
+                            <div className="col">
+                                <div className="row">
                                     Tags: {this.props.sandwich.tags.join(", ")}
                                 </div>
                                 <div className="row">
@@ -39,10 +57,10 @@ class SandwichPage extends React.Component {
                                 </div>
                                 <div className="row">
                                     Grade versions:
-                        </div>
+                                </div>
                                 <div className="row">
                                     Related Modules:
-                        </div>
+                                </div>
 
                                 <div className="row">
                                     Suggested Condiments:
@@ -51,18 +69,33 @@ class SandwichPage extends React.Component {
                                 </div>) :
                                         <div className="col">None</div>}
                                 </div>
+                            </div>
 
-                                <div className="row text-center">
-                                    <div className="col">
-                                        <h4> Resources:</h4>
-                                        {this.props.sandwich.resources.map((resource, index) => <div className="container" key={index}>
-                                            <a key={index} href={process.env.PUBLIC_URL + resource.url}>{resource.text}</a>
-                                        </div>)}
-                                        <div className="container">
-                                            <a href={process.env.PUBLIC_URL + "/sandwich/" + this.props.sandwich.uid + "/sandwich-" + this.props.sandwich.uid + ".zip"} className="btn btn-info" role="button">.ZIP File</a>
-                                        </div>
-                                    </div>
+                            <div className="col">
+
+                                <div className="row">
+                                    <h6>Additional Resources:</h6>
                                 </div>
+                                {this.props.sandwich.resources.map((resource, index) =>
+                                    <div className="row">
+                                        <a key={index} href={process.env.PUBLIC_URL + resource.url}>{resource.text}</a>
+                                    </div>
+                                )}
+                                {/* <div className="row">
+                                        <a href={process.env.PUBLIC_URL + "/sandwich/" + this.props.sandwich.uid + "/sandwich-" + this.props.sandwich.uid + ".zip"} className="btn btn-info" role="button">.ZIP File</a>
+                                    </div> */}
+                            </div>
+
+                        </InfoBox>
+
+                        <Subheading>Customize it!</Subheading>
+                        <div className="row">
+                            <BuilderContainer>
+                                <SandwichBuilderWeekly sandwich={this.props.sandwich} />
+                            </BuilderContainer>
+                        </div>
+
+
 
                     </div>
                 </>
