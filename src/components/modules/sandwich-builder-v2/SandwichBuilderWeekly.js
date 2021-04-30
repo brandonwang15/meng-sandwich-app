@@ -11,6 +11,7 @@ import PropTypes from 'prop-types';
 import styled from 'styled-components';
 import store from "../../../store";
 import { builderMoveFilling } from '../../../actions'
+import WeeklySandwichNutritionFacts from "./WeeklySandwichNutritionFacts";
 
 
 const WeekDivider = styled.h3`
@@ -130,7 +131,7 @@ class SandwichBuilderWeekly extends React.Component {
                 </div>
 
                 <div className="col-3">
-                    <NutritionFacts sandwichData={[this.props.sandwich]} />
+                    <WeeklySandwichNutritionFacts sandwichId={[this.props.sandwich.uid]} />
                 </div>
             </>
         )
