@@ -24,31 +24,37 @@ class LearningGoalsDisplay extends React.Component {
     render() {
 
         return (
-            <InfoBox className="row">
-                <div className="col">
-                    Driving question: <em>{this.props.sandwich.drivingQuestion}</em><br />
-                                    Project question: <em>{this.props.sandwich.projectQuestion}</em><br />
-                    {Object.entries(this.props.sandwich.learningGoals).map(tuple => {
-                        let obj = tuple[1];
-                        let subComponents = obj.goals.map(goal =>
-                            <LearningGoalContent>
-                                <b>{goal.title} {goal.type !== "" ? "(" + goal.type + ")" : ""}</b>
-                                <div>{goal.description}</div>
-                                <LearningSubgoals>
-                                    <ul>
-                                        {goal.subgoals.map(subgoal =>
-                                            <li>{subgoal}</li>
-                                        )}
-                                    </ul>
-                                </LearningSubgoals>
+            <div className="card">
+                <a className="card-header" data-toggle="collapse" href="#collapseInfo" role="button" aria-expanded="false" aria-controls="collapseInfo">
+                    Learning Goals
+                </a>
+                <div className="card-body collapse show" id="collapseInfo">
+                    <div className="row">
+                        <div className="col">
+                            {Object.entries(this.props.sandwich.learningGoals).map(tuple => {
+                                let obj = tuple[1];
+                                let subComponents = obj.goals.map(goal =>
+                                    <LearningGoalContent>
+                                        <b>{goal.title} {goal.type !== "" ? "(" + goal.type + ")" : ""}</b>
+                                        <div>{goal.description}</div>
+                                        <LearningSubgoals>
+                                            <ul>
+                                                {goal.subgoals.map(subgoal =>
+                                                    <li>{subgoal}</li>
+                                                )}
+                                            </ul>
+                                        </LearningSubgoals>
 
-                            </LearningGoalContent>
-                        )
-                        return <LearningGoalCategory><h5>{obj.title}</h5>{subComponents}</LearningGoalCategory>
+                                    </LearningGoalContent>
+                                )
+                                return <LearningGoalCategory><h5>{obj.title}</h5>{subComponents}</LearningGoalCategory>
 
-                    })}
+                            })}
+                        </div>
+                    </div>
                 </div>
-            </InfoBox>
+            </div>
+
         )
     }
 }

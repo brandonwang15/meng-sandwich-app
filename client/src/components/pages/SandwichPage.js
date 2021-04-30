@@ -56,7 +56,12 @@ class SandwichPage extends React.Component {
                     <div className="container">
                         <MainHeading>{this.props.sandwich.title}</MainHeading>
                         <Subheading>At a glance:</Subheading>
-                        <LearningGoalsDisplay sandwich={this.props.sandwich}/>
+                        <InfoBox className="row">
+                            <div>
+                                Driving question: <em>{this.props.sandwich.drivingQuestion}</em><br />
+                                Project question: <em>{this.props.sandwich.projectQuestion}</em><br />
+                            </div>
+                        </InfoBox>
                         <InfoBox className="row">
                             <div className="col">
                                 <div className="row">
@@ -97,6 +102,7 @@ class SandwichPage extends React.Component {
                             </div>
 
                         </InfoBox>
+                        <LearningGoalsDisplay sandwich={this.props.sandwich} />
 
                         <Subheading>Customize it!</Subheading>
                         <BuilderContainer className="row">
