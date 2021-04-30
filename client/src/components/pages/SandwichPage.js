@@ -102,7 +102,7 @@ class SandwichPage extends React.Component {
                             </div>
 
                         </InfoBox>
-                        <LearningGoalsDisplay sandwich={this.props.sandwich} />
+                        {/* <LearningGoalsDisplay sandwich={this.props.sandwich} /> */}
 
                         <Subheading>Customize it!</Subheading>
                         <BuilderContainer className="row">

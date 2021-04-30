@@ -11,6 +11,7 @@ import Home from './pages/Home';
 import AllModules from './pages/AllModules';
 import AllCondiments from './pages/AllCondiments';
 import BuildYourOwn from "./pages/BuildYourOwn";
+import SandwichExportPage from "./pages/SandwichExportPage";
 
 import data from "../data/all_modules";
 import AppContext from "./context/app_context";
@@ -196,12 +197,21 @@ class App extends React.Component {
 
 
               {
-                // TODO: generate Routes to the sandwich page for each sandwich
-                
+                // Sandwich builder pages
                 Object.entries(store.getState().sandwiches).map(tuple => {
                   let sandwich = tuple[1];
                   return <Route key={sandwich.uid} path={"/sandwich/" + sandwich.uid}>
                     <SandwichPage sandwich={sandwich} />
+                  </Route>
+                })
+              }
+
+                {
+                  // Sandwich export pages
+                Object.entries(store.getState().sandwiches).map(tuple => {
+                  let sandwich = tuple[1];
+                  return <Route key={+"export-"+sandwich.uid} path={"/sandwich/export/" + sandwich.uid}>
+                    <SandwichExportPage sandwichId={sandwich.uid} />
                   </Route>
                 })
               }

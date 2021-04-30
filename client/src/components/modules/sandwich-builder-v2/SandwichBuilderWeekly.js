@@ -1,17 +1,20 @@
 import React, { Component } from "react";
 import { connect } from 'react-redux'
 import { DragDropContext } from 'react-beautiful-dnd';
+import {
+    NavLink
+} from "react-router-dom";
 
-import NutritionFacts from "../NutritionFacts";
 import FillingBank from "./FillingBank";
 import FillingList from "./FillingList";
 
 import PropTypes from 'prop-types';
 
-import styled from 'styled-components';
-import store from "../../../store";
 import { builderMoveFilling } from '../../../actions'
 import WeeklySandwichNutritionFacts from "./WeeklySandwichNutritionFacts";
+
+import styled from 'styled-components';
+import store from "../../../store";
 
 
 const WeekDivider = styled.h3`
@@ -22,6 +25,10 @@ const WeekDivider = styled.h3`
     // padding-left: 10px;
     padding-bottom: 5px;
 `
+
+const ExportButtonContainer = styled.div`
+    padding: 10px;
+`;
 
 class SandwichBuilderWeekly extends React.Component {
 
@@ -139,7 +146,9 @@ class SandwichBuilderWeekly extends React.Component {
 
                 <div className="col-3">
                     <WeeklySandwichNutritionFacts sandwichId={[this.props.sandwich.uid]} />
-                    <button className="btn btn-primary" onClick={this.makeTestBackendRequest}>Send Test Request</button>
+                    <ExportButtonContainer>
+                        <NavLink className="btn btn-primary" to={"/sandwich/export/" + this.props.sandwich.uid }>Export</NavLink>
+                    </ExportButtonContainer>
                 </div>
             </>
         )
