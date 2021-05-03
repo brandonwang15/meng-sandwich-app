@@ -42,8 +42,6 @@ const DurationTotal = styled.div`
 class FillingList extends React.Component {
 
     render() {
-        console.log("FillingList.props = ", this.props);
-
         let totalDurationOfFillings = 0;
         this.props.contents.forEach(fillingId => {
             totalDurationOfFillings += this.props.sandwich.allFillings[fillingId].duration;

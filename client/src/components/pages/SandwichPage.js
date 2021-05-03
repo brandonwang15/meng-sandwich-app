@@ -80,7 +80,7 @@ class SandwichPage extends React.Component {
                                 <div className="row">
                                     Suggested Condiments:
                             {this.props.sandwich.suggested_condiments ? this.props.sandwich.suggested_condiments.map((uid) => <div className="col-sm" key={uid}>
-                                    <CondimentCard uid={uid} />
+                                    <CondimentCard key={uid} uid={uid} />
                                 </div>) :
                                         <div className="col">None</div>}
                                 </div>
@@ -92,7 +92,7 @@ class SandwichPage extends React.Component {
                                     <h6>Additional Resources:</h6>
                                 </div>
                                 {this.props.sandwich.resources.map((resource, index) =>
-                                    <div className="row">
+                                    <div key={index} className="row">
                                         <a key={index} href={process.env.PUBLIC_URL + resource.url}>{resource.text}</a>
                                     </div>
                                 )}
