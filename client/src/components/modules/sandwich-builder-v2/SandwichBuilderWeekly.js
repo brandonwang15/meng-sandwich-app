@@ -30,6 +30,10 @@ const ExportButtonContainer = styled.div`
     padding: 10px;
 `;
 
+const SetButton = styled.button`
+    margin: auto;
+`;
+
 class SandwichBuilderWeekly extends React.Component {
 
     // Parse a plan id string of the format: "plan-list-{week}-{day}"
@@ -42,16 +46,50 @@ class SandwichBuilderWeekly extends React.Component {
     constructor(props) {
         super(props);
 
+        this.state = {
+            nWeeks: 5,
+            daysPerWeek: 3,
+            weeksDaysNeedUpdate: false,
+        };
+
         // Bind class functions
         this.onDragEnd = this.onDragEnd.bind(this);
+        this.setWeekAndDays = this.setWeekAndDays.bind(this);
+        this.updateWeeksLabel = this.updateWeeksLabel.bind(this);
+        this.updateDaysLabel = this.updateDaysLabel.bind(this);
 
     }
 
     makeTestBackendRequest() {
         const url = "/test";
         fetch(url)
-            .then(data=>{return data.text()})
-            .then(res => {console.log("http response: ", res)});        
+            .then(data => { return data.text() })
+            .then(res => { console.log("http response: ", res) });
+    }
+
+    setWeekAndDays() {
+        console.log("setWeekAndDays() called: ", this.state.nWeeks, this.state.daysPerWeek);
+
+        this.setState({
+            weeksDaysNeedUpdate: false,
+        })
+ 
+    }
+
+    updateWeeksLabel(val) {
+        console.log("weeks: ", val);
+        this.setState({
+            nWeeks: parseInt(val),
+            weeksDaysNeedUpdate: true,
+        })
+    }
+
+    updateDaysLabel(val) {
+        console.log("days: ", val);
+        this.setState({
+            daysPerWeek: parseInt(val),
+            weeksDaysNeedUpdate: true,
+        })
     }
 
     onDragEnd(result) {
@@ -120,10 +158,10 @@ class SandwichBuilderWeekly extends React.Component {
             finalComponents.push(<WeekDivider key={"week-divider-" + week}>{"Week " + (week + 1)}</WeekDivider>)
 
 
-            let planCol = <div className="col-6">{fillingListComponents[week]}</div>;
+            let planCol = <div key="plan-col" className="col-6">{fillingListComponents[week]}</div>;
 
             let bankListObj = this.props.builderState.bankLists["bank-list-" + week];
-            let bankCol = <div className="col-6">
+            let bankCol = <div key="bank-col" className="col-6">
                 <FillingBank
                     key={bankListObj.id}
                     displayTitle={"Suggested Fillings"}
@@ -133,22 +171,40 @@ class SandwichBuilderWeekly extends React.Component {
                 />
             </div>;
 
-            finalComponents.push(<div className="row text-center">{planCol}{bankCol}</div>)
+            finalComponents.push(<div key={"plan-bank-col-"+week} className="row text-center">{planCol}{bankCol}</div>)
         }
 
         return (
             <>
-                <div className="col-9 text-left">
-                    <DragDropContext onDragEnd={this.onDragEnd}>
-                        {finalComponents}
-                    </DragDropContext>
-                </div>
+                <div className="row">
+                        <div className="col">
+                            <div className="form-group row">
+                                <label className="col-6" id="num-weeks-label" htmlFor="num-weeks-field">{this.state.nWeeks} weeks</label>
+                                <input type="range" className="custom-range col-6" min="1" max="20" value={this.state.nWeeks} id="num-weeks-field" onChange={(e) => this.updateWeeksLabel(e.target.value)}></input>
+                            </div>
+                            <div className="form-group row">
+                                <label className="col-6" id="num-days-label" htmlFor="num-days-field">{this.state.daysPerWeek} days per week</label>
+                                <input type="range" className="custom-range col-6" min="1" max="5" value={this.state.daysPerWeek} id="num-days-field" onChange={(e) => this.updateDaysLabel(e.target.value)}></input>
 
-                <div className="col-3">
-                    <WeeklySandwichNutritionFacts sandwichId={this.props.sandwich.uid} />
-                    <ExportButtonContainer>
-                        <NavLink className="btn btn-primary" to={"/sandwich/export/" + this.props.sandwich.uid }>Export</NavLink>
-                    </ExportButtonContainer>
+                            </div>
+                            <div className="form-group row">
+                                <SetButton className="btn btn-primary col" disabled={!this.state.weeksDaysNeedUpdate} onClick={this.setWeekAndDays}>Set (changes will be lost!)</SetButton>
+                            </div>
+                        </div>
+                </div>
+                <div className="row">
+                    <div className="col-9 text-left">
+                        <DragDropContext onDragEnd={this.onDragEnd}>
+                            {finalComponents}
+                        </DragDropContext>
+                    </div>
+
+                        <div className="col-3">
+                        <WeeklySandwichNutritionFacts sandwichId={this.props.sandwich.uid} />
+                        <ExportButtonContainer>
+                            <NavLink className="btn btn-primary" to={"/sandwich/export/" + this.props.sandwich.uid}>Export</NavLink>
+                        </ExportButtonContainer>
+                    </div>
                 </div>
             </>
         )
