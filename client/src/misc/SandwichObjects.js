@@ -21,7 +21,7 @@ class CustomSandwichData {
     }
 
     this.nWeeks = rawJSON.numWeeks; // number of weeks in the curriculum
-    this.daysInWeek = 3;
+    this.daysInWeek =rawJSON.daysInWeek;
 
     // Array of the contents of each week
     // this.contents[i] = an ordered list of the fillings in week i
@@ -40,12 +40,21 @@ class SandwichFillingData {
     this.isRequired = fillingJSON.isRequired;
     this.type = fillingJSON.type;
 
-    this.suggestedWeek = fillingJSON.suggested_week;
-    this.suggestedDay = fillingJSON.suggested_day;
+    // suggestedDay refers to the suggested order in the class sequence for this filling
+    this.suggestedDay = fillingJSON.suggested_day; 
 
     this.duration = fillingJSON.duration;
 
   }
+
+  // Given a weekly schedule where the class meets {daysPerWeeks} days per week,
+  // return the week num (0-indexed) and day num in that week (0-indexed) suggested for this filling 
+  getDayAndWeek(daysPerWeek) {
+    let week = Math.floor(this.suggestedDay / daysPerWeek);
+    let day = this.suggestedDay - (week * daysPerWeek);
+    return [week, day];
+  }
+
 
 
 }

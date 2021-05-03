@@ -55,7 +55,10 @@ function initialStoreStateForSandwichBuilder(sandwich) {
     Object.entries(sandwich.allFillings).forEach(tuple => {
         let filling = tuple[1];
         if (filling.isRequired) {
-            state.planLists["plan-list-"+filling.suggestedWeek+"-"+filling.suggestedDay].contents.push(filling.uid);
+            let [week, day] = filling.getDayAndWeek(sandwich.daysInWeek) 
+            let planId = "plan-list-"+week+"-"+day
+            console.log(planId)
+            state.planLists[planId].contents.push(filling.uid);
         }
     })
 
@@ -63,7 +66,11 @@ function initialStoreStateForSandwichBuilder(sandwich) {
     Object.entries(sandwich.allFillings).forEach(tuple => {
         let filling = tuple[1];
         if (!filling.isRequired) {
-            state.bankLists["bank-list-"+filling.suggestedWeek].contents.push(filling.uid);
+            let [week, day] = filling.getDayAndWeek(sandwich.daysInWeek) 
+            let bankId = "bank-list-"+week;
+            console.log(bankId)
+            console.log(state.bankLists)
+            state.bankLists[bankId].contents.push(filling.uid);
         }
     })
 

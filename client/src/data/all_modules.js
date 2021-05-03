@@ -12,7 +12,8 @@ var data = {
             "toothpick": "Creating an interactive public art exhibit using AI tools.",
             "driving_question": "driving question todo",
             "project_question": "project question todo",
-            "numWeeks": 3,
+            "numWeeks": 1,
+            "daysInWeek": 20,
             "resources": [
                 {
                     "url": "/sandwich/1/image.png",
@@ -32,7 +33,6 @@ var data = {
                     title: "Project Launch",
                     type: "top-bun",
                     isRequired: true,
-                    suggested_week: 0,
                     suggested_day: 0,
                     duration: 15,
                 },
@@ -41,8 +41,7 @@ var data = {
                     title: "Intro to QFT",
                     type: "top-bun",
                     isRequired: true,
-                    suggested_week: 0,
-                    suggested_day: 0,
+                    suggested_day: 5,
                     duration: 15,
                 },
                 {
@@ -50,8 +49,7 @@ var data = {
                     title: "Intro to machine perception",
                     type: "filling",
                     isRequired: true,
-                    suggested_week: 0,
-                    suggested_day: 1,
+                    suggested_day: 3,
                     duration: 15,
 
                 },
@@ -60,8 +58,8 @@ var data = {
                     title: "Community Presentation",
                     type: "bottom-bun",
                     isRequired: true,
-                    suggested_week: 2,
-                    suggested_day: 2,
+                    suggested_week: 0,
+                    suggested_day: 8,
                     duration: 15,
 
                 },
@@ -70,7 +68,7 @@ var data = {
                     title: "Intro to Debugging",
                     type: "filling",
                     isRequired: false,
-                    suggested_week: 0,
+                    suggested_day: 2,
                     duration: 15,
 
                 },
@@ -79,7 +77,7 @@ var data = {
                     title: "Fine-tuning models",
                     type: "filling",
                     isRequired: false,
-                    suggested_week: 2,
+                    suggested_day: 6,
                     duration: 15,
 
                 },
@@ -88,7 +86,7 @@ var data = {
                     title: "Testing your model",
                     type: "filling",
                     isRequired: false,
-                    suggested_week: 2,
+                    suggested_day: 7,
                     duration: 15,
 
                 },
@@ -97,7 +95,7 @@ var data = {
                     title: "Bias activity",
                     type: "filling",
                     isRequired: false,
-                    suggested_week: 1,
+                    suggested_day: 1,
                     duration: 15,
 
                 }
@@ -163,7 +161,7 @@ var data = {
             ]
         },
         {
-            "uid": 1,
+            "uid": 2,
             "title": "Interactive Public Art",
             "short_description": "Students explore AI tools that meld creativity and technology and partner with stakeholders in their community to design and create a public art installation.",
             "tags": [
@@ -230,7 +228,8 @@ var data = {
                     }],
                 }
             },
-            "numWeeks": 3,
+            "numWeeks": 2,
+            "daysInWeek": 5,
             "resources": [
                 {
                     "url": "/sandwich/1/image.png",
@@ -250,7 +249,6 @@ var data = {
                     title: "Project Launch",
                     type: "top-bun",
                     isRequired: true,
-                    suggested_week: 0,
                     suggested_day: 0,
                     duration: 15,
                 },
@@ -259,8 +257,7 @@ var data = {
                     title: "Intro to QFT",
                     type: "top-bun",
                     isRequired: true,
-                    suggested_week: 0,
-                    suggested_day: 0,
+                    suggested_day: 5,
                     duration: 15,
                 },
                 {
@@ -268,8 +265,7 @@ var data = {
                     title: "Intro to machine perception",
                     type: "filling",
                     isRequired: true,
-                    suggested_week: 0,
-                    suggested_day: 1,
+                    suggested_day: 3,
                     duration: 15,
 
                 },
@@ -278,8 +274,8 @@ var data = {
                     title: "Community Presentation",
                     type: "bottom-bun",
                     isRequired: true,
-                    suggested_week: 2,
-                    suggested_day: 2,
+                    suggested_week: 0,
+                    suggested_day: 8,
                     duration: 15,
 
                 },
@@ -288,7 +284,7 @@ var data = {
                     title: "Intro to Debugging",
                     type: "filling",
                     isRequired: false,
-                    suggested_week: 0,
+                    suggested_day: 2,
                     duration: 15,
 
                 },
@@ -297,7 +293,7 @@ var data = {
                     title: "Fine-tuning models",
                     type: "filling",
                     isRequired: false,
-                    suggested_week: 2,
+                    suggested_day: 6,
                     duration: 15,
 
                 },
@@ -306,7 +302,7 @@ var data = {
                     title: "Testing your model",
                     type: "filling",
                     isRequired: false,
-                    suggested_week: 2,
+                    suggested_day: 7,
                     duration: 15,
 
                 },
@@ -315,7 +311,7 @@ var data = {
                     title: "Bias activity",
                     type: "filling",
                     isRequired: false,
-                    suggested_week: 1,
+                    suggested_day: 1,
                     duration: 15,
 
                 }

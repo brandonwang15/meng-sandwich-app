@@ -145,7 +145,7 @@ class SandwichBuilderWeekly extends React.Component {
                 </div>
 
                 <div className="col-3">
-                    <WeeklySandwichNutritionFacts sandwichId={[this.props.sandwich.uid]} />
+                    <WeeklySandwichNutritionFacts sandwichId={this.props.sandwich.uid} />
                     <ExportButtonContainer>
                         <NavLink className="btn btn-primary" to={"/sandwich/export/" + this.props.sandwich.uid }>Export</NavLink>
                     </ExportButtonContainer>
