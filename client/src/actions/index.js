@@ -1,3 +1,5 @@
+// sandwiches actions
+
 export const setFilling = (sandwichUID, fillingIndex, newValue) => ({
     type: 'SET_FILLING',
     uid: sandwichUID,
@@ -17,6 +19,14 @@ export const setWeekAndDays = (sandwichUID, numWeeks, daysInWeek) => ({
   numWeeks: numWeeks,
   daysInWeek: daysInWeek,
 })
+
+export const setExportResults = (sandwichUID, exportResults) => ({
+  type: "SET_SANDWICH_EXPORT_RESULTS",
+  uid: sandwichUID,
+  exportResults: exportResults,
+})
+
+// sandwichBuilder actions
 
 export const builderMoveFilling = (sandwichId, sourceListId, destinationListId, sourceIndex, destinationIndex) => ({
   type: "BUILDER_MOVE_FILLING",

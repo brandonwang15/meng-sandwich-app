@@ -23,6 +23,14 @@ const sandwiches = (state = initialState, action) => {
   }
 
   switch (action.type) {
+    case "SET_SANDWICH_EXPORT_RESULTS":
+      console.log("Reducer handling SET_SANDWICH_EXPORT_RESULTS");
+      return {...state,
+        [action.uid]: {
+          ...sandwich,
+          exportResults: action.exportResults,
+        }
+      }
     case "SET_WEEKS_AND_DAYS_FOR_SANDWICH":
       return {...state, 
         [action.uid]: {

@@ -45,6 +45,7 @@ const ZipButton = styled.button`
 
 class SandwichExportPage extends React.Component {
     render() {
+        console.log("export results in render(): ", this.props.sandwichData.exportResults);
         return (
             <>
                 <div className="row">
@@ -57,7 +58,7 @@ class SandwichExportPage extends React.Component {
                                 Class slides:
                             </ExportedContentDescription>
                             <LinkTextField className="col">
-                                https://reactjs.org/docs/refs-and-the-dom.html
+                                {this.props.sandwichData.exportResults["class_slides_url"]}
                             </LinkTextField>
                         </ExportedContent>
                         <ExportedContent className="row">
@@ -65,7 +66,8 @@ class SandwichExportPage extends React.Component {
                                 Student Workbook:
                             </ExportedContentDescription>
                             <LinkTextField className="col">
-                                https://reactjs.org/docs/refs-and-the-dom.html
+                                {this.props.sandwichData.exportResults["student_workbook_url"]}
+
                             </LinkTextField>
                         </ExportedContent>
                         <ExportedContent className="row">
@@ -73,7 +75,18 @@ class SandwichExportPage extends React.Component {
                                 Teacher Facilitation Guide:
                             </ExportedContentDescription>
                             <LinkTextField className="col">
-                                https://reactjs.org/docs/refs-and-the-dom.html
+                                {this.props.sandwichData.exportResults["teacher_guide_url"]}
+
+                            </LinkTextField>
+                        </ExportedContent>
+
+                        <ExportedContent className="row">
+                            <ExportedContentDescription className="col-4">
+                                Summary doc:
+                            </ExportedContentDescription>
+                            <LinkTextField className="col">
+                                {this.props.sandwichData.exportResults["summary_doc_url"]}
+
                             </LinkTextField>
                         </ExportedContent>
                     </div>
@@ -99,6 +112,7 @@ class SandwichExportPage extends React.Component {
 }
 
 function mapStateToProps(state, props) {
+    console.log("SandwichData in export page mapstatetoprops: ", state.sandwiches[props.sandwichId]);
     return {
         sandwichData: state.sandwiches[props.sandwichId],
         builderData: state.sandwichBuilder[props.sandwichId],

@@ -10,7 +10,7 @@ import FillingList from "./FillingList";
 
 import PropTypes from 'prop-types';
 
-import { builderMoveFilling, setWeekAndDays, builderResetSandwichContents } from '../../../actions'
+import { builderMoveFilling, setWeekAndDays, builderResetSandwichContents, setExportResults } from '../../../actions'
 import WeeklySandwichNutritionFacts from "./WeeklySandwichNutritionFacts";
 
 import styled from 'styled-components';
@@ -59,7 +59,7 @@ class SandwichBuilderWeekly extends React.Component {
         this.setWeekAndDays = this.setWeekAndDays.bind(this);
         this.updateWeeksLabel = this.updateWeeksLabel.bind(this);
         this.updateDaysLabel = this.updateDaysLabel.bind(this);
-
+        this.startExportingMaterialsForThisSandwich = this.startExportingMaterialsForThisSandwich.bind(this);
     }
 
     makeTestBackendRequest() {
@@ -137,6 +137,14 @@ class SandwichBuilderWeekly extends React.Component {
             destination.droppableId,
             source.index,
             destination.index));
+    }
+
+    startExportingMaterialsForThisSandwich() {
+        const sandwich = store.getState().sandwiches[this.props.sandwichId];
+        sandwich.startExport((responseText) => {
+            console.log("Callback got responseText: ", responseText);
+            store.dispatch(setExportResults(this.props.sandwichId, responseText));
+        });
     }
 
     render() {
@@ -225,7 +233,11 @@ class SandwichBuilderWeekly extends React.Component {
                     <div className="col-3">
                         <WeeklySandwichNutritionFacts sandwichId={this.props.sandwichId} />
                         <ExportButtonContainer>
-                            <NavLink className="btn btn-primary" to={"/sandwich/export/" + this.props.sandwichId}>Export</NavLink>
+                            <NavLink className="btn btn-primary" to={"/sandwich/export/" + this.props.sandwichId}>
+                                <div onClick={this.startExportingMaterialsForThisSandwich}>
+                                    Export
+                                </div>
+                            </NavLink>
                         </ExportButtonContainer>
                     </div>
                 </div>

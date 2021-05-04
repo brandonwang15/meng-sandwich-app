@@ -29,8 +29,33 @@ class CustomSandwichData {
       this.contents.push([]);
     }
 
+    // Export-related fields
+    this.exportInProgress = false;
+    this.exportResults = {};
+
     // bind instance functions
     this.latestSuggestedFillingClassNum = this.latestSuggestedFillingClassNum.bind(this);
+    this.startExport = this.startExport.bind(this);
+  }
+
+  // Start exporting the materials associated with the current state of builder for this sandwich
+  // Accepts a callback function takes a http response.
+  startExport(callback) {
+    // Cannot start export if one is still in progress
+    if (this.exportInProgress) {
+      return false;
+    }
+
+    const url = "/test";
+    fetch(url)
+      .then(data => { return data.json() })
+      .then(text => { 
+          console.log("http response text: ", text);
+          console.log("calling callback");
+          return callback(text); 
+        });
+
+    return true;
   }
 
   // Returns the latest suggested day of a filling (0-indexed)
