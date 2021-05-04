@@ -11,6 +11,13 @@ export const deleteFilling = (sandwichUID, fillingIndex) => ({
   index: fillingIndex,
 })
 
+export const setWeekAndDays = (sandwichUID, numWeeks, daysInWeek) => ({
+  type: "SET_WEEKS_AND_DAYS_FOR_SANDWICH",
+  uid: sandwichUID,
+  numWeeks: numWeeks,
+  daysInWeek: daysInWeek,
+})
+
 export const builderMoveFilling = (sandwichId, sourceListId, destinationListId, sourceIndex, destinationIndex) => ({
   type: "BUILDER_MOVE_FILLING",
   sandwichId: sandwichId,
@@ -18,4 +25,10 @@ export const builderMoveFilling = (sandwichId, sourceListId, destinationListId, 
   destinationListId: destinationListId,
   sourceIndex: sourceIndex,
   destinationIndex: destinationIndex,
+});
+
+export const builderResetSandwichContents = (sandwichId, sandwichObj) => ({
+  type: "BUILDER_RESET_SANDWICH_CONTENTS",
+  sandwichId: sandwichId,
+  sandwichObj, sandwichObj,
 });

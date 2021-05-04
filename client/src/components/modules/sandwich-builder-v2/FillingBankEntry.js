@@ -38,6 +38,9 @@ class FillingBankEntry extends React.Component {
                         <div>
                             Filling ID: {this.props.fillingID}
                         </div>
+                        <div>
+                            Suggested Day: {filling.suggestedDay}
+                        </div>
                         <b>
                             {filling.duration + " min."}
                         </b>

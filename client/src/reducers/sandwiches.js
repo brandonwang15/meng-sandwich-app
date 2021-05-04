@@ -23,6 +23,14 @@ const sandwiches = (state = initialState, action) => {
   }
 
   switch (action.type) {
+    case "SET_WEEKS_AND_DAYS_FOR_SANDWICH":
+      return {...state, 
+        [action.uid]: {
+          ...sandwich,
+          nWeeks: action.numWeeks,
+          daysInWeek: action.daysInWeek,
+        }
+      }
     case "SET_FILLING":
       console.log("inside SET_FILLING: ", JSON.stringify(state, undefined, 2));
       // return state;

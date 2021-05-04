@@ -10,7 +10,7 @@ import FillingList from "./FillingList";
 
 import PropTypes from 'prop-types';
 
-import { builderMoveFilling } from '../../../actions'
+import { builderMoveFilling, setWeekAndDays, builderResetSandwichContents } from '../../../actions'
 import WeeklySandwichNutritionFacts from "./WeeklySandwichNutritionFacts";
 
 import styled from 'styled-components';
@@ -46,9 +46,11 @@ class SandwichBuilderWeekly extends React.Component {
     constructor(props) {
         super(props);
 
+        let sandwich = store.getState().sandwiches[props.sandwichId];
+
         this.state = {
-            nWeeks: 5,
-            daysPerWeek: 3,
+            nWeeks: sandwich.nWeeks,
+            daysPerWeek: sandwich.daysInWeek,
             weeksDaysNeedUpdate: false,
         };
 
@@ -70,10 +72,26 @@ class SandwichBuilderWeekly extends React.Component {
     setWeekAndDays() {
         console.log("setWeekAndDays() called: ", this.state.nWeeks, this.state.daysPerWeek);
 
+        const totalDaysAvailable = this.state.nWeeks * this.state.daysPerWeek;
+        console.log("sandwich: ", store.getState().sandwiches[this.props.sandwichId]);
+        // Add one because class nums are 0-indexed
+        const minRequiredDays = 1 + store.getState().sandwiches[this.props.sandwichId].latestSuggestedFillingClassNum();
+
+        console.log("total: ", totalDaysAvailable, " minRequired: ", minRequiredDays);
+
+        if (totalDaysAvailable < minRequiredDays) {
+            alert("The contents of this sandwich require at least "+minRequiredDays+" days!");
+            return;
+        }
+
         this.setState({
             weeksDaysNeedUpdate: false,
         })
- 
+        
+        store.dispatch(setWeekAndDays(this.props.sandwichId, this.state.nWeeks,  this.state.daysPerWeek));
+        // Since store.dispatch happens synchrounously, this line will see the effect of the previous line, which
+        // is required for correctness
+        store.dispatch(builderResetSandwichContents(this.props.sandwichId, store.getState().sandwiches[this.props.sandwichId]));
     }
 
     updateWeeksLabel(val) {
@@ -114,7 +132,7 @@ class SandwichBuilderWeekly extends React.Component {
         const sameListType = destinationListType === sourceListType;
 
         store.dispatch(builderMoveFilling(
-            this.props.sandwich.uid,
+            this.props.sandwichId,
             source.droppableId,
             destination.droppableId,
             source.index,
@@ -122,11 +140,12 @@ class SandwichBuilderWeekly extends React.Component {
     }
 
     render() {
-        console.log("sandwich: ", this.props.sandwich)
+        const sandwich = store.getState().sandwiches[this.props.sandwichId];
+        console.log("sandwich: ", sandwich)
 
         // Generate the components to hold each week's plan lists
         let fillingListComponents = {};
-        for (let i = 0; i < this.props.sandwich.nWeeks; i++) {
+        for (let i = 0; i < sandwich.nWeeks; i++) {
             fillingListComponents[i] = [];
         }
 
@@ -138,11 +157,15 @@ class SandwichBuilderWeekly extends React.Component {
             week = parseInt(week);
             day = parseInt(day);
 
+            console.log("week: ", week);
+            console.log("builderState: ", this.props.builderState);
+            console.log("fillingListComponents: ", fillingListComponents);
+
             fillingListComponents[week].push(<FillingList
                 key={obj.id}
                 displayTitle={"Day " + (day + 1)}
                 listID={obj.id}
-                sandwich={this.props.sandwich}
+                sandwich={sandwich}
                 contents={obj.contents}
             />);
 
@@ -153,7 +176,7 @@ class SandwichBuilderWeekly extends React.Component {
         // Generate the final layout by creating a row for each week.
         // The row will contain a column containing the planLists for the week, and a column containing
         // the bank for the week.
-        for (let week = 0; week < this.props.sandwich.nWeeks; week++) {
+        for (let week = 0; week < sandwich.nWeeks; week++) {
             let totalDurationOfFillings = 0;
             finalComponents.push(<WeekDivider key={"week-divider-" + week}>{"Week " + (week + 1)}</WeekDivider>)
 
@@ -166,7 +189,7 @@ class SandwichBuilderWeekly extends React.Component {
                     key={bankListObj.id}
                     displayTitle={"Suggested Fillings"}
                     listID={bankListObj.id}
-                    sandwich={this.props.sandwich}
+                    sandwich={sandwich}
                     contents={bankListObj.contents}
                 />
             </div>;
@@ -200,9 +223,9 @@ class SandwichBuilderWeekly extends React.Component {
                     </div>
 
                         <div className="col-3">
-                        <WeeklySandwichNutritionFacts sandwichId={this.props.sandwich.uid} />
+                        <WeeklySandwichNutritionFacts sandwichId={this.props.sandwichId} />
                         <ExportButtonContainer>
-                            <NavLink className="btn btn-primary" to={"/sandwich/export/" + this.props.sandwich.uid}>Export</NavLink>
+                            <NavLink className="btn btn-primary" to={"/sandwich/export/" + this.props.sandwichId}>Export</NavLink>
                         </ExportButtonContainer>
                     </div>
                 </div>
@@ -213,12 +236,12 @@ class SandwichBuilderWeekly extends React.Component {
 
 function mapStateToProps(state, props) {
     return {
-        builderState: state.sandwichBuilder[props.sandwich.uid]
+        builderState: state.sandwichBuilder[props.sandwichId]
     };
 }
 
 SandwichBuilderWeekly.propTypes = {
-    sandwich: PropTypes.object.isRequired,
+    sandwichId: PropTypes.number.isRequired,
 }
 
 export default connect(mapStateToProps)(SandwichBuilderWeekly);

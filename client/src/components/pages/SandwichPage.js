@@ -106,7 +106,7 @@ class SandwichPage extends React.Component {
 
                         <Subheading>Customize it!</Subheading>
                         <BuilderContainer className="row">
-                            <SandwichBuilderWeekly sandwich={this.props.sandwich} />
+                            <SandwichBuilderWeekly sandwichId={this.props.sandwich.uid}/>
                         </BuilderContainer>
 
 

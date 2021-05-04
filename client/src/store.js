@@ -2,6 +2,7 @@ import rootReducer from './reducers'
 import { createStore } from 'redux';
 import data from "./data/all_modules";
 import { CustomSandwichData, SandwichFillingData } from './misc/SandwichObjects';
+import { createInitialBuilderStateFromSandwich } from './reducers/sandwichBuilder'
 
 function setRequiredFillings(sandwichObject) {
     for (let i = 0; i < this.context.customSandwichData[this.props.sandwichUID].numSlots; i++) {
@@ -28,54 +29,6 @@ function setRequiredFillings(sandwichObject) {
 
 }
 
-function initialStoreStateForSandwichBuilder(sandwich) {
-    const state = {
-        planLists: {}, // entries for each day
-        bankLists: {}, // entries in each bank
-    }
-
-    for (let i = 0; i < sandwich.nWeeks; i++) {
-
-        for (let day = 0; day < sandwich.daysInWeek; day++) {
-            let listId = "plan-list-" + i + "-" + day;
-            state.planLists[listId] = {
-                id: listId,
-                contents: [], // filling ids
-            };
-        }
-
-        let bankId = "bank-list-" + i;
-        state.bankLists[bankId] = {
-            id: bankId,
-            contents: [], // filling ids
-        };
-    }
-
-    // Seed initial fillings for the list from the required fillings
-    Object.entries(sandwich.allFillings).forEach(tuple => {
-        let filling = tuple[1];
-        if (filling.isRequired) {
-            let [week, day] = filling.getDayAndWeek(sandwich.daysInWeek) 
-            let planId = "plan-list-"+week+"-"+day
-            console.log(planId)
-            state.planLists[planId].contents.push(filling.uid);
-        }
-    })
-
-    // Seed the bank with optional fillings
-    Object.entries(sandwich.allFillings).forEach(tuple => {
-        let filling = tuple[1];
-        if (!filling.isRequired) {
-            let [week, day] = filling.getDayAndWeek(sandwich.daysInWeek) 
-            let bankId = "bank-list-"+week;
-            console.log(bankId)
-            console.log(state.bankLists)
-            state.bankLists[bankId].contents.push(filling.uid);
-        }
-    })
-
-    return state;
-}
 
 function createInitialReduxStoreState() {
     let initialState = {sandwiches: {}, sandwichBuilder: {}};
@@ -83,7 +36,7 @@ function createInitialReduxStoreState() {
     data.all_modules.forEach((rawJSON) => {
       let sandwich = new CustomSandwichData(rawJSON);
       initialState.sandwiches[sandwich.uid] = sandwich;
-      initialState.sandwichBuilder[sandwich.uid] = initialStoreStateForSandwichBuilder(sandwich);
+      initialState.sandwichBuilder[sandwich.uid] = createInitialBuilderStateFromSandwich(sandwich);
     })
   
 

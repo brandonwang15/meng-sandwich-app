@@ -1,6 +1,6 @@
 import { combineReducers } from 'redux'
 import sandwiches from './sandwiches'
-import sandwichBuilder from './sandwichBuilder'
+import { sandwichBuilder } from './sandwichBuilder'
 
 
 export default combineReducers({

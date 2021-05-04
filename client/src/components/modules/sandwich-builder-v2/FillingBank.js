@@ -62,7 +62,7 @@ FillingBank.propTypes = {
     displayTitle: PropTypes.string.isRequired,
     listID: PropTypes.string.isRequired,
     contents: PropTypes.array.isRequired,
-    sandwich: PropTypes.object.isRequired,
+    sandwichId: PropTypes.number.isRequired,
 }
 
 export default FillingBank;

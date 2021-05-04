@@ -1,16 +1,15 @@
 class CustomSandwichData {
-  
+
   constructor(rawJSON) {
     this.uid = rawJSON.uid;
     this.title = rawJSON.title;
     this.tags = rawJSON.tags;
     this.resources = rawJSON.resources;
-    
+
     this.learningGoals = rawJSON.learning_goals;
     this.toothpick = rawJSON.toothpick;
     this.drivingQuestion = rawJSON.driving_question;
     this.projectQuestion = rawJSON.project_question;
-
 
     this.allFillings = {}; // filling_id -> SandwichFillingData map 
     if ("fillings" in rawJSON) {
@@ -21,7 +20,7 @@ class CustomSandwichData {
     }
 
     this.nWeeks = rawJSON.numWeeks; // number of weeks in the curriculum
-    this.daysInWeek =rawJSON.daysInWeek;
+    this.daysInWeek = rawJSON.daysInWeek;
 
     // Array of the contents of each week
     // this.contents[i] = an ordered list of the fillings in week i
@@ -29,6 +28,27 @@ class CustomSandwichData {
     for (let i = 0; i < this.nWeeks; i++) {
       this.contents.push([]);
     }
+
+    // bind instance functions
+    this.latestSuggestedFillingClassNum = this.latestSuggestedFillingClassNum.bind(this);
+  }
+
+  // Returns the latest suggested day of a filling (0-indexed)
+  latestSuggestedFillingClassNum() {
+    let fillingsList = Object.entries(this.allFillings);
+
+    if (fillingsList.length == 0) {
+      return -1;
+    } 
+    let latest = -1;
+    fillingsList.forEach(filling => {
+      const fillingObj = filling[1];
+      if (fillingObj.suggestedDay > latest) {
+        latest = fillingObj.suggestedDay;
+      }
+    });
+
+    return latest;
   }
 }
 
@@ -41,7 +61,7 @@ class SandwichFillingData {
     this.type = fillingJSON.type;
 
     // suggestedDay refers to the suggested order in the class sequence for this filling
-    this.suggestedDay = fillingJSON.suggested_day; 
+    this.suggestedDay = fillingJSON.suggested_day;
 
     this.duration = fillingJSON.duration;
 
@@ -58,5 +78,6 @@ class SandwichFillingData {
 
 
 }
-  
-export {CustomSandwichData, SandwichFillingData};
+
+
+export { CustomSandwichData, SandwichFillingData };

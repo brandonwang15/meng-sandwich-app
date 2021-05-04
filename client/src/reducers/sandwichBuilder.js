@@ -1,10 +1,10 @@
 import { createReducer } from '@reduxjs/toolkit'
 
-
-
-const sandwichBuilderReducer = (state = {}, action) => {
+const sandwichBuilder = (state = {}, action) => {
 
   switch (action.type) {
+    case "BUILDER_RESET_SANDWICH_CONTENTS":
+      return resetBuilder(state, action);
     case "BUILDER_MOVE_FILLING":
 
       const { sourceListId, destinationListId, sourceIndex, destinationIndex } = action;
@@ -45,6 +45,14 @@ const sandwichBuilderReducer = (state = {}, action) => {
       return state;
   }
 
+}
+
+
+function resetBuilder(state = {}, action) {
+    return {
+      ...state,
+      [action.sandwichId]: createInitialBuilderStateFromSandwich(action.sandwichObj),
+    }
 }
 
 
@@ -253,4 +261,56 @@ function dragBetweenDifferentTypedLists(state, action) {
 
 }
 
-export default sandwichBuilderReducer
+
+function createInitialBuilderStateFromSandwich(sandwich) {
+  const state = {
+    planLists: {}, // entries for each day
+    bankLists: {}, // entries in each bank
+  }
+
+  for (let i = 0; i < sandwich.nWeeks; i++) {
+
+    for (let day = 0; day < sandwich.daysInWeek; day++) {
+      let listId = "plan-list-" + i + "-" + day;
+      state.planLists[listId] = {
+        id: listId,
+        contents: [], // filling ids
+      };
+    }
+
+    let bankId = "bank-list-" + i;
+    state.bankLists[bankId] = {
+      id: bankId,
+      contents: [], // filling ids
+    };
+  }
+
+  // Seed initial fillings for the list from the required fillings
+  Object.entries(sandwich.allFillings).forEach(tuple => {
+    let filling = tuple[1];
+    if (filling.isRequired) {
+      let [week, day] = filling.getDayAndWeek(sandwich.daysInWeek)
+      let planId = "plan-list-" + week + "-" + day
+      console.log(planId)
+      state.planLists[planId].contents.push(filling.uid);
+    }
+  })
+
+  // Seed the bank with optional fillings
+  Object.entries(sandwich.allFillings).forEach(tuple => {
+    let filling = tuple[1];
+    if (!filling.isRequired) {
+      let [week, day] = filling.getDayAndWeek(sandwich.daysInWeek)
+      let bankId = "bank-list-" + week;
+      console.log(bankId)
+      console.log(state.bankLists)
+      state.bankLists[bankId].contents.push(filling.uid);
+    }
+  })
+
+  return state;
+}
+
+
+
+export {sandwichBuilder, createInitialBuilderStateFromSandwich}

@@ -228,8 +228,8 @@ var data = {
                     }],
                 }
             },
-            "numWeeks": 2,
-            "daysInWeek": 5,
+            "numWeeks": 5,
+            "daysInWeek": 3,
             "resources": [
                 {
                     "url": "/sandwich/1/image.png",
