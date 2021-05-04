@@ -1,22 +1,22 @@
 {
   "files": {
-    "main.css": "/meng-sandwich-app/static/css/main.f097c944.chunk.css",
-    "main.js": "/meng-sandwich-app/static/js/main.69f17bf8.chunk.js",
-    "main.js.map": "/meng-sandwich-app/static/js/main.69f17bf8.chunk.js.map",
-    "runtime-main.js": "/meng-sandwich-app/static/js/runtime-main.3b9f105d.js",
-    "runtime-main.js.map": "/meng-sandwich-app/static/js/runtime-main.3b9f105d.js.map",
-    "static/js/2.fe4557a4.chunk.js": "/meng-sandwich-app/static/js/2.fe4557a4.chunk.js",
-    "static/js/2.fe4557a4.chunk.js.map": "/meng-sandwich-app/static/js/2.fe4557a4.chunk.js.map",
-    "static/js/3.6409debb.chunk.js": "/meng-sandwich-app/static/js/3.6409debb.chunk.js",
-    "static/js/3.6409debb.chunk.js.map": "/meng-sandwich-app/static/js/3.6409debb.chunk.js.map",
+    "main.css": "/meng-sandwich-app/static/css/main.ddea969c.chunk.css",
+    "main.js": "/meng-sandwich-app/static/js/main.ab7aa96c.chunk.js",
+    "main.js.map": "/meng-sandwich-app/static/js/main.ab7aa96c.chunk.js.map",
+    "runtime-main.js": "/meng-sandwich-app/static/js/runtime-main.cc54d5f5.js",
+    "runtime-main.js.map": "/meng-sandwich-app/static/js/runtime-main.cc54d5f5.js.map",
+    "static/js/2.fccea864.chunk.js": "/meng-sandwich-app/static/js/2.fccea864.chunk.js",
+    "static/js/2.fccea864.chunk.js.map": "/meng-sandwich-app/static/js/2.fccea864.chunk.js.map",
+    "static/js/3.1b4bdf24.chunk.js": "/meng-sandwich-app/static/js/3.1b4bdf24.chunk.js",
+    "static/js/3.1b4bdf24.chunk.js.map": "/meng-sandwich-app/static/js/3.1b4bdf24.chunk.js.map",
     "index.html": "/meng-sandwich-app/index.html",
-    "static/css/main.f097c944.chunk.css.map": "/meng-sandwich-app/static/css/main.f097c944.chunk.css.map",
-    "static/js/2.fe4557a4.chunk.js.LICENSE.txt": "/meng-sandwich-app/static/js/2.fe4557a4.chunk.js.LICENSE.txt"
+    "static/css/main.ddea969c.chunk.css.map": "/meng-sandwich-app/static/css/main.ddea969c.chunk.css.map",
+    "static/js/2.fccea864.chunk.js.LICENSE.txt": "/meng-sandwich-app/static/js/2.fccea864.chunk.js.LICENSE.txt"
   },
   "entrypoints": [
-    "static/js/runtime-main.3b9f105d.js",
-    "static/js/2.fe4557a4.chunk.js",
-    "static/css/main.f097c944.chunk.css",
-    "static/js/main.69f17bf8.chunk.js"
+    "static/js/runtime-main.cc54d5f5.js",
+    "static/js/2.fccea864.chunk.js",
+    "static/css/main.ddea969c.chunk.css",
+    "static/js/main.ab7aa96c.chunk.js"
   ]
 }
