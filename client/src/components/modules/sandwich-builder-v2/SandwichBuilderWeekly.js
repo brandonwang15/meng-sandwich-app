@@ -80,15 +80,15 @@ class SandwichBuilderWeekly extends React.Component {
         console.log("total: ", totalDaysAvailable, " minRequired: ", minRequiredDays);
 
         if (totalDaysAvailable < minRequiredDays) {
-            alert("The contents of this sandwich require at least "+minRequiredDays+" days!");
+            alert("The contents of this sandwich require at least " + minRequiredDays + " days!");
             return;
         }
 
         this.setState({
             weeksDaysNeedUpdate: false,
         })
-        
-        store.dispatch(setWeekAndDays(this.props.sandwichId, this.state.nWeeks,  this.state.daysPerWeek));
+
+        store.dispatch(setWeekAndDays(this.props.sandwichId, this.state.nWeeks, this.state.daysPerWeek));
         // Since store.dispatch happens synchrounously, this line will see the effect of the previous line, which
         // is required for correctness
         store.dispatch(builderResetSandwichContents(this.props.sandwichId, store.getState().sandwiches[this.props.sandwichId]));
@@ -194,26 +194,26 @@ class SandwichBuilderWeekly extends React.Component {
                 />
             </div>;
 
-            finalComponents.push(<div key={"plan-bank-col-"+week} className="row text-center">{planCol}{bankCol}</div>)
+            finalComponents.push(<div key={"plan-bank-col-" + week} className="row text-center">{planCol}{bankCol}</div>)
         }
 
         return (
-            <>
+            <div className="container">
                 <div className="row">
-                        <div className="col">
-                            <div className="form-group row">
-                                <label className="col-6" id="num-weeks-label" htmlFor="num-weeks-field">{this.state.nWeeks} weeks</label>
-                                <input type="range" className="custom-range col-6" min="1" max="20" value={this.state.nWeeks} id="num-weeks-field" onChange={(e) => this.updateWeeksLabel(e.target.value)}></input>
-                            </div>
-                            <div className="form-group row">
-                                <label className="col-6" id="num-days-label" htmlFor="num-days-field">{this.state.daysPerWeek} days per week</label>
-                                <input type="range" className="custom-range col-6" min="1" max="5" value={this.state.daysPerWeek} id="num-days-field" onChange={(e) => this.updateDaysLabel(e.target.value)}></input>
-
-                            </div>
-                            <div className="form-group row">
-                                <SetButton className="btn btn-primary col" disabled={!this.state.weeksDaysNeedUpdate} onClick={this.setWeekAndDays}>Set (changes will be lost!)</SetButton>
-                            </div>
+                    <div className="col">
+                        <div className="form-group row justify-content-md-center">
+                            <label className="col-3" id="num-weeks-label" htmlFor="num-weeks-field">{this.state.nWeeks} weeks</label>
+                            <input type="range" className="custom-range col-3" min="1" max="20" value={this.state.nWeeks} id="num-weeks-field" onChange={(e) => this.updateWeeksLabel(e.target.value)}></input>
                         </div>
+                        <div className="form-group row justify-content-md-center">
+                            <label className="col-3" id="num-days-label" htmlFor="num-days-field">{this.state.daysPerWeek} days per week</label>
+                            <input type="range" className="custom-range col-3" min="1" max="5" value={this.state.daysPerWeek} id="num-days-field" onChange={(e) => this.updateDaysLabel(e.target.value)}></input>
+
+                        </div>
+                        <div className="form-group row">
+                            <SetButton className="btn btn-primary w-auto" disabled={!this.state.weeksDaysNeedUpdate} onClick={this.setWeekAndDays}>Set (changes will be lost!)</SetButton>
+                        </div>
+                    </div>
                 </div>
                 <div className="row">
                     <div className="col-9 text-left">
@@ -222,14 +222,14 @@ class SandwichBuilderWeekly extends React.Component {
                         </DragDropContext>
                     </div>
 
-                        <div className="col-3">
+                    <div className="col-3">
                         <WeeklySandwichNutritionFacts sandwichId={this.props.sandwichId} />
                         <ExportButtonContainer>
                             <NavLink className="btn btn-primary" to={"/sandwich/export/" + this.props.sandwichId}>Export</NavLink>
                         </ExportButtonContainer>
                     </div>
                 </div>
-            </>
+            </div>
         )
     }
 }
