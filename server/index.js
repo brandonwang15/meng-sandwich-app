@@ -11,8 +11,9 @@ const app = express();
 app.get('/test', (req, res) => {
 
   console.log("start");
+  console.log(req.body);
 
-  appsScript.callAppsScriptFn((result) => {
+  appsScript.callStitchSlides((result) => {
     console.log(result);
     const success = result.success;
     

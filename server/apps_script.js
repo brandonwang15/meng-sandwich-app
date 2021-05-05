@@ -12,13 +12,13 @@ const SCOPES = ['https://www.googleapis.com/auth/script.projects', 'https://www.
 // time.
 const TOKEN_PATH = 'token.json';
 
-function callAppsScriptFn(responseCallback) {
+function callStitchSlides(params, responseCallback) {
     // Load client secrets from a local file.
     fs.readFile('credentials.json', (err, content) => {
         console.log("GAS.initialze()");
         if (err) return console.log('Error loading client secret file:', err);
         // Authorize a client with credentials, then call the Google Apps Script API.
-        authorize(JSON.parse(content), (auth) => callAppsScriptSlideMerge(auth, responseCallback));
+        authorize(JSON.parse(content), (auth) => callAppsScriptSlideMerge(params, auth, responseCallback));
     });
 }
 
@@ -78,38 +78,38 @@ function getAccessToken(oAuth2Client, callback) {
  *
  * @param {google.auth.OAuth2} auth An authorized OAuth2 client.
  */
-function callAppsScriptSlideMerge(auth, responseCallback) { // eslint-disable-line no-unused-vars
+function callAppsScriptSlideMerge(params, auth, responseCallback) { // eslint-disable-line no-unused-vars
     const scriptId = 'AKfycbxMUtlQz6x44_Xasg6AyiICRFb0K6oPfqq3pDEeeCtJtywwvNqCj2wmqIcqC5moMZ0EdA';
     const script = google.script('v1');
 
     // Make the API request. The request object is included here as 'resource'.
     console.log('Calling stitchSlides()...');
 
-    var input = [];
+    // var input = [];
 
-    input.push({
-        url: "https://docs.google.com/presentation/d/1RI-m8wjilNdb1AZgEh1GzeznUFSnDSDLXynNkV7sq5o/edit",
-        startIndex: 0,
-        nSlides: 2,
-    });
+    // input.push({
+    //     url: "https://docs.google.com/presentation/d/1RI-m8wjilNdb1AZgEh1GzeznUFSnDSDLXynNkV7sq5o/edit",
+    //     startIndex: 0,
+    //     nSlides: 2,
+    // });
 
-    input.push({
-        url: "https://docs.google.com/presentation/d/1RI-m8wjilNdb1AZgEh1GzeznUFSnDSDLXynNkV7sq5o/edit",
-        startIndex: 0,
-        nSlides: 5,
-    });
+    // input.push({
+    //     url: "https://docs.google.com/presentation/d/1RI-m8wjilNdb1AZgEh1GzeznUFSnDSDLXynNkV7sq5o/edit",
+    //     startIndex: 0,
+    //     nSlides: 5,
+    // });
 
-    input.push({
-        url: "https://docs.google.com/presentation/d/1RI-m8wjilNdb1AZgEh1GzeznUFSnDSDLXynNkV7sq5o/edit",
-        startIndex: 0,
-        nSlides: 2,
-    });
+    // input.push({
+    //     url: "https://docs.google.com/presentation/d/1RI-m8wjilNdb1AZgEh1GzeznUFSnDSDLXynNkV7sq5o/edit",
+    //     startIndex: 0,
+    //     nSlides: 2,
+    // });
 
     script.scripts.run({
         auth: auth,
         resource: {
             function: 'stitchSlides',
-            parameters: ["stitched slides (desktop)", input],
+            parameters: ["stitched slides (desktop)", params],
         },
         devMode: true,
         scriptId: scriptId,
@@ -174,5 +174,5 @@ function callAppsScriptSlideMerge(auth, responseCallback) { // eslint-disable-li
 }
 
 module.exports = {
-    callAppsScriptFn: callAppsScriptFn,
+    callStitchSlides: callStitchSlides,
 }

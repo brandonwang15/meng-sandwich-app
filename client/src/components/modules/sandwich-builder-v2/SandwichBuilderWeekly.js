@@ -199,7 +199,7 @@ class SandwichBuilderWeekly extends React.Component {
                     key={bankListObj.id}
                     displayTitle={"Suggested Fillings"}
                     listID={bankListObj.id}
-                    sandwich={sandwich}
+                    sandwichId={sandwich.uid}
                     contents={bankListObj.contents}
                 />
             </div>;

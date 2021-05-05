@@ -42,7 +42,7 @@ class FillingBank extends React.Component {
                                     <FillingBankEntry 
                                         key={fillingID} 
                                         fillingID={fillingID} 
-                                        sandwichID={this.props.sandwich.uid} 
+                                        sandwichID={this.props.sandwichId} 
                                         index={listIndex}
                                     />
 

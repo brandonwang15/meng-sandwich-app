@@ -14,7 +14,7 @@ var fillingData = {
             },
             student_journal: {
                 type: "googleslides",
-                slides: [0, 5],
+                slides: [0, 5], // (inclusive, exclusive)
                 url: "https://docs.google.com/presentation/d/1RI-m8wjilNdb1AZgEh1GzeznUFSnDSDLXynNkV7sq5o/edit?usp=drive_web&ouid=113731355827264814751",
             },
             teacher_plan: {
