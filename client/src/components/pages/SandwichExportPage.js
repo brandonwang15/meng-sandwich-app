@@ -43,55 +43,62 @@ const ZipButton = styled.button`
     margin-top: 20px;
 `;
 
+const LoadingDiv = styled.div`
+    padding-left: 50px;
+    padding-right: 50px;
+`;
+
 class SandwichExportPage extends React.Component {
     render() {
-        console.log("export results in render(): ", this.props.sandwichData.exportResults);
+        const exportResults = this.props.sandwichData.exportResults;
+        console.log("export results in render(): ", exportResults);
+
+        const exportPairs = exportResults != null ? Object.entries(exportResults) : [];
+
+        const isLoaded = exportResults != null && !this.props.sandwichData.isExportInProgress;
+        const inProgress = this.props.sandwichData.isExportInProgress;
+        const noExport = exportResults == null && !this.props.sandwichData.isExportInProgress;
+
+        console.log("isLoaded: ", isLoaded);
+        console.log("inProgress: ", inProgress);
+        console.log("noexport: ", noExport);
+
         return (
             <>
                 <div className="row">
                     <MainHeading>{this.props.sandwichData.title}</MainHeading>
+
+                </div>
+                <div className="row">
+                    <LoadingDiv className="col-9">
+                        <div class="d-flex align-items-center">
+                            <strong>Status: </strong>
+                            <span hidden={!inProgress} className="badge badge-info">Loading...</span>
+                            <div hidden={!inProgress} className="spinner-border ml-auto text-primary" role="status" aria-hidden="true"></div>
+                            <span hidden={!isLoaded} className="badge badge-success">LOADED</span>
+                            <span hidden={!noExport} className="badge badge-warning">No export started, please retry.</span>
+                        </div>
+                    </LoadingDiv>
                 </div>
                 <div className="row">
                     <div className="col-9">
-                        <ExportedContent className="row">
-                            <ExportedContentDescription className="col-4">
-                                Class slides:
-                            </ExportedContentDescription>
-                            <LinkTextField className="col">
-                                {this.props.sandwichData.exportResults["class_slides_url"]}
-                            </LinkTextField>
-                        </ExportedContent>
-                        <ExportedContent className="row">
-                            <ExportedContentDescription className="col-4">
-                                Student Workbook:
-                            </ExportedContentDescription>
-                            <LinkTextField className="col">
-                                {this.props.sandwichData.exportResults["student_workbook_url"]}
-
-                            </LinkTextField>
-                        </ExportedContent>
-                        <ExportedContent className="row">
-                            <ExportedContentDescription className="col-4">
-                                Teacher Facilitation Guide:
-                            </ExportedContentDescription>
-                            <LinkTextField className="col">
-                                {this.props.sandwichData.exportResults["teacher_guide_url"]}
-
-                            </LinkTextField>
-                        </ExportedContent>
-
-                        <ExportedContent className="row">
-                            <ExportedContentDescription className="col-4">
-                                Summary doc:
-                            </ExportedContentDescription>
-                            <LinkTextField className="col">
-                                {this.props.sandwichData.exportResults["summary_doc_url"]}
-
-                            </LinkTextField>
-                        </ExportedContent>
+                        {
+                            exportPairs.map(tuple => {
+                                const [key, value] = tuple;
+                                
+                                return <ExportedContent className="row">
+                                <ExportedContentDescription className="col-4">
+                                    {key}
+                                </ExportedContentDescription>
+                                <LinkTextField className="col">
+                                    {value}
+                                </LinkTextField>
+                            </ExportedContent>
+                            })
+                        }
                     </div>
                     <div className="col-3">
-                        <WeeklySandwichNutritionFacts sandwichId={[this.props.sandwichId]} />
+                        <WeeklySandwichNutritionFacts sandwichId={this.props.sandwichId} />
                     </div>
                 </div>
                 <div className="row">

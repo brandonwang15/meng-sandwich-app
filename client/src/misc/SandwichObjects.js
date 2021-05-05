@@ -1,5 +1,8 @@
 import fillingData from "../data/all_fillings";
 
+// TODO: since these are being stored in redux state, they shouldn't be actual class objects
+// And any instance functions should NOT modify state (state modification has to go through redux)
+// Ideally, should not even have getters here - move these to SandwichHelpers.js later, as functions that operate on the plain object representations
 class CustomSandwichData {
 
   constructor(rawJSON) {
@@ -45,32 +48,11 @@ class CustomSandwichData {
     }
 
     // Export-related fields
-    this.exportInProgress = false;
-    this.exportResults = {};
+    this.isExportInProgress = false;
+    this.exportResults = null;
 
     // bind instance functions
     this.latestSuggestedFillingClassNum = this.latestSuggestedFillingClassNum.bind(this);
-    this.startExport = this.startExport.bind(this);
-  }
-
-  // Start exporting the materials associated with the current state of builder for this sandwich
-  // Accepts a callback function takes a http response.
-  startExport(callback) {
-    // Cannot start export if one is still in progress
-    if (this.exportInProgress) {
-      return false;
-    }
-
-    const url = "/test";
-    fetch(url)
-      .then(data => { return data.json() })
-      .then(text => { 
-          console.log("http response text: ", text);
-          console.log("calling callback");
-          return callback(text); 
-        });
-
-    return true;
   }
 
   // Returns the latest suggested day of a filling (0-indexed)
@@ -119,6 +101,5 @@ class SandwichFillingData {
 
 
 }
-
 
 export { CustomSandwichData, SandwichFillingData };

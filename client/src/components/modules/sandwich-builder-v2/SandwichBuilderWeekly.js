@@ -13,6 +13,8 @@ import PropTypes from 'prop-types';
 import { builderMoveFilling, setWeekAndDays, builderResetSandwichContents, setExportResults } from '../../../actions'
 import WeeklySandwichNutritionFacts from "./WeeklySandwichNutritionFacts";
 
+import {startExport} from "../../../misc/SandwichHelpers";
+
 import styled from 'styled-components';
 import store from "../../../store";
 
@@ -141,9 +143,9 @@ class SandwichBuilderWeekly extends React.Component {
 
     startExportingMaterialsForThisSandwich() {
         const sandwich = store.getState().sandwiches[this.props.sandwichId];
-        sandwich.startExport((responseText) => {
-            console.log("Callback got responseText: ", responseText);
-            store.dispatch(setExportResults(this.props.sandwichId, responseText));
+        startExport(this.props.sandwichId, (responseJSON) => {
+            console.log("Callback got responseJSON: ", responseJSON);
+            store.dispatch(setExportResults(this.props.sandwichId, responseJSON));
         });
     }
 

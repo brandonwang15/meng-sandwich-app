@@ -26,6 +26,12 @@ export const setExportResults = (sandwichUID, exportResults) => ({
   exportResults: exportResults,
 })
 
+export const setExportInProgress = (sandwichUID, isExportInProgress) => ({
+  type: "SET_SANDWICH_EXPORT_IN_PROGRESS",
+  uid: sandwichUID,
+  isExportInProgress: isExportInProgress,
+})
+
 // sandwichBuilder actions
 
 export const builderMoveFilling = (sandwichId, sourceListId, destinationListId, sourceIndex, destinationIndex) => ({

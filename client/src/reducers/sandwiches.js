@@ -23,8 +23,16 @@ const sandwiches = (state = initialState, action) => {
   }
 
   switch (action.type) {
+    case "SET_SANDWICH_EXPORT_IN_PROGRESS":
+      return {...state,
+        [action.uid]: {
+          ...sandwich,
+          isExportInProgress: action.isExportInProgress,
+        }
+      }
     case "SET_SANDWICH_EXPORT_RESULTS":
       console.log("Reducer handling SET_SANDWICH_EXPORT_RESULTS");
+
       return {...state,
         [action.uid]: {
           ...sandwich,
