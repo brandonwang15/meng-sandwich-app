@@ -1,3 +1,5 @@
+import fillingData from "../data/all_fillings";
+
 class CustomSandwichData {
 
   constructor(rawJSON) {
@@ -13,9 +15,22 @@ class CustomSandwichData {
 
     this.allFillings = {}; // filling_id -> SandwichFillingData map 
     if ("fillings" in rawJSON) {
-      rawJSON.fillings.forEach((rawJSON) => {
-        let filling = new SandwichFillingData(rawJSON);
-        this.allFillings[filling.uid] = filling;
+      rawJSON.fillings.forEach((customFillingData) => {
+        const fillingId = customFillingData.id;
+
+        if (fillingId in fillingData) {
+          const baseFillingData = fillingData[fillingId];
+          const finalFillingData = {
+            ...baseFillingData, 
+            ...customFillingData,
+          };
+
+          let filling = new SandwichFillingData(finalFillingData);
+          this.allFillings[filling.uid] = filling;
+        } else {
+          throw "Sandwich " + this.uid + " references a filling id " + fillingId + " that is not defined in all_fillings.js";
+        }
+
       });
     }
 
@@ -84,7 +99,8 @@ class SandwichFillingData {
     this.title = fillingJSON.title;
     this.isRequired = fillingJSON.isRequired;
     this.type = fillingJSON.type;
-
+    this.materials = fillingJSON.materials;
+    
     // suggestedDay refers to the suggested order in the class sequence for this filling
     this.suggestedDay = fillingJSON.suggested_day;
 

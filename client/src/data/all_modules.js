@@ -1,3 +1,7 @@
+// TODO: document structure of this file and all_fillings.js
+// TODO: explain how filling overriding works:
+// - fields in fillings here will override any fields in all_fillings
+// - allows for sandwiches to reference the same base filling but customize fields per sandwich as well.
 var data = {
     "all_modules": [
         {
@@ -30,73 +34,46 @@ var data = {
             "fillings": [
                 {
                     id: "filling-launch",
-                    title: "Project Launch",
-                    type: "top-bun",
                     isRequired: true,
                     suggested_day: 0,
-                    duration: 15,
                 },
                 {
                     id: "filling-intro-to-qft",
-                    title: "Intro to QFT",
-                    type: "top-bun",
                     isRequired: true,
                     suggested_day: 5,
-                    duration: 15,
                 },
                 {
                     id: "filling-intro-machine-percept",
-                    title: "Intro to machine perception",
-                    type: "filling",
                     isRequired: true,
                     suggested_day: 3,
-                    duration: 15,
 
                 },
                 {
                     id: "filling-comm-preso",
-                    title: "Community Presentation",
-                    type: "bottom-bun",
                     isRequired: true,
-                    suggested_week: 0,
                     suggested_day: 8,
-                    duration: 15,
 
                 },
                 {
                     id: "filling-debugging",
-                    title: "Intro to Debugging",
-                    type: "filling",
                     isRequired: false,
                     suggested_day: 2,
-                    duration: 15,
 
                 },
                 {
                     id: "filling-fine-tuning-models",
-                    title: "Fine-tuning models",
-                    type: "filling",
                     isRequired: false,
                     suggested_day: 6,
-                    duration: 15,
-
                 },
                 {
                     id: "filling-testing-models",
-                    title: "Testing your model",
-                    type: "filling",
                     isRequired: false,
                     suggested_day: 7,
-                    duration: 15,
-
                 },
                 {
                     id: "filling-bias",
-                    title: "Bias activity",
-                    type: "filling",
                     isRequired: false,
                     suggested_day: 1,
-                    duration: 15,
 
                 }
 
@@ -246,76 +223,48 @@ var data = {
             "fillings": [
                 {
                     id: "filling-launch",
-                    title: "Project Launch",
-                    type: "top-bun",
                     isRequired: true,
                     suggested_day: 0,
-                    duration: 15,
                 },
                 {
                     id: "filling-intro-to-qft",
-                    title: "Intro to QFT",
-                    type: "top-bun",
                     isRequired: true,
                     suggested_day: 5,
-                    duration: 15,
                 },
                 {
                     id: "filling-intro-machine-percept",
-                    title: "Intro to machine perception",
-                    type: "filling",
                     isRequired: true,
                     suggested_day: 3,
-                    duration: 15,
 
                 },
                 {
                     id: "filling-comm-preso",
-                    title: "Community Presentation",
-                    type: "bottom-bun",
                     isRequired: true,
-                    suggested_week: 0,
                     suggested_day: 8,
-                    duration: 15,
 
                 },
                 {
                     id: "filling-debugging",
-                    title: "Intro to Debugging",
-                    type: "filling",
                     isRequired: false,
                     suggested_day: 2,
-                    duration: 15,
 
                 },
                 {
                     id: "filling-fine-tuning-models",
-                    title: "Fine-tuning models",
-                    type: "filling",
                     isRequired: false,
                     suggested_day: 6,
-                    duration: 15,
-
                 },
                 {
                     id: "filling-testing-models",
-                    title: "Testing your model",
-                    type: "filling",
                     isRequired: false,
                     suggested_day: 7,
-                    duration: 15,
-
                 },
                 {
                     id: "filling-bias",
-                    title: "Bias activity",
-                    type: "filling",
                     isRequired: false,
                     suggested_day: 1,
-                    duration: 15,
 
                 }
-
             ],
             "suggested_condiments": [1, 2],
             "example_student_projects": [
