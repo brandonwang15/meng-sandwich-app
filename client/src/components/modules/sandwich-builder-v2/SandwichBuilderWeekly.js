@@ -13,7 +13,7 @@ import PropTypes from 'prop-types';
 import { builderMoveFilling, setWeekAndDays, builderResetSandwichContents, setExportResults } from '../../../actions'
 import WeeklySandwichNutritionFacts from "./WeeklySandwichNutritionFacts";
 
-import {startExport} from "../../../misc/SandwichHelpers";
+import { startExport } from "../../../misc/SandwichHelpers";
 
 import styled from 'styled-components';
 import store from "../../../store";
@@ -36,6 +36,29 @@ const SetButton = styled.button`
     margin: auto;
 `;
 
+const Sidebar = styled.div`
+    position: fixed;
+    bottom: 0;
+    right: 0;
+    height: auto;
+    width: auto;
+    padding: 0px;
+    z-index:99;
+    background-color: white;
+    border: 1px solid gray;
+`;
+
+const SidebarContent = styled.div`
+    padding: 20px;
+`;
+
+const FillingInfobox = styled.div`
+    border-bottom: 1px solid gray;
+    background-color: #61f7ff;
+    width: 100%;
+    padding: 20px;
+`;
+
 class SandwichBuilderWeekly extends React.Component {
 
     // Parse a plan id string of the format: "plan-list-{week}-{day}"
@@ -54,6 +77,7 @@ class SandwichBuilderWeekly extends React.Component {
             nWeeks: sandwich.nWeeks,
             daysPerWeek: sandwich.daysInWeek,
             weeksDaysNeedUpdate: false,
+            selectedFilling: null,
         };
 
         // Bind class functions
@@ -62,6 +86,7 @@ class SandwichBuilderWeekly extends React.Component {
         this.updateWeeksLabel = this.updateWeeksLabel.bind(this);
         this.updateDaysLabel = this.updateDaysLabel.bind(this);
         this.startExportingMaterialsForThisSandwich = this.startExportingMaterialsForThisSandwich.bind(this);
+        this.onFillingMouseOver = this.onFillingMouseOver.bind(this);
     }
 
     makeTestBackendRequest() {
@@ -69,6 +94,20 @@ class SandwichBuilderWeekly extends React.Component {
         fetch(url)
             .then(data => { return data.text() })
             .then(res => { console.log("http response: ", res) });
+    }
+
+    onFillingMouseOver(fillingId) {
+        if (fillingId == -1) {
+            this.setState({
+                selectedFilling: null,
+            })
+        }
+
+        let sandwich = store.getState().sandwiches[this.props.sandwichId];
+
+        this.setState({
+            selectedFilling: sandwich.allFillings[fillingId],
+        })
     }
 
     setWeekAndDays() {
@@ -177,6 +216,7 @@ class SandwichBuilderWeekly extends React.Component {
                 listID={obj.id}
                 sandwich={sandwich}
                 contents={obj.contents}
+                onFillingMouseOver={this.onFillingMouseOver}
             />);
 
         }
@@ -194,15 +234,17 @@ class SandwichBuilderWeekly extends React.Component {
             let planCol = <div key="plan-col" className="col-6">{fillingListComponents[week]}</div>;
 
             let bankListObj = this.props.builderState.bankLists["bank-list-" + week];
-            let bankCol = <div key="bank-col" className="col-6">
-                <FillingBank
-                    key={bankListObj.id}
-                    displayTitle={"Suggested Fillings"}
-                    listID={bankListObj.id}
-                    sandwichId={sandwich.uid}
-                    contents={bankListObj.contents}
-                />
-            </div>;
+            let bankCol = (
+                <div key="bank-col" className="col-6">
+                    <FillingBank
+                        key={bankListObj.id}
+                        displayTitle={"Suggested Fillings"}
+                        listID={bankListObj.id}
+                        sandwichId={sandwich.uid}
+                        contents={bankListObj.contents}
+                        onFillingMouseOver={this.onFillingMouseOver}
+                    />
+                </div>);
 
             finalComponents.push(<div key={"plan-bank-col-" + week} className="row text-center">{planCol}{bankCol}</div>)
         }
@@ -233,16 +275,28 @@ class SandwichBuilderWeekly extends React.Component {
                     </div>
 
                     <div className="col-3">
+
+                    </div>
+                </div>
+                <Sidebar className="col-3">
+                    <FillingInfobox hidden={this.state.selectedFilling == null}>
+                        <h5>{this.state.selectedFilling == null ? "Select a filling!" : this.state.selectedFilling.title}</h5>
+                        <small>
+                            Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.
+                        </small>
+                    </FillingInfobox>
+                    <SidebarContent>
                         <WeeklySandwichNutritionFacts sandwichId={this.props.sandwichId} />
                         <ExportButtonContainer>
                             <NavLink className="btn btn-primary" to={"/sandwich/export/" + this.props.sandwichId}>
                                 <div onClick={this.startExportingMaterialsForThisSandwich}>
                                     Export
-                                </div>
+                                    </div>
                             </NavLink>
                         </ExportButtonContainer>
-                    </div>
-                </div>
+
+                    </SidebarContent>
+                </Sidebar>
             </div>
         )
     }
