@@ -13,8 +13,6 @@ const InfoBox = styled.div`
 
 const MainHeading = styled.h1`
     margin-top: 20px;
-    margin-left: 10%;
-    margin-left: 10%;
 `;
 
 const ExportedContent = styled.div`
@@ -66,51 +64,60 @@ class SandwichExportPage extends React.Component {
         return (
             <>
                 <div className="row">
-                    <MainHeading>{this.props.sandwichData.title}</MainHeading>
+                    <div className="col">
+                        <MainHeading>{this.props.sandwichData.title}</MainHeading>
+                    </div>
 
                 </div>
                 <div className="row">
-                    <LoadingDiv className="col-9">
-                        <div class="d-flex align-items-center">
-                            <strong>Status: </strong>
-                            <span hidden={!inProgress} className="badge badge-info">Loading...</span>
-                            <div hidden={!inProgress} className="spinner-border ml-auto text-primary" role="status" aria-hidden="true"></div>
+                    <div className="col">
+                        <h3>Custom generated for your sandwich configuration</h3>
+                    </div>
+                </div>
+                <div className="row">
+                    <LoadingDiv className="col">
+                        <h2>
+                            <span hidden={!inProgress} className="badge badge-info">
+                                Loading...
+                                    <div hidden={!inProgress} className="spinner-border ml-auto text-light" role="status" aria-hidden="true"></div>
+                            </span>
                             <span hidden={!isLoaded} className="badge badge-success">LOADED</span>
                             <span hidden={!noExport} className="badge badge-warning">No export started, please retry.</span>
-                        </div>
+                        </h2>
                     </LoadingDiv>
                 </div>
                 <div className="row">
-                    <div className="col-9">
+                    <div className="col-9 mx-auto">
                         {
                             exportPairs.map(tuple => {
                                 const [key, value] = tuple;
-                                
-                                return <ExportedContent className="row">
-                                <ExportedContentDescription className="col-4">
-                                    {key}
-                                </ExportedContentDescription>
-                                <LinkTextField className="col">
-                                    {value}
-                                </LinkTextField>
-                            </ExportedContent>
+
+                                return <ExportedContent key={key} className="row">
+                                    <ExportedContentDescription className="col-4">
+                                        {key}
+                                    </ExportedContentDescription>
+                                    <LinkTextField className="col">
+                                        {value}
+                                    </LinkTextField>
+                                </ExportedContent>
                             })
                         }
                     </div>
-                    <div className="col-3">
-                        <WeeklySandwichNutritionFacts sandwichId={this.props.sandwichId} />
-                    </div>
+
                 </div>
                 <div className="row">
-                    <ExportedContent className="col-9">
+                    <ExportedContent className="col-6 mx-auto">
                         <h4>Additional Resources:</h4>
                         {this.props.sandwichData.resources.map((resource, index) =>
-                            <div>
-                                <a key={index} href={process.env.PUBLIC_URL + resource.url}>{resource.text}</a>
+                            <div key={index}>
+                                <a href={process.env.PUBLIC_URL + resource.url}>{resource.text}</a>
                             </div>
                         )}
                         <ZipButton className="btn btn-primary">Download ZIP</ZipButton>
                     </ExportedContent>
+                </div>
+                <div className="row mx-auto">
+                    <WeeklySandwichNutritionFacts sandwichId={this.props.sandwichId} />
                 </div>
 
             </>
