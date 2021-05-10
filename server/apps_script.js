@@ -86,33 +86,11 @@ function callAppsScriptSlideMerge(params, auth, responseCallback) { // eslint-di
     // Make the API request. The request object is included here as 'resource'.
     console.log('Calling stitchSlides()... with params: ', params);
 
-    var input = [];
-
-    input.push({
-      url: "https://docs.google.com/presentation/d/12svaHbSKQvc9wwbT1kcQ8N-IEAqmxjMY1HD22Tf8Gzk/edit#slide=id.p",
-      startIndex: 0,
-      nSlides: -1,
-    });
-  
-    input.push({
-      url: "https://docs.google.com/presentation/d/12svaHbSKQvc9wwbT1kcQ8N-IEAqmxjMY1HD22Tf8Gzk/edit#slide=id.p",
-      startIndex: 0,
-      nSlides: -1,
-    });
-  
-    input.push({
-      url: "https://docs.google.com/presentation/d/12svaHbSKQvc9wwbT1kcQ8N-IEAqmxjMY1HD22Tf8Gzk/edit#slide=id.p",
-      startIndex: 0,
-      nSlides: -1,
-    });
-
-
     script.scripts.run({
         auth: auth,
         resource: {
             function: 'stitchSlides',
-            parameters: [params["presentationTitle"], input],
-            // parameters: [params["presentationTitle"], params["slideRanges"]],
+            parameters: [params["presentationTitle"], params["slideRanges"]],
         },
         devMode: true,
         scriptId: scriptId,
