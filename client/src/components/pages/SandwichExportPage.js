@@ -132,10 +132,10 @@ class SandwichExportPage extends React.Component {
 
                                 return <ExportedContent key={key} className="row">
                                     <ExportedContentDescription className="col-4">
-                                        {key}
+                                        {key+":"}
                                     </ExportedContentDescription>
                                     <LinkTextField className="col">
-                                        {value}
+                                        <a href={value} target="_blank">{value}</a>
                                     </LinkTextField>
                                 </ExportedContent>
                             })
