@@ -11,9 +11,28 @@ const app = express();
 // For parsing application/json
 app.use(express.json());
 
-app.post('/test', (req, res) => {
+/*
+  /api/stitchslides
+  ---
+  Parameters:
+  {slideRanges: [
+    {
+      url: string,
+      startIndex: int,
+      nSlides, int,
+    },
+    ...
+  ]}
 
-  
+  Returns:
+  {
+    success: bool,
+    url: string,
+    error: string,
+  }
+*/
+app.post('/api/stitchslides', (req, res) => {
+  // Validate request parameters
   if (!("slideRanges" in req.body)) {
     console.log("400: slideRanges not present in request body.");
     res.status(400).send("POST request missing 'slideRanges' key in body");
@@ -23,9 +42,11 @@ app.post('/test', (req, res) => {
   console.log("Passed request validation.");
   console.log("req.body: ", req.body);
 
+  
+  // Call the slide stitching function
   const stitchParams = req.body["slideRanges"];
-
   appsScript.callStitchSlides(stitchParams, (result) => {
+    // Respond to the client
     console.log(result);
     const success = result.success;
     

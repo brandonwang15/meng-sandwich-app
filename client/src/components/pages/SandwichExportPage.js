@@ -3,7 +3,12 @@ import React, { Component } from "react";
 import { connect } from 'react-redux'
 import PropTypes from 'prop-types';
 import styled from "styled-components";
+
 import WeeklySandwichNutritionFacts from "../modules/sandwich-builder-v2/WeeklySandwichNutritionFacts";
+
+import { startExport } from "../../misc/SandwichHelpers"; 
+import { setExportResults } from '../../actions'
+import store from "../../store";
 
 const InfoBox = styled.div`
     border: 1px solid lightgray;
@@ -47,19 +52,43 @@ const LoadingDiv = styled.div`
 `;
 
 class SandwichExportPage extends React.Component {
+
+    constructor(props) {
+        super(props);
+
+        // Bind class functions
+        this.startExportingMaterialsForThisSandwich = this.startExportingMaterialsForThisSandwich.bind(this);
+    }
+
+    startExportingMaterialsForThisSandwich() {
+        startExport(this.props.sandwichId, (responseJSON) => {
+            console.log("Callback got responseJSON: ", responseJSON);
+            store.dispatch(setExportResults(this.props.sandwichId, responseJSON));
+        });
+    }
+
     render() {
         const exportResults = this.props.sandwichData.exportResults;
         console.log("export results in render(): ", exportResults);
 
-        const exportPairs = exportResults != null ? Object.entries(exportResults) : [];
 
         const isLoaded = exportResults != null && !this.props.sandwichData.isExportInProgress;
         const inProgress = this.props.sandwichData.isExportInProgress;
         const noExport = exportResults == null && !this.props.sandwichData.isExportInProgress;
+        const loadSuccessful = exportResults != null && exportResults.success
+
+        const errorMessage = exportResults != null ? exportResults.errorMessage : "";
+
+        var exportPairs = [];
+
+        if (exportResults != null && exportResults.contents != null) {
+            exportPairs = Object.entries(exportResults.contents);
+        }
 
         console.log("isLoaded: ", isLoaded);
         console.log("inProgress: ", inProgress);
         console.log("noexport: ", noExport);
+        console.log("loadSuccessful: ", loadSuccessful);
 
         return (
             <>
@@ -81,9 +110,18 @@ class SandwichExportPage extends React.Component {
                                 Loading...
                                     <div hidden={!inProgress} className="spinner-border ml-auto text-light" role="status" aria-hidden="true"></div>
                             </span>
-                            <span hidden={!isLoaded} className="badge badge-success">LOADED</span>
                             <span hidden={!noExport} className="badge badge-warning">No export started, please retry.</span>
+
+                            <span hidden={!(isLoaded && loadSuccessful)} className="badge badge-success">Loaded</span>
+                            <span hidden={!(isLoaded && !loadSuccessful)} className="badge badge-danger">Load error!</span>
                         </h2>
+                        <div hidden={!(isLoaded && !loadSuccessful)}>
+                            <div className="alert alert-danger" role="alert">
+                                <b>Error: </b>
+                                <em>{errorMessage}</em><br />
+                                <button className="btn btn-info" onClick={this.startExportingMaterialsForThisSandwich}>Retry</button>
+                            </div>
+                        </div>
                     </LoadingDiv>
                 </div>
                 <div className="row">

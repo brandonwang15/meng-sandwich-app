@@ -28,7 +28,7 @@ function startExport(sandwichId, callback) {
         "Content-Type": "application/json",
     }
 
-    const url = "/test";
+    const url = "/api/stitchslides";
 
     console.log("about to axios POST: ", requestBody);
     axios.post(url, requestBody, requestHeaders)
@@ -36,14 +36,23 @@ function startExport(sandwichId, callback) {
             (response) => {
                 console.log("axios POST response successful: ", response);
                 store.dispatch(setExportInProgress(sandwich.uid, false));
-                callback(response.data);
+
+                const responseValue = response.data;
+                callback({
+                    success: responseValue.success,
+                    errorMessage: "There was a server side error: \""+responseValue.error+"\"",
+                    contents: {
+                        url: responseValue.url,
+                    }
+                });
             },
             (error) => {
                 console.log("axios POST failed: ", error);
                 store.dispatch(setExportInProgress(sandwich.uid, false));
                 callback({
                     success: false,
-                    error: error,
+                    errorMessage: "HTTP request failed. Check that your internet connection is working and that the backend server is up?",
+                    contents: {},
                 })
             });
 
