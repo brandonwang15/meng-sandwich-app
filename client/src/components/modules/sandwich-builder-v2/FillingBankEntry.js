@@ -16,6 +16,11 @@ const Title = styled.h6`
     text-style: bold;
 `;
 
+const ExpandableSubContainer = styled.div`
+    margin: 20px;
+
+`;
+
 
 
 class FillingBankEntry extends React.Component {
@@ -44,6 +49,17 @@ class FillingBankEntry extends React.Component {
                         <b>
                             {filling.duration + " min."}
                         </b>
+                        <ExpandableSubContainer>
+                            <button class="btn btn-link" type="button" data-toggle="collapse" data-target={"#bankEntryFillingDetails-"+this.props.fillingID} aria-expanded="false" aria-controls="collapseExample">
+                                See More
+                            </button>
+                            <div class="collapse" id={"bankEntryFillingDetails-"+this.props.fillingID}>
+                                <div>
+                                    Anim pariatur cliche reprehenderit, enim eiusmod high life accusamus terry richardson ad squid. Nihil anim keffiyeh helvetica, craft beer labore wes anderson cred nesciunt sapiente ea proident.
+                                </div>
+                            </div>
+
+                        </ExpandableSubContainer>
                     </Container>
 
                 )
