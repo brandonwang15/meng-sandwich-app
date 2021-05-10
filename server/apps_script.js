@@ -81,35 +81,38 @@ function getAccessToken(oAuth2Client, callback) {
 function callAppsScriptSlideMerge(params, auth, responseCallback) { // eslint-disable-line no-unused-vars
     const scriptId = 'AKfycbxMUtlQz6x44_Xasg6AyiICRFb0K6oPfqq3pDEeeCtJtywwvNqCj2wmqIcqC5moMZ0EdA';
     const script = google.script('v1');
+    
+    var input = [];
+
+    input.push({
+      url: "https://docs.google.com/presentation/d/1RI-m8wjilNdb1AZgEh1GzeznUFSnDSDLXynNkV7sq5o/edit#slide=id.gd73955e227_0_0",
+      startIndex: 0,
+      nSlides: 2,
+    });
+  
+    input.push({
+      url: "https://docs.google.com/presentation/d/1RI-m8wjilNdb1AZgEh1GzeznUFSnDSDLXynNkV7sq5o/edit#slide=id.gd73955e227_0_0",
+      startIndex: 0,
+      nSlides: 5,
+    });
+  
+    input.push({
+      url: "https://docs.google.com/presentation/d/1RI-m8wjilNdb1AZgEh1GzeznUFSnDSDLXynNkV7sq5o/edit#slide=id.gd73955e227_0_0",
+      startIndex: 0,
+      nSlides: 2,
+    });
+
+    params = input;
 
     // Make the API request. The request object is included here as 'resource'.
-    console.log('Calling stitchSlides()...');
+    console.log('Calling stitchSlides()... with params: ', params);
 
-    // var input = [];
-
-    // input.push({
-    //     url: "https://docs.google.com/presentation/d/1RI-m8wjilNdb1AZgEh1GzeznUFSnDSDLXynNkV7sq5o/edit",
-    //     startIndex: 0,
-    //     nSlides: 2,
-    // });
-
-    // input.push({
-    //     url: "https://docs.google.com/presentation/d/1RI-m8wjilNdb1AZgEh1GzeznUFSnDSDLXynNkV7sq5o/edit",
-    //     startIndex: 0,
-    //     nSlides: 5,
-    // });
-
-    // input.push({
-    //     url: "https://docs.google.com/presentation/d/1RI-m8wjilNdb1AZgEh1GzeznUFSnDSDLXynNkV7sq5o/edit",
-    //     startIndex: 0,
-    //     nSlides: 2,
-    // });
 
     script.scripts.run({
         auth: auth,
         resource: {
             function: 'stitchSlides',
-            parameters: ["stitched slides (desktop)", params],
+            parameters: ["stitched slides (desktop)", input],
         },
         devMode: true,
         scriptId: scriptId,

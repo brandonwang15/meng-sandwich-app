@@ -46,16 +46,16 @@ class FillingListEntry extends React.Component {
                             {filling.duration + " min."}
                         </b>
                         <ExpandableSubContainer>
-                            <button class="btn btn-link" type="button" data-toggle="collapse" data-target={"#listEntryFillingDetails-" + this.props.fillingID} aria-expanded="false" aria-controls="collapseExample">
+                            <button className="btn btn-link" type="button" data-toggle="collapse" data-target={"#listEntryFillingDetails-" + this.props.fillingID} aria-expanded="false" aria-controls="collapseExample">
                                 See More
                             </button>
-                            <div class="collapse" id={"listEntryFillingDetails-" + this.props.fillingID}>
+                            <div className="collapse" id={"listEntryFillingDetails-" + this.props.fillingID}>
                                 {
                                     Object.entries(filling.materials).map(tuple => {
                                         let [fillingKey, value] = tuple;
                                         let url = value.url;
 
-                                        return <div>
+                                        return <div key={fillingKey}>
                                             <b>{fillingKey + ": "}</b>
                                             <a href={url} target="_blank">link</a>
                                         </div>

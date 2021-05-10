@@ -8,22 +8,31 @@ const PORT = process.env.PORT || 3001;
 
 const app = express();
 
-app.get('/test', (req, res) => {
+// For parsing application/json
+app.use(express.json());
 
-  console.log("start");
-  console.log(req.body);
+app.post('/test', (req, res) => {
 
-  appsScript.callStitchSlides((result) => {
+  
+  if (!("slideRanges" in req.body)) {
+    console.log("400: slideRanges not present in request body.");
+    res.status(400).send("POST request missing 'slideRanges' key in body");
+    return;
+  }
+
+  console.log("Passed request validation.");
+  console.log("req.body: ", req.body);
+
+  const stitchParams = req.body["slideRanges"];
+
+  appsScript.callStitchSlides(stitchParams, (result) => {
     console.log(result);
     const success = result.success;
     
     if (!success) { 
       res.send({
-        class_slides_url: "n/a",
-        student_workbook_url: "n/a",
-        teacher_guide_url: "n/a",
-        summary_doc_url: "n/a",
-  
+        success: false,
+        url: "",
       });  
     } else {
       const responsePayload = result.response.response.result;
@@ -32,11 +41,8 @@ app.get('/test', (req, res) => {
       const url = responsePayload.url;
 
       res.send({
-        class_slides_url: url,
-        student_workbook_url: 'slides.google.com/test/student_workbook',
-        teacher_guide_url: 'slides.google.com/test/teacher_guide',
-        summary_doc_url: "slides.google.com/test/summary_doc",
-  
+        success: true,
+        url: url,
       });  
     }
     

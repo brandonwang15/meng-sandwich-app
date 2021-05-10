@@ -8,7 +8,7 @@ const axios = require('axios');
 function startExport(sandwichId, callback) {
     // clear the old results
     store.dispatch(setExportResults(sandwichId, {}));
-    
+
     const sandwich = store.getState().sandwiches[sandwichId];
     console.log("Starting sandwich export for: ", sandwichId, sandwich);
     // Cannot start export if one is still in progress
@@ -19,21 +19,33 @@ function startExport(sandwichId, callback) {
     store.dispatch(setExportInProgress(sandwichId, true));
 
     const requestParams = generateRequestParamsForExport(sandwichId);
+    const requestBody =
+    {
+        slideRanges: requestParams["student_journal"],
+    };
 
-    const requestBody = {
-        body: JSON.stringify(requestParams["student_journal"]),
+    const requestHeaders = {
+        "Content-Type": "application/json",
     }
 
     const url = "/test";
 
-    fetch(url)
-        .then(data => { return data.json() })
-        .then(text => {
-            console.log("http response text: ", text);
-            console.log("calling callback");
-            store.dispatch(setExportInProgress(sandwich.uid, false));
-            return callback(text);
-        });
+    console.log("about to axios POST: ", requestBody);
+    axios.post(url, requestBody, requestHeaders)
+        .then(
+            (response) => {
+                console.log("axios POST response successful: ", response);
+                store.dispatch(setExportInProgress(sandwich.uid, false));
+                callback(response.data);
+            },
+            (error) => {
+                console.log("axios POST failed: ", error);
+                store.dispatch(setExportInProgress(sandwich.uid, false));
+                callback({
+                    success: false,
+                    error: error,
+                })
+            });
 
     return true;
 }
@@ -49,7 +61,7 @@ function generateRequestParamsForExport(sandwichId) {
     // Get the list of filling ids in the builder, in sequential order
     for (let week = 0; week < sandwich.nWeeks; week++) {
         for (let day = 0; day < sandwich.daysInWeek; day++) {
-            let planId = "plan-list-"+week+"-"+day
+            let planId = "plan-list-" + week + "-" + day
             let planList = builderState.planLists[planId];
 
             fillingIdSequence.push(...planList.contents);
@@ -96,11 +108,11 @@ function generateRequestParamsForExport(sandwichId) {
 
             slideRanges[key].push(slideRange);
         });
-    });  
-    
+    });
+
     console.log(slideRanges);
 
     return slideRanges;
 }
 
-export {startExport};
+export { startExport };
