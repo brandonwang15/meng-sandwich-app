@@ -59,16 +59,12 @@ class FillingList extends React.Component {
                                 {...providedDroppable.droppableProps}>
 
                                 {this.props.contents.map((fillingID, listIndex) =>
-                                    <div
-                                        onMouseOver={() => this.props.onFillingMouseOver(fillingID)}
-                                        onMouseOut={() => this.props.onFillingMouseOver(-1)}>
-                                        <FillingListEntry
-                                            sandwichID={this.props.sandwich.uid}
-                                            fillingID={fillingID}
-                                            key={fillingID}
-                                            index={listIndex}
-                                        />
-                                    </div>
+                                    <FillingListEntry
+                                        sandwichID={this.props.sandwich.uid}
+                                        fillingID={fillingID}
+                                        key={fillingID}
+                                        index={listIndex}
+                                    />
                                 )}
                                 {providedDroppable.placeholder}
                             </ContentsList>
@@ -86,7 +82,6 @@ FillingList.propTypes = {
     listID: PropTypes.string.isRequired,
     sandwich: PropTypes.object.isRequired,
     contents: PropTypes.array.isRequired,
-    onFillingMouseOver: PropTypes.func.isRequired,
 }
 
 export default FillingList;

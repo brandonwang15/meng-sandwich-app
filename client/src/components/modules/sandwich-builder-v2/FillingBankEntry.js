@@ -10,9 +10,6 @@ const Container = styled.div`
     margin-bottom: 8px;
     padding: 5px;
     background-color: white;
-    &:hover {
-        background-color: #61f7ff;
-    };
 `;
 
 const Title = styled.h6`
