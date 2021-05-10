@@ -19,43 +19,60 @@ function startExport(sandwichId, callback) {
     store.dispatch(setExportInProgress(sandwichId, true));
 
     const requestParams = generateRequestParamsForExport(sandwichId);
-    const requestBody =
-    {
-        slideRanges: requestParams["student_journal"],
-    };
-
     const requestHeaders = {
         "Content-Type": "application/json",
     }
-
     const url = "/api/stitchslides";
 
-    console.log("about to axios POST: ", requestBody);
-    axios.post(url, requestBody, requestHeaders)
-        .then(
-            (response) => {
-                console.log("axios POST response successful: ", response);
-                store.dispatch(setExportInProgress(sandwich.uid, false));
+    const requestKeys = Object.keys(requestParams);
+    const requestPromises = requestKeys.map(key => {
+        let params = requestParams[key];
+        const requestBody =
+        {
+            presentationTitle: key,
+            slideRanges: params,
+        };
 
-                const responseValue = response.data;
-                callback({
-                    success: responseValue.success,
-                    errorMessage: "There was a server side error: \""+responseValue.error+"\"",
-                    contents: {
-                        url: responseValue.url,
-                    }
-                });
-            },
-            (error) => {
-                console.log("axios POST failed: ", error);
-                store.dispatch(setExportInProgress(sandwich.uid, false));
-                callback({
-                    success: false,
-                    errorMessage: "HTTP request failed. Check that your internet connection is working and that the backend server is up?",
-                    contents: {},
-                })
-            });
+        const requestPromise = axios.post(url, requestBody, requestHeaders);
 
+        return requestPromise;
+    });
+
+    Promise.all(requestPromises).then(responses => {
+        console.log("Promise.all(): ", responses);
+        store.dispatch(setExportInProgress(sandwich.uid, false));
+
+        let exportResult = {
+            success: true,
+            errorMessage: "",
+            contents: {
+            }
+        };
+
+        for (let i = 0; i < responses.length; i++) {
+            const response = responses[i];
+            const responseValue = response.data;
+            const requestKey = requestKeys[i];
+    
+            if (!responseValue.success) {
+                exportResult.success = false;
+                exportResult.errorMessage = "There was a server side error: \"" + responseValue.error + "\"";
+                break;
+            } else {
+                exportResult.contents[requestKey] = responseValue.url;
+            }
+        }
+        console.log("Promise.all() exportResult: ", exportResult);
+        callback(exportResult);
+    }).catch(error => {
+        console.log("Promise.all().catch(error). error: ", error);
+        store.dispatch(setExportInProgress(sandwich.uid, false));
+        callback({
+            success: false,
+            errorMessage: "HTTP request failed. Check that your internet connection is working and that the backend server is up?",
+            contents: {},
+        })
+    })
     return true;
 }
 

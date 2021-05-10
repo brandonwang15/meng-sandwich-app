@@ -15,7 +15,9 @@ app.use(express.json());
   /api/stitchslides
   ---
   Parameters:
-  {slideRanges: [
+  {
+    presentationTitle: string,
+    slideRanges: [
     {
       url: string,
       startIndex: int,
@@ -39,21 +41,30 @@ app.post('/api/stitchslides', (req, res) => {
     return;
   }
 
+  if (!("presentationTitle" in req.body)) {
+    console.log("400: presentationTitle not present in request body.");
+    res.status(400).send("POST request missing 'presentationTitle' key in body");
+    return;
+  }
+
   console.log("Passed request validation.");
   console.log("req.body: ", req.body);
 
   
   // Call the slide stitching function
-  const stitchParams = req.body["slideRanges"];
+  const stitchParams = {};
+  stitchParams["slideRanges"] = req.body["slideRanges"];
+  stitchParams["presentationTitle"] = req.body["presentationTitle"];
+
   appsScript.callStitchSlides(stitchParams, (result) => {
     // Respond to the client
     console.log(result);
-    const success = result.success;
-    
+    var success = result.success;
     if (!success) { 
       res.send({
         success: false,
         url: "",
+        error: result.error,
       });  
     } else {
       const responsePayload = result.response.response.result;

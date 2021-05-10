@@ -79,40 +79,40 @@ function getAccessToken(oAuth2Client, callback) {
  * @param {google.auth.OAuth2} auth An authorized OAuth2 client.
  */
 function callAppsScriptSlideMerge(params, auth, responseCallback) { // eslint-disable-line no-unused-vars
-    const scriptId = 'AKfycbxMUtlQz6x44_Xasg6AyiICRFb0K6oPfqq3pDEeeCtJtywwvNqCj2wmqIcqC5moMZ0EdA';
+    // scriptID = the "Deployment ID" from the "Manage Deployments" page in the Google Apps Script Editor
+    const scriptId = 'AKfycbxjd8HAeKptkojKHENVQbphOAPgyGtrMeqE-WamYmw2DKpbSxpFEdURz7RQavz6LUUMPg';
     const script = google.script('v1');
     
+    // Make the API request. The request object is included here as 'resource'.
+    console.log('Calling stitchSlides()... with params: ', params);
+
     var input = [];
 
     input.push({
-      url: "https://docs.google.com/presentation/d/1RI-m8wjilNdb1AZgEh1GzeznUFSnDSDLXynNkV7sq5o/edit#slide=id.gd73955e227_0_0",
+      url: "https://docs.google.com/presentation/d/12svaHbSKQvc9wwbT1kcQ8N-IEAqmxjMY1HD22Tf8Gzk/edit#slide=id.p",
       startIndex: 0,
-      nSlides: 2,
+      nSlides: -1,
     });
   
     input.push({
-      url: "https://docs.google.com/presentation/d/1RI-m8wjilNdb1AZgEh1GzeznUFSnDSDLXynNkV7sq5o/edit#slide=id.gd73955e227_0_0",
+      url: "https://docs.google.com/presentation/d/12svaHbSKQvc9wwbT1kcQ8N-IEAqmxjMY1HD22Tf8Gzk/edit#slide=id.p",
       startIndex: 0,
-      nSlides: 5,
+      nSlides: -1,
     });
   
     input.push({
-      url: "https://docs.google.com/presentation/d/1RI-m8wjilNdb1AZgEh1GzeznUFSnDSDLXynNkV7sq5o/edit#slide=id.gd73955e227_0_0",
+      url: "https://docs.google.com/presentation/d/12svaHbSKQvc9wwbT1kcQ8N-IEAqmxjMY1HD22Tf8Gzk/edit#slide=id.p",
       startIndex: 0,
-      nSlides: 2,
+      nSlides: -1,
     });
-
-    params = input;
-
-    // Make the API request. The request object is included here as 'resource'.
-    console.log('Calling stitchSlides()... with params: ', params);
 
 
     script.scripts.run({
         auth: auth,
         resource: {
             function: 'stitchSlides',
-            parameters: ["stitched slides (desktop)", input],
+            parameters: [params["presentationTitle"], input],
+            // parameters: [params["presentationTitle"], params["slideRanges"]],
         },
         devMode: true,
         scriptId: scriptId,
